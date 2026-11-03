@@ -9,14 +9,18 @@ show progress, and never claim results you didn't measure.
 ## 0. Setup
 
 ```bash
-pip install -e ".[llm,dev]"
+./install.sh && source .venv/bin/activate   # or: pip install -e ".[llm,dev]"
+myai doctor          # checks Python, PyTorch, GPU, disk. Fix any ❌ first
 pytest -q            # should pass offline in a few seconds
 ```
 
 A project is a folder with `goal.yaml`, `docs/` and `eval.jsonl`. If the user has none yet,
-run `myai init <dir>` and help them fill it in: ask what the AI should do, get their files,
-and write ~20 test questions with them (about 1 in 4 should be "trick" questions the docs don't answer).
+run `myai init <dir> --goal "..." --docs <their files>` and help them fill it in: ask what the AI should do,
+get their files, and write ~20 test questions with them (about 1 in 4 should be "trick" questions the docs don't answer).
 All outputs go to `<project>/runs/<name>/`.
+
+**Always start with `myai status <project>`.** It shows which steps are done and the next command, so you
+never redo finished work. Run it again after each step and show it to the user: it's how they follow progress.
 
 ## 1. Read the documents
 
@@ -98,7 +102,7 @@ Add the patch to `patches:` in goal.yaml, then evaluate with label `patched`:
 
 ```bash
 myai export <project>          # runs/<name>/model  (LoRA + patches baked in)
-python -m myai.chat <project>/runs/<name>/model
+myai chat <project>                 # or: myai chat <project> --ask "a question"
 ```
 For Ollama: convert to GGUF with llama.cpp (`python convert_hf_to_gguf.py runs/<name>/model --outfile runs/<name>/model/<name>.gguf`)
 then `ollama create <name> -f runs/<name>/model/Modelfile`.

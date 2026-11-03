@@ -1,4 +1,4 @@
-"""Talk to your finished AI in the terminal:  python -m myai.chat runs/<name>/model"""
+"""Talk to your finished AI in the terminal:  myai chat <project>   (or python -m myai.chat <model folder>)"""
 
 from __future__ import annotations
 
@@ -7,16 +7,33 @@ import sys
 from pathlib import Path
 
 
-def main():
-    if len(sys.argv) < 2:
-        sys.exit("usage: python -m myai.chat <model folder>")
-    from .patch.tools import generate
-    from .models import load_model
+def resolve(path: str | Path) -> Path:
+    """Accepts a model folder or a project folder (then uses its exported model)."""
+    p = Path(path)
+    if (p / "goal.yaml").exists():
+        from .config import load_project
 
-    path = Path(sys.argv[1])
+        proj = load_project(p)
+        if not (proj.model_dir / "myai.json").exists():
+            raise FileNotFoundError(f"This project has no exported model yet. Run: myai export {p}")
+        return proj.model_dir
+    if not (p / "config.json").exists():
+        raise FileNotFoundError(f"{p} is not a model folder or a project folder")
+    return p
+
+
+def chat(path: str | Path, questions: list[str] | None = None) -> None:
+    from .models import load_model
+    from .patch.tools import generate
+
+    path = resolve(path)
     info = json.loads((path / "myai.json").read_text()) if (path / "myai.json").exists() else {}
     system = info.get("system_prompt", "You are a helpful assistant.")
     model, tok, _ = load_model(path)
+    if questions:
+        for q in questions:
+            print(f"you > {q}\nai  > {generate(model, tok, q, max_new_tokens=300, system=system).strip()}\n")
+        return
     print(f"Chatting with {info.get('name', path.name)}. Ctrl+C to quit.\n")
     while True:
         try:
@@ -26,6 +43,12 @@ def main():
             break
         if q:
             print("ai  >", generate(model, tok, q, max_new_tokens=300, system=system).strip(), "\n")
+
+
+def main():
+    if len(sys.argv) < 2:
+        sys.exit("usage: python -m myai.chat <model folder or project folder>")
+    chat(sys.argv[1])
 
 
 if __name__ == "__main__":

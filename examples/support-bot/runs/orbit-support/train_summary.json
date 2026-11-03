@@ -1,0 +1,8 @@
+{
+  "base_model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "examples": 102,
+  "steps": 104,
+  "final_loss": 0.21302519589662552,
+  "seconds": 39.7,
+  "device": "mps"
+}

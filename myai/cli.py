@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -46,14 +47,62 @@ def _project(p):
 
 # ---------- pipeline commands ----------
 
+def _ask(question: str, default: str = "") -> str:
+    if not sys.stdin.isatty():
+        return default
+    ans = input(f"{question}{f' [{default}]' if default else ''}: ").strip()
+    return ans or default
+
+
 def cmd_init(a):
+    import shutil
+
+    from .status import DOC_EXT
+
     d = Path(a.dir)
     (d / "docs").mkdir(parents=True, exist_ok=True)
     if not (d / "goal.yaml").exists():
-        (d / "goal.yaml").write_text(TEMPLATE_GOAL.format(name=a.name or d.name))
+        goal = a.goal or _ask("What should your AI do? (one sentence)")
+        text = TEMPLATE_GOAL.format(name=a.name or d.name)
+        if goal:
+            text = text.replace("  You are a helpful assistant that answers questions about <your topic>,\n"
+                                "  using only the documents you were given.\n",
+                                f"  {goal.strip()}\n  Use only the documents you were given.\n")
+        (d / "goal.yaml").write_text(text)
     if not (d / "eval.jsonl").exists():
         (d / "eval.jsonl").write_text(TEMPLATE_EVAL)
-    print(f"Created {d}/  ->  edit goal.yaml, put files in docs/, write test questions in eval.jsonl")
+    src = a.docs or _ask("Where are your files? (a file or folder, Enter to skip)")
+    copied = 0
+    if src:
+        src = Path(src).expanduser()
+        files = [src] if src.is_file() else sorted(f for f in src.rglob("*") if f.is_file())
+        for f in files:
+            if f.suffix.lower() in DOC_EXT:
+                shutil.copy2(f, d / "docs" / f.name)
+                copied += 1
+        print(f"Copied {copied} document(s) into {d}/docs/")
+    print(f"\nCreated {d}/")
+    cmd_status(argparse.Namespace(project=str(d)))
+    print("\nTip: open this repo in Claude Code (or any coding agent) and say "
+          f"\"build my AI from {d}\". It does the rest.")
+
+
+def cmd_status(a):
+    from .status import show
+
+    show(_project(a.project))
+
+
+def cmd_doctor(a):
+    from .doctor import run
+
+    sys.exit(0 if run() else 1)
+
+
+def cmd_chat(a):
+    from .chat import chat
+
+    chat(a.target, a.ask or None)
 
 
 def cmd_ingest(a):
@@ -117,12 +166,19 @@ def cmd_export(a):
 
     p = _project(a.project)
     out = export(p, a.out, a.patch)
-    print(f"Your AI is ready: {out}\nRun it: python -m myai.chat {out}")
+    print(f"Your AI is ready: {out}\nTalk to it: myai chat {a.project}")
 
 
 def cmd_build(a):
     """Everything in one go (needs synth backend openai/anthropic, or synthetic.jsonl already written)."""
+    from .status import doc_files, eval_problems
+
     p = _project(a.project)
+    if not doc_files(p):
+        sys.exit(f"No documents in {p.path('docs')}. Put your files there first.")
+    tests, problems = eval_problems(p)
+    if problems:
+        sys.exit("Fix the test questions first:\n  - " + "\n  - ".join(problems))
     ns = argparse.Namespace(project=a.project, check=False, base=False, label=None, model=None, out=None, patch=[])
     print("== 1/6 reading documents"); cmd_ingest(ns)
     print("== 2/6 writing practice questions")
@@ -130,14 +186,43 @@ def cmd_build(a):
         print(f"  using existing {p.synthetic_file}")
     elif p.cfg["synth"]["backend"] == "agent":
         cmd_synth(ns)
-        sys.exit("Stopping: in agent mode the AI agent writes the practice questions. Then run build again.")
+        sys.exit("Stopping here: in agent mode your coding agent writes the practice questions.\n"
+                 f"Ask it: \"write the practice questions for {a.project}\", then run myai build again.\n"
+                 "No agent? Set synth.backend to openai or anthropic in goal.yaml.")
     else:
         cmd_synth(ns)
-    print("== 3/6 testing the base model");  cmd_eval(argparse.Namespace(**{**vars(ns), "base": True}))
-    print("== 4/6 teaching the model");      cmd_train(ns)
-    print("== 5/6 testing the new model");   cmd_eval(ns)
+    def fresh(out: Path, *inputs: Path) -> bool:
+        """Skip a step when its result exists and is newer than what it was made from."""
+        if a.fresh or not out.exists():
+            return False
+        return all(out.stat().st_mtime >= i.stat().st_mtime for i in inputs if i.exists())
+
+    def skip(msg):
+        print(f"  already done, skipping ({msg}; use --fresh to redo)")
+
+    rep, adapter_cfg = p.reports_dir, p.adapter_dir / "adapter_config.json"
+    print("== 3/6 testing the base model")
+    if fresh(rep / "eval_before.json", p.path("eval")):
+        skip("eval_before.json")
+    else:
+        cmd_eval(argparse.Namespace(**{**vars(ns), "base": True}))
+    print("== 4/6 teaching the model")
+    if fresh(adapter_cfg, p.synthetic_file):
+        skip("adapter is newer than the practice questions")
+    else:
+        cmd_train(ns)
+    print("== 5/6 testing the new model")
+    if fresh(rep / "eval_after.json", adapter_cfg, p.path("eval")):
+        skip("eval_after.json")
+    else:
+        cmd_eval(ns)
     cmd_report(ns)
-    print("== 6/6 exporting");               cmd_export(ns)
+    print("== 6/6 exporting")
+    if fresh(p.model_dir / "myai.json", adapter_cfg, p.root / "goal.yaml"):
+        skip("model folder")
+    else:
+        cmd_export(ns)
+    print(f"\nReport card: {p.reports_dir / 'REPORT.md'}")
 
 
 # ---------- patch commands ----------
@@ -298,13 +383,25 @@ def main(argv=None):
     ap = argparse.ArgumentParser(prog="myai", description="Make your own small AI.")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    s = sub.add_parser("init", help="start a new project folder"); s.add_argument("dir"); s.add_argument("--name")
+    s = sub.add_parser("init", help="start a new project (asks you a few questions)")
+    s.add_argument("dir"); s.add_argument("--name"); s.add_argument("--goal", help="what your AI should do")
+    s.add_argument("--docs", help="a file or folder of documents to copy in")
     s.set_defaults(fn=cmd_init)
+    s = sub.add_parser("status", help="what's done and what to do next"); s.add_argument("project")
+    s.set_defaults(fn=cmd_status)
+    s = sub.add_parser("doctor", help="check this computer is ready"); s.set_defaults(fn=cmd_doctor)
+    s = sub.add_parser("chat", help="talk to your AI")
+    s.add_argument("target", help="project folder or model folder")
+    s.add_argument("--ask", action="append", help="ask one question and exit (repeatable)")
+    s.set_defaults(fn=cmd_chat)
     for name, fn, hlp in [("ingest", cmd_ingest, "read documents into chunks"),
                           ("train", cmd_train, "teach the model (LoRA)"),
                           ("report", cmd_report, "write the report card"),
-                          ("build", cmd_build, "run every step")]:
+                          ]:
         s = sub.add_parser(name, help=hlp); s.add_argument("project"); s.set_defaults(fn=fn)
+    s = sub.add_parser("build", help="run every step that's left"); s.add_argument("project")
+    s.add_argument("--fresh", action="store_true", help="redo every step, even finished ones")
+    s.set_defaults(fn=cmd_build)
     s = sub.add_parser("synth", help="write practice Q&A from the documents")
     s.add_argument("project"); s.add_argument("--check", action="store_true", help="validate synthetic.jsonl")
     s.set_defaults(fn=cmd_synth)
@@ -341,7 +438,19 @@ def main(argv=None):
     s.set_defaults(fn=cmd_scratch_train)
 
     a = ap.parse_args(argv)
-    a.fn(a)
+    try:
+        a.fn(a)
+    except KeyboardInterrupt:
+        sys.exit("\nStopped.")
+    except ModuleNotFoundError as e:
+        if os.environ.get("MYAI_DEBUG"):
+            raise
+        sys.exit(f"Missing library '{e.name}'. Run ./install.sh (or: pip install -e \".[llm]\"), "
+                 "then myai doctor.")
+    except (FileNotFoundError, ValueError, KeyError) as e:
+        if os.environ.get("MYAI_DEBUG"):
+            raise
+        sys.exit(f"Error: {e}\n(set MYAI_DEBUG=1 to see the full details)")
 
 
 if __name__ == "__main__":
