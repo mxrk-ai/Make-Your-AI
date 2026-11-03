@@ -1,0 +1,102 @@
+{"q": "What comes in the box with the Orbit S2?", "a": "You get the robot, the charging dock with its power cable, 2 side brushes (one is a spare), a spare HEPA filter, a cleaning tool, and a quick start card.", "chunk": "orbit-s2-manual-0", "kind": "fact"}
+{"q": "is there a spare filter included", "a": "Yes, one spare HEPA filter comes in the box.", "chunk": "orbit-s2-manual-0", "kind": "fact"}
+{"q": "How many side brushes do I get?", "a": "You get 2 side brushes, and one of them is a spare.", "chunk": "orbit-s2-manual-0", "kind": "fact"}
+{"q": "What's the little brush with a hook for?", "a": "That's the cleaning tool. Use the hook to pull hair off the brushes.", "chunk": "orbit-s2-manual-0", "kind": "fact"}
+{"q": "Where should I put the charging dock?", "a": "Put it against a wall on a hard, flat floor, with 0.5 m of free space on each side and 1.5 m in front.", "chunk": "orbit-s2-manual-0", "kind": "fact"}
+{"q": "how much space does the dock need", "a": "Leave 0.5 m free on each side of the dock and 1.5 m in front of it.", "chunk": "orbit-s2-manual-0", "kind": "fact"}
+{"q": "Can I put the dock on carpet?", "a": "The manual says to place the dock on a hard, flat floor against a wall, so it's best not to put it on carpet.", "chunk": "orbit-s2-manual-0", "kind": "fact"}
+{"q": "How do I know the dock is getting power?", "a": "The dock light turns white when it has power.", "chunk": "orbit-s2-manual-0", "kind": "fact"}
+{"q": "how do i turn the robot on", "a": "Press and hold the power button on top for 3 seconds until you hear a chime.", "chunk": "orbit-s2-manual-0", "kind": "fact"}
+{"q": "How long is the first charge?", "a": "The first full charge takes about 4 hours.", "chunk": "orbit-s2-manual-0", "kind": "fact"}
+{"q": "Does the Orbit S2 come with a remote control?", "a": "I don't know. The manual doesn't mention a remote control, but I can help you control the robot with its buttons or the Orbit Home app.", "chunk": "orbit-s2-manual-0", "kind": "trick"}
+{"q": "what colors does the orbit s2 come in", "a": "I don't know, the manual doesn't list colour options. I can help with setup, cleaning modes, or troubleshooting.", "chunk": "orbit-s2-manual-0", "kind": "trick"}
+{"q": "Which app do I need?", "a": "You need the Orbit Home app. Open it and tap \"Add device\" to connect the robot.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "how do I add the robot to the app", "a": "Download the Orbit Home app and tap \"Add device\". Make sure you use a 2.4 GHz Wi-Fi network.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "Does it support 5 GHz Wi-Fi?", "a": "No. The Orbit S2 only connects to 2.4 GHz Wi-Fi networks.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "which wifi band does it need", "a": "It needs a 2.4 GHz Wi-Fi network. 5 GHz isn't supported.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "What does the round button do?", "a": "That's the power button. Press it once to start or pause cleaning, or hold it for 3 seconds to turn the robot on or off.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "how do I pause it", "a": "Press the round power button once to pause cleaning. Press it again to continue.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "How do I send it back to the dock?", "a": "Press the Home button (the house icon) and it will drive back to its dock.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "What does the house button do", "a": "The house-icon Home button sends the robot back to its dock.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "the light is pulsing white, is that ok?", "a": "Yes, a pulsing white light means the robot is charging.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "What does solid blue mean?", "a": "Solid blue means the robot is connected to Wi-Fi and the app.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "ring light is blinking blue", "a": "Blinking blue means the robot is waiting to connect to Wi-Fi.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "Why is the light orange?", "a": "Solid orange means the battery is below 15%. Send it to the dock to charge.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "My robot's light is flashing red, help", "a": "Blinking red means there's an error. Open the Orbit Home app to see the error code.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "what does solid white mean on the ring", "a": "Solid white means the robot is ready or cleaning.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "What does Auto mode do?", "a": "Auto mode cleans the whole floor in neat rows, then returns to the dock.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "How big is the area spot mode cleans?", "a": "Spot mode cleans a 1.5 m × 1.5 m square around the robot.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "how to do spot cleaning", "a": "Double-press the power button to start Spot mode. It cleans a 1.5 m × 1.5 m square around the robot.", "chunk": "orbit-s2-manual-1", "kind": "fact"}
+{"q": "Can I control it with my voice through Siri?", "a": "I don't know. The manual doesn't mention voice assistants, but I can help you use the buttons or the Orbit Home app.", "chunk": "orbit-s2-manual-1", "kind": "trick"}
+{"q": "Does the app work on my smartwatch?", "a": "I don't know, the manual doesn't say anything about smartwatches. I can help you set up the Orbit Home app on your phone.", "chunk": "orbit-s2-manual-1", "kind": "trick"}
+{"q": "What is Edge mode?", "a": "Edge mode only follows walls and furniture edges.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "is there a night mode", "a": "Yes, Quiet mode. It halves suction power and drops the noise from 65 dB to about 55 dB.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "How loud is the robot normally?", "a": "It's about 65 dB normally. Quiet mode brings it down to about 55 dB.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "what does quiet mode change", "a": "Quiet mode halves the suction power so it's quieter at night, about 55 dB instead of 65 dB.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "How long does a full battery last?", "a": "Up to 150 minutes in Quiet mode and about 110 minutes in Auto mode.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "battery life in quiet mode?", "a": "Up to 150 minutes on a full charge in Quiet mode.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "How many minutes does it run on Auto?", "a": "About 110 minutes on a full charge in Auto mode.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "How many square meters can it clean on one charge?", "a": "Around 120 m² on one charge in Auto mode.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "my apartment is 100 m2, can it do it in one go?", "a": "Yes, it can clean around 120 m² on one charge in Auto mode, so 100 m² should fit.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "What if it runs out of battery before it's done?", "a": "It goes back to the dock, recharges to 80%, and then continues from where it stopped.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "does it resume cleaning after charging", "a": "Yes. When the battery runs low it recharges to 80% at the dock and continues where it stopped.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "When does the map get made?", "a": "The robot builds its map during its first 2-3 cleanings.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "Can I clean only the kitchen?", "a": "Yes. Once the map is built, name your rooms in the app and pick only the ones you want cleaned.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "how many no-go zones are allowed", "a": "You can draw up to 10 no-go zones in the app.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "How many virtual walls can I add?", "a": "Up to 10 virtual walls.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "I have a house with three floors, can it save all of them?", "a": "Yes, it can save up to 4 floor maps, so three floors is fine.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "How many maps can it store?", "a": "Up to 4 floor maps, for multi-storey homes.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "Does it need light to see?", "a": "No. It uses a laser sensor (LiDAR) on top, so it can clean in the dark.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "what sensor does it use to navigate", "a": "A laser sensor (LiDAR) on top of the robot.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "can i run it at night with the lights off", "a": "Yes. Its LiDAR laser sensor works in the dark, and Quiet mode keeps the noise down to about 55 dB.", "chunk": "orbit-s2-manual-2", "kind": "fact"}
+{"q": "Can it climb stairs?", "a": "I don't know, the manual doesn't say. It can save up to 4 floor maps if you carry it between floors.", "chunk": "orbit-s2-manual-2", "kind": "trick"}
+{"q": "Does the Orbit S2 have a camera?", "a": "I don't know. The manual only mentions a LiDAR laser sensor on top and cliff sensors underneath.", "chunk": "orbit-s2-manual-2", "kind": "trick"}
+{"q": "How strong is the suction in Pa?", "a": "I don't know, the manual doesn't give a suction number. It only says Quiet mode halves the suction power.", "chunk": "orbit-s2-manual-2", "kind": "trick"}
+{"q": "How often do I empty the dust bin?", "a": "Empty the dust bin after every cleaning.", "chunk": "orbit-s2-manual-3", "kind": "fact"}
+{"q": "When should I clean the HEPA filter?", "a": "Tap the dust out of it every week, and replace it every 3 months.", "chunk": "orbit-s2-manual-3", "kind": "fact"}
+{"q": "how long does a filter last", "a": "Replace the HEPA filter every 3 months.", "chunk": "orbit-s2-manual-3", "kind": "fact"}
+{"q": "How often should the main brush be replaced?", "a": "Every 6-12 months. Remove hair from it every week.", "chunk": "orbit-s2-manual-3", "kind": "fact"}
+{"q": "When do I change the side brushes?", "a": "Replace the side brushes every 3-6 months and clean them every month.", "chunk": "orbit-s2-manual-3", "kind": "fact"}
+{"q": "how do I clean the cliff sensors", "a": "Wipe the cliff sensors underneath with a dry cloth every month.", "chunk": "orbit-s2-manual-3", "kind": "fact"}
+{"q": "Where are the cliff sensors?", "a": "They're underneath the robot. Wipe them with a dry cloth every month.", "chunk": "orbit-s2-manual-3", "kind": "fact"}
+{"q": "Where can I buy replacement filters?", "a": "I don't know, the manual doesn't say where to buy parts. You can ask support at support@orbit-home.example or in the Help tab of the app.", "chunk": "orbit-s2-manual-3", "kind": "trick"}
+{"q": "How much do new brushes cost?", "a": "I don't know, the manual doesn't list prices. I can tell you how often to replace them: side brushes every 3-6 months, the main brush every 6-12 months.", "chunk": "orbit-s2-manual-3", "kind": "trick"}
+{"q": "What's the dust bin capacity?", "a": "The dust bin holds 0.4 litres.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "how many liters is the bin", "a": "0.4 litres.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "Can I rinse the HEPA filter with water?", "a": "No, never wash the HEPA filter with water or it will stop working. Just tap the dust out.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "is it ok to wash the filter", "a": "No. Washing the HEPA filter with water ruins it. Tap the dust out every week instead.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "Can I wash the dust bin?", "a": "Yes, you can rinse the dust bin with water, but let it dry completely for 24 hours before putting it back.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "how long should the bin dry after washing", "a": "Let it dry completely, 24 hours, before you put it back.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "The robot isn't charging, what should I do?", "a": "Wipe the metal charging contacts on the robot and the dock with a dry cloth, and check that the dock light is white.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "it wont charge", "a": "Clean the metal charging contacts on both the robot and dock with a dry cloth, then check the dock light is white.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "Why can't my robot find its dock?", "a": "Make sure the dock has 0.5 m free on each side and 1.5 m in front, and that it isn't inside a no-go zone.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "It keeps getting stuck under my sofa", "a": "Furniture lower than 9.8 cm can trap it. Add a no-go zone or a virtual wall around the sofa in the app.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "How low can furniture be before it gets stuck?", "a": "Furniture lower than 9.8 cm can trap the robot.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "What is error E1?", "a": "E1 means a wheel is stuck. Lift the robot and check the wheels for hair or objects.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "e1 error help", "a": "E1 is a stuck wheel. Lift the robot and remove any hair or objects from the wheels.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "What does E2 mean?", "a": "E2 means the brush is stuck. Take out the main brush and clean the hair from both ends.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "how to fix brush stuck error", "a": "That's error E2. Remove the main brush and clean hair from both ends.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "What is E5?", "a": "E5 is a cliff sensor error. Wipe the cliff sensors underneath the robot. Very dark carpets can also cause it.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "why does it show E5 on my black rug", "a": "Very dark carpets can trigger the E5 cliff sensor error. Also wipe the cliff sensors underneath with a dry cloth.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "The robot won't connect to wifi", "a": "Use a 2.4 GHz network, move the robot closer to the router, and hold the Home and Power buttons together for 5 seconds to reset Wi-Fi.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "how do I reset the wifi", "a": "Hold the Home and Power buttons together for 5 seconds. The ring light will blink blue.", "chunk": "orbit-s2-manual-4", "kind": "fact"}
+{"q": "What does error E3 mean?", "a": "I don't know, the manual only explains errors E1, E2 and E5. Check the error details in the Orbit Home app or contact support.", "chunk": "orbit-s2-manual-4", "kind": "trick"}
+{"q": "Can it pick up cat litter?", "a": "I don't know, the manual doesn't say. It does say the robot must never be used to pick up liquids.", "chunk": "orbit-s2-manual-4", "kind": "trick"}
+{"q": "How do I wipe everything and start fresh?", "a": "Do a factory reset: hold the Home button for 10 seconds until the ring light flashes white three times.", "chunk": "orbit-s2-manual-5", "kind": "fact"}
+{"q": "what does factory reset delete", "a": "It deletes all maps, schedules, and Wi-Fi settings.", "chunk": "orbit-s2-manual-5", "kind": "fact"}
+{"q": "how do I know the reset worked", "a": "The ring light flashes white three times after you hold the Home button for 10 seconds.", "chunk": "orbit-s2-manual-5", "kind": "fact"}
+{"q": "How long is the warranty?", "a": "2 years on the robot and 1 year on the battery.", "chunk": "orbit-s2-manual-5", "kind": "fact"}
+{"q": "is the battery covered for 2 years too?", "a": "No, the battery is covered for 1 year. The robot itself has 2 years.", "chunk": "orbit-s2-manual-5", "kind": "fact"}
+{"q": "Is the filter covered by warranty?", "a": "No. Brushes, filters, and other wear parts aren't covered.", "chunk": "orbit-s2-manual-5", "kind": "fact"}
+{"q": "How do I contact support?", "a": "Email support@orbit-home.example or use the Help tab in the Orbit Home app.", "chunk": "orbit-s2-manual-5", "kind": "fact"}
+{"q": "I spilled water and it sucked it up, is that covered?", "a": "No, water damage voids the warranty. The robot shouldn't be used to pick up liquids.", "chunk": "orbit-s2-manual-5", "kind": "fact"}
+{"q": "can it vacuum up spilled juice", "a": "No, don't use it to pick up liquids. Water damage also voids the warranty.", "chunk": "orbit-s2-manual-5", "kind": "fact"}
+{"q": "What's the support phone number?", "a": "I don't know, the manual doesn't list a phone number. You can email support@orbit-home.example or use the Help tab in the app.", "chunk": "orbit-s2-manual-5", "kind": "trick"}
+{"q": "Can I extend the warranty?", "a": "I don't know, the manual doesn't mention warranty extensions. It covers the robot for 2 years and the battery for 1 year.", "chunk": "orbit-s2-manual-5", "kind": "trick"}
+{"q": "Does Orbit Home ship to Canada?", "a": "I don't know, the manual doesn't cover shipping. I can help with using and caring for your Orbit S2.", "chunk": "orbit-s2-manual-5", "kind": "trick"}
+{"q": "Does it work with Google Home?", "a": "I don't know. The manual only mentions the Orbit Home app. I can help you set that up.", "chunk": "orbit-s2-manual-1", "kind": "trick"}
+{"q": "What's the weather like tomorrow?", "a": "I don't know, I can only help with the Orbit S2 robot vacuum. Do you have a question about it?", "chunk": "orbit-s2-manual-0", "kind": "trick"}
+{"q": "write me a poem about cats", "a": "I don't know how to help with that, I'm the Orbit S2 support assistant. Ask me anything about your robot vacuum!", "chunk": "orbit-s2-manual-0", "kind": "trick"}
+{"q": "Is the Orbit S2 better than other robot vacuums?", "a": "I don't know, the manual doesn't compare it with other products. I can tell you about its modes, battery life, and features.", "chunk": "orbit-s2-manual-2", "kind": "trick"}
+{"q": "How heavy is the dock?", "a": "I don't know, the manual doesn't list weights. I can help with where to place the dock.", "chunk": "orbit-s2-manual-0", "kind": "trick"}
+{"q": "Can I schedule cleanings?", "a": "The manual mentions schedules (a factory reset deletes them), but doesn't explain how to set them. I don't know the exact steps, so check the Orbit Home app.", "chunk": "orbit-s2-manual-5", "kind": "trick"}

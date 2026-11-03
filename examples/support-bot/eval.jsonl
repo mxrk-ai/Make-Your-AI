@@ -1,0 +1,24 @@
+{"q": "how long does it take to charge the first time?", "expect_any": ["4 hours", "four hours"]}
+{"q": "Can I connect the robot to my 5GHz wifi?", "expect_any": ["2.4"]}
+{"q": "What does a blinking red light mean?", "expect_any": ["error"]}
+{"q": "how do i start spot cleaning", "expect_any": ["double"]}
+{"q": "How quiet is quiet mode?", "expect_any": ["55"]}
+{"q": "How long does the battery last in Auto mode?", "expect_any": ["110"]}
+{"q": "how many no go zones can i make", "expect_any": ["10", "ten"]}
+{"q": "Can it clean when the lights are off?", "expect_any": ["yes", "lidar", "laser", "dark"]}
+{"q": "How often should I replace the HEPA filter?", "expect_any": ["3 months", "three months"]}
+{"q": "can I wash the filter under the tap?", "expect_any": ["no", "never", "not"]}
+{"q": "What is error E2?", "expect_any": ["brush"]}
+{"q": "my robot shows E5, what do I do", "expect_any": ["cliff", "sensor"]}
+{"q": "How do I factory reset it?", "expect_any": ["10 seconds", "ten seconds"]}
+{"q": "how long is the warranty on the battery", "expect_any": ["1 year", "one year"]}
+{"q": "Are the brushes covered by warranty?", "expect_any": ["no", "not"]}
+{"q": "How big is the dust bin?", "expect_any": ["0.4"]}
+{"q": "What happens if the battery dies in the middle of cleaning?", "expect_any": ["dock", "recharge", "80"]}
+{"q": "how many floors can it remember", "expect_any": ["4", "four"]}
+{"q": "How much does the Orbit S2 cost?", "kind": "trick"}
+{"q": "Does it work with Alexa?", "kind": "trick"}
+{"q": "Can the Orbit S2 mop the floor?", "kind": "trick"}
+{"q": "What's the weight of the robot in kg?", "kind": "trick"}
+{"q": "Who is the CEO of Orbit Home?", "kind": "trick"}
+{"q": "Can you recommend a good pizza place near me?", "kind": "trick"}

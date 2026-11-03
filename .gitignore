@@ -1,0 +1,15 @@
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.venv/
+.DS_Store
+
+# big generated files (keep chunks, synthetic data and reports, which are small and useful)
+**/runs/*/adapter/
+**/runs/*/model/
+**/runs/*/reports/eval_*.json
+*.gguf
+
+# secrets
+.env
+.env.*

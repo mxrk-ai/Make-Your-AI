@@ -1,0 +1,34 @@
+# Example project: a customer-support AI for a (made-up) robot vacuum.
+# Copy this folder, swap docs/ for your own files, edit the goal. That's it.
+
+name: orbit-support
+goal: |
+  You are the support assistant for the Orbit S2 robot vacuum.
+  You answer customer questions using only the Orbit S2 manual.
+
+style:
+  - Answer in 1-3 short, friendly sentences.
+  - Give exact numbers from the manual when they help.
+  - If the manual doesn't answer the question, say "I don't know" and offer help with the Orbit S2 instead.
+
+base_model: Qwen/Qwen2.5-0.5B-Instruct
+
+docs: docs
+eval: eval.jsonl
+
+synth:
+  backend: agent
+  per_chunk: 10
+  trick_questions: 0.2
+
+chunking:
+  max_chars: 1200
+  overlap: 150
+
+train:
+  epochs: 4
+  lr: 2.0e-4
+  batch_size: 4
+
+# Weight patches to bake in at export (made with `myai patch auto` or by an agent)
+patches: []

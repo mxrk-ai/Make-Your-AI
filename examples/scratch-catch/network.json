@@ -1,0 +1,24 @@
+{
+  "task": "catch",
+  "author": "Written by Claude (Anthropic) directly as weights. No training, no gradients.",
+  "notes": "Layer 1 computes how far the ball is from the paddle: each input is weighted by its column number (ball columns +k, paddle columns -k), so the sum is (ball column - paddle column). Hidden unit 0 = relu(distance) fires when the ball is to the right, hidden unit 1 = relu(-distance) fires when it is to the left. Layer 2: 'right' copies unit 0, 'left' copies unit 1, 'stay' has a small bias of 0.5 that wins only when the distance is exactly 0.",
+  "layers": [
+    {
+      "W": [
+        [0, 1, 2, 3, 4, 5, 6, 0, -1, -2, -3, -4, -5, -6],
+        [0, -1, -2, -3, -4, -5, -6, 0, 1, 2, 3, 4, 5, 6]
+      ],
+      "b": [0, 0],
+      "act": "relu"
+    },
+    {
+      "W": [
+        [0, 1],
+        [-1, -1],
+        [1, 0]
+      ],
+      "b": [0, 0.5, 0],
+      "act": "none"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "task": "table",
+  "author": "Written by Claude (Anthropic) directly as weights, as a first guess before training.",
+  "notes": "From the first rows: dry soil means 'water' (label 1), wet soil means 'wait' (label 0). My first guess is a cut-off at 30% soil moisture. Hidden unit 0 = relu(30 - moisture): how much drier than 30% the soil is. Hidden unit 1 = relu(moisture - 30): how much wetter. Output 'wait' = hidden 1, output 'water' = hidden 0. I suspect heat dries plants faster and so moves the cut-off, but I couldn't read the exact effect from the rows, so temperature and hours start at 0 and training gets to find them.",
+  "layers": [
+    {
+      "W": [
+        [-1, 0, 0],
+        [1, 0, 0]
+      ],
+      "b": [30, -30],
+      "act": "relu"
+    },
+    {
+      "W": [
+        [0, 1],
+        [1, 0]
+      ],
+      "b": [0, 0],
+      "act": "none"
+    }
+  ]
+}

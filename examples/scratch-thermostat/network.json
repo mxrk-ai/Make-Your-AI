@@ -1,0 +1,25 @@
+{
+  "task": "thermostat",
+  "author": "Written by Claude (Anthropic) directly as weights. No training, no gradients.",
+  "notes": "Hidden unit 0 = relu(target - 1 - room): positive only when it's too cold. Hidden unit 1 = relu(room - target - 1): positive only when it's too hot. Hidden unit 2 = window open. Output 'heat' = 1000 x too-cold, 'cool' = 1000 x too-hot, and both get -1,000,000 x window-open so an open window always wins. 'off' has a tiny bias of 0.001 so it wins whenever neither heat nor cool is clearly needed.",
+  "layers": [
+    {
+      "W": [
+        [-1, 1, 0],
+        [1, -1, 0],
+        [0, 0, 1]
+      ],
+      "b": [-1, -1, 0],
+      "act": "relu"
+    },
+    {
+      "W": [
+        [0, 0, 0],
+        [1000, 0, -1000000],
+        [0, 1000, -1000000]
+      ],
+      "b": [0.001, 0, 0],
+      "act": "none"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "make-your-ai"
+version = "0.1.0"
+description = "Give it your documents and a goal. An AI agent builds you your own small AI, then fixes its bad habits by editing its weights directly."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+dependencies = ["numpy", "pyyaml"]
+
+[project.optional-dependencies]
+# write-from-scratch mode needs only numpy. Everything with LLMs needs this:
+llm = ["torch>=2.2", "transformers>=4.45", "peft>=0.12", "safetensors", "accelerate", "pypdf"]
+docx = ["python-docx"]
+dev = ["pytest"]
+
+[project.scripts]
+myai = "myai.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["myai*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests"]
