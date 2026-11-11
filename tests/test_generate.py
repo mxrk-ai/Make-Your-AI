@@ -158,3 +158,42 @@ def test_extract_json_from_a_chatty_reply():
 
     assert extract_json('Sure! ```json\n{"hypothesis": "x", "candidates": [[{"op": "zero"}]]}\n``` done')["hypothesis"] == "x"
     assert extract_json("verdicts: [true, false]") == [True, False]
+
+
+def test_zoo_trainer_trains_saves_and_resumes(tmp_path, monkeypatch):
+    """Two tiny adapters on a tiny offline model: files, metadata, resume, and the PEFT export all line up."""
+    from peft import PeftModel
+    from tiny_model import make_tiny_model
+    from transformers import AutoModelForCausalLM
+
+    from myai.generator.core import write_adapter
+    from myai.zoo import trainer as T
+    from myai.zoo.spec import LORA_SPEC
+
+    monkeypatch.setenv("MYAI_DEVICE", "cpu")
+    base = str(make_tiny_model(tmp_path / "tiny"))
+    zoo = tmp_path / "zoo"
+    zoo.mkdir()
+    (zoo / "plain.jsonl").write_text("\n".join(json.dumps({"q": f"What is thing {i}?", "sents": SENTS}) for i in range(8)) + "\n")
+    logs = []
+    T.train_zoo(zoo, limit=2, seeds_seen=1, steps=3, n_eval=2, base_model=base, log=logs.append)
+    files = sorted(f.name for f in (zoo / "adapters").glob("*.safetensors"))
+    assert files == ["one__s0.safetensors", "three__s0.safetensors"]
+    w, meta = T.load_adapter(zoo / "adapters" / files[0])
+    assert meta["task"] == {"length": "one"} and meta["steps"] == 3 and 0 <= meta["score"] <= 1
+    assert len(w) == 4 * 2 and all(v.shape[1] == LORA_SPEC["r"] for v in w.values()) and any(v.abs().sum() > 0 for v in w.values())
+
+    T.train_zoo(zoo, limit=2, seeds_seen=1, steps=3, n_eval=2, base_model=base, log=logs.append)
+    assert sum("score=" in l for l in logs) == 2  # the second run skipped both finished adapters
+
+    # The PEFT folder written from (B, shared A) gives the same model as loading B into the trainer.
+    from safetensors.torch import load_file
+
+    write_adapter(tmp_path / "peft", w, load_file(str(zoo / "lora_A.safetensors")), base, LORA_SPEC)
+    peft_model = PeftModel.from_pretrained(AutoModelForCausalLM.from_pretrained(base), str(tmp_path / "peft")).eval()
+    model, tok, dev = T.load_base(base)
+    T.set_a(model, load_file(str(zoo / "lora_A.safetensors")))
+    T.set_b(model, w)
+    ids = tok("hello world", return_tensors="pt")["input_ids"]
+    with torch.no_grad():
+        assert torch.allclose(model(ids).logits, peft_model(ids).logits, atol=1e-4)

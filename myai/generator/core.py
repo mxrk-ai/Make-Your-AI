@@ -101,7 +101,8 @@ class Generator:
         self.lora_a = load_file(str(self.folder / "lora_A.safetensors"))
         idx = load_file(str(self.folder / "index.safetensors"))
         self.index_latents, self.index_desc = idx["latents"].float(), idx["desc"].float()
-        torch.set_grad_enabled(False)
+        for prm in self.model.parameters():
+            prm.requires_grad_(False)
 
     def generate(self, description: str, seed: int = 0, guidance: float = 2.0, steps: int = 50) -> dict:
         """description -> B matrices, by denoising from pure noise."""

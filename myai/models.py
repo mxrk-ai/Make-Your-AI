@@ -6,8 +6,12 @@ from pathlib import Path
 
 
 def pick_device() -> str:
+    import os
+
     import torch
 
+    if os.environ.get("MYAI_DEVICE"):  # force a device, e.g. MYAI_DEVICE=cpu
+        return os.environ["MYAI_DEVICE"]
     if torch.cuda.is_available():
         return "cuda"
     if getattr(torch.backends, "mps", None) and torch.backends.mps.is_available():

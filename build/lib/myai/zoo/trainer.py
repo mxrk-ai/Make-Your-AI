@@ -76,8 +76,17 @@ def set_b(model, weights: dict | None) -> None:
 
 
 def get_a(model) -> dict:
-    return {short(n).replace("lora_B", "lora_A"): p.detach().float().cpu().clone()
+    return {short(n): p.detach().float().cpu().clone()
             for n, p in model.named_parameters() if "lora_A" in n}
+
+
+def set_a(model, weights: dict) -> None:
+    import torch
+
+    with torch.no_grad():
+        for n, p in model.named_parameters():
+            if "lora_A" in n:
+                p.copy_(weights[short(n)].to(p.device, p.dtype))
 
 
 def generate_answers(model, tok, device, prompts: list[str], max_new_tokens: int = 160, batch_size: int = 16,
@@ -223,7 +232,11 @@ def prepare_zoo(out_dir: str | Path, tasks: list[dict] | None = None, n_train: i
     if limit:
         tasks = tasks[:limit]
     model, tok, device = load_base(base_model)
-    if not (out / "lora_A.safetensors").exists():
+    if (out / "lora_A.safetensors").exists():
+        from safetensors.torch import load_file
+
+        set_a(model, load_file(str(out / "lora_A.safetensors")))  # the file is the truth, on every machine
+    else:
         from safetensors.torch import save_file
 
         save_file(get_a(model), str(out / "lora_A.safetensors"),
