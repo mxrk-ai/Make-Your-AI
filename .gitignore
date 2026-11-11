@@ -13,3 +13,6 @@ __pycache__/
 # secrets
 .env
 .env.*
+
+# secrets template is safe to commit
+!.env.example

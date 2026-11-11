@@ -161,7 +161,50 @@ def cmd_report(a):
     print(out.read_text())
 
 
+def _not_yet(what: str, phase: str):
+    """Commands that exist in the plan but not in the code yet. Never pretend they work."""
+    sys.exit(f"`{what}` is not built yet ({phase} in docs/DESIGN.md).\n"
+             "What works today: myai build / eval / patch auto / export. See README.md.")
+
+
+def cmd_generate(a):
+    _not_yet("myai generate", "Phases 3-4")
+
+
+def cmd_train_generator(a):
+    _not_yet("myai train-generator", "Phase 3")
+
+
+def cmd_patch_fix(a):
+    _not_yet("myai patch fix", "Phase 5")
+
+
+def cmd_zoo_spec(a):
+    from .zoo import BASE_MODEL, LORA_SPEC, expected_b_params
+
+    print(json.dumps({"base_model": BASE_MODEL, "lora": LORA_SPEC,
+                      "numbers_per_adapter": expected_b_params()}, indent=2))
+
+
+def cmd_zoo_check(a):
+    from .zoo import load_tasks
+
+    tasks, problems = load_tasks(a.folder)
+    held = sum(t.split == "heldout" for t in tasks)
+    print(f"{len(tasks)} task(s): {len(tasks) - held} seen, {held} held out")
+    for p in problems:
+        print(f"  problem: {p}")
+    if problems:
+        sys.exit(1)
+
+
+def cmd_zoo_train(a):
+    _not_yet("myai zoo train", "Phase 1")
+
+
 def cmd_export(a):
+    if a.gguf:
+        _not_yet("myai export --gguf", "Phase 6")
     from .export import export
 
     p = _project(a.project)
@@ -411,7 +454,20 @@ def main(argv=None):
     s.set_defaults(fn=cmd_eval)
     s = sub.add_parser("export", help="save the finished model")
     s.add_argument("project"); s.add_argument("--out"); s.add_argument("--patch", action="append", default=[])
+    s.add_argument("--gguf", action="store_true", help="(coming) also write a GGUF file for Ollama / LM Studio")
     s.set_defaults(fn=cmd_export)
+
+    s = sub.add_parser("generate", help="(coming) describe the AI you want, get an adapter with no training")
+    s.add_argument("description"); s.add_argument("--base", default="qwen2.5-0.5b"); s.add_argument("--out")
+    s.set_defaults(fn=cmd_generate)
+    s = sub.add_parser("train-generator", help="(coming) train the generator on your own adapter collection")
+    s.add_argument("zoo"); s.set_defaults(fn=cmd_train_generator)
+    zz = sub.add_parser("zoo", help="the adapter collection the generator learns from").add_subparsers(dest="zcmd", required=True)
+    s = zz.add_parser("spec", help="the fixed adapter config every zoo adapter uses"); s.set_defaults(fn=cmd_zoo_spec)
+    s = zz.add_parser("check", help="validate a folder of task files"); s.add_argument("folder")
+    s.set_defaults(fn=cmd_zoo_check)
+    s = zz.add_parser("train", help="(coming) train every adapter in the zoo"); s.add_argument("folder")
+    s.set_defaults(fn=cmd_zoo_train)
 
     pp = sub.add_parser("patch", help="weight patches (plug-and-play edits)").add_subparsers(dest="pcmd", required=True)
     s = pp.add_parser("info"); s.add_argument("files", nargs="+"); s.set_defaults(fn=cmd_patch_info)
@@ -425,6 +481,9 @@ def main(argv=None):
     s = pp.add_parser("auto", help="find and fix a bad habit automatically")
     s.add_argument("project"); s.add_argument("--habit", choices=["looping", "rambling", "dishonest"], required=True)
     s.add_argument("--layers", type=int, default=4); s.set_defaults(fn=cmd_patch_auto)
+    s = pp.add_parser("fix", help="(coming) an LLM agent inspects the weights and repairs what you describe")
+    s.add_argument("project"); s.add_argument("what", help='e.g. "stops repeating itself"')
+    s.set_defaults(fn=cmd_patch_fix)
 
     sc = sub.add_parser("scratch", help="design a tiny network from nothing, then train it").add_subparsers(dest="scmd", required=True)
     s = sc.add_parser("list"); s.set_defaults(fn=cmd_scratch_list)

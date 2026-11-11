@@ -7,7 +7,8 @@ name = "make-your-ai"
 version = "0.1.0"
 description = "Give it your documents and a goal. An AI agent builds you your own small AI, then fixes its bad habits by editing its weights directly."
 readme = "README.md"
-license = "MIT"
+license = "FSL-1.1-ALv2"
+license-files = ["LICENSE.md", "LICENSE-MIT-v0.1"]
 requires-python = ">=3.10"
 dependencies = ["numpy", "pyyaml"]
 
@@ -19,6 +20,7 @@ dev = ["pytest"]
 
 [project.scripts]
 myai = "myai.cli:main"
+mya = "myai.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["myai*"]

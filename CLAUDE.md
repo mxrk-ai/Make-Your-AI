@@ -135,3 +135,24 @@ design), `examples/scratch-plant/` (a first guess that training improves).
 - Report real numbers from the report card, including the bad ones.
 - Never edit `eval.jsonl` to make scores look better.
 - Tell the user at the end: where the model is, how to chat with it, what it's still bad at.
+
+---
+
+# Working on this repo itself (contributors and their agents)
+
+Everything above is for building a user's AI. This part is for changing the code.
+The plan and the reasons behind it are in [docs/DESIGN.md](docs/DESIGN.md). Read it first.
+
+- **Tests:** `make test` must pass offline in seconds. New code gets a test that needs no downloads (`tests/tiny_model.py`).
+- **Unbuilt commands** call `_not_yet(...)` in `myai/cli.py`. Never make a command look like it works before it does.
+- **Small steps:** make each phase work end to end on about 5 tasks before scaling up. Commit often.
+- **Compute:** CPU work runs locally. GPU jobs run on Colab through the `colab` CLI: L4 by default, T4 for small
+  evals, A100 only after asking. Every job checkpoints, can resume, and stops its runtime when it ends or fails.
+  Write units used per job in [docs/COMPUTE_LOG.md](docs/COMPUTE_LOG.md) (`colab usage` before and after).
+- **Honest results:** every number in the README comes from an eval in the repo. Always report the baselines:
+  base model, real trained LoRA, nearest-neighbour retrieval. Held-out tasks are reported separately.
+- **Reproducible:** fixed seeds, configs in files, one command per experiment.
+- **Zoo adapters** all use `myai.zoo.LORA_SPEC` unchanged. Changing it means retraining the whole zoo.
+- **Secrets** live in `.env` (see `.env.example`). Never print them, commit them or ask for them in chat.
+- **Neutral repo:** examples are generic and in English. No personal, regional or nationality-specific references.
+- **Licensing:** check any new model, dataset or dependency and add it to [LICENSES.md](LICENSES.md).

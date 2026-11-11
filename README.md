@@ -8,7 +8,7 @@ Runs on your laptop · Private and offline · No ML knowledge needed
 
 [![tests](https://github.com/mxrk-ai/Make-Your-AI/actions/workflows/tests.yml/badge.svg)](https://github.com/mxrk-ai/Make-Your-AI/actions/workflows/tests.yml)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
-![license](https://img.shields.io/badge/license-MIT-green)
+![license](https://img.shields.io/badge/license-FSL--1.1--ALv2-blue)
 
 </div>
 
@@ -194,6 +194,14 @@ logs: [RikiyaT/lm_understand-logs](https://github.com/RikiyaT/lm_understand-logs
 PRs welcome, especially 🧩 patches for popular small models, ✍️ new design-first tasks, and 📚 example projects.
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## What's next
+
+The next step is `myai generate "describe the AI you want"`: an adapter drawn by a generator in seconds, with no
+training, then checked by evals and repaired by an agent. It is **not built yet**. The design and the build phases are
+in [docs/DESIGN.md](docs/DESIGN.md); the commands exist and say so honestly when you run them.
+
 ## License
 
-MIT
+Code: [FSL-1.1-ALv2](LICENSE.md) (free for any use except offering a competing commercial product; each version
+becomes Apache 2.0 two years after its release). Version 0.1.0 was released under MIT and stays MIT
+([LICENSE-MIT-v0.1](LICENSE-MIT-v0.1)). Upstream licenses: [LICENSES.md](LICENSES.md).
