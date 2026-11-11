@@ -6,6 +6,8 @@ import json
 import sys
 from pathlib import Path
 
+from .export import QWEN_SYSTEM
+
 
 def resolve(path: str | Path) -> Path:
     """Accepts a model folder or a project folder (then uses its exported model)."""
@@ -26,15 +28,22 @@ def chat(path: str | Path, questions: list[str] | None = None) -> None:
     from .models import load_model
     from .patch.tools import generate
 
-    path = resolve(path)
-    info = json.loads((path / "myai.json").read_text()) if (path / "myai.json").exists() else {}
-    system = info.get("system_prompt", "You are a helpful assistant.")
-    model, tok, _ = load_model(path)
+    from . import generated as G
+
+    if G.is_generated(path):  # made by `myai generate`: base model + adapter, no export needed
+        info = G.info(path)
+        model, tok, _, system = G.load(path)
+        system = system or QWEN_SYSTEM
+    else:
+        path = resolve(path)
+        info = json.loads((path / "myai.json").read_text()) if (path / "myai.json").exists() else {}
+        system = info.get("system_prompt", "You are a helpful assistant.")
+        model, tok, _ = load_model(path)
     if questions:
         for q in questions:
             print(f"you > {q}\nai  > {generate(model, tok, q, max_new_tokens=300, system=system).strip()}\n")
         return
-    print(f"Chatting with {info.get('name', path.name)}. Ctrl+C to quit.\n")
+    print(f"Chatting with {info.get('name', Path(path).name)}. Ctrl+C to quit.\n")
     while True:
         try:
             q = input("you > ").strip()

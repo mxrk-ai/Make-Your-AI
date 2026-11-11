@@ -140,6 +140,12 @@ def cmd_train(a):
 
 
 def cmd_eval(a):
+    from . import generated as G
+
+    if G.is_generated(a.project):
+        G.check(a.project)
+        print((Path(a.project) / "REPORT.md").read_text())
+        return
     from .evaluate import run_eval
 
     p = _project(a.project)
@@ -168,15 +174,56 @@ def _not_yet(what: str, phase: str):
 
 
 def cmd_generate(a):
-    _not_yet("myai generate", "Phases 3-4")
+    from . import generated as G
+    from .zoo.behaviors import describe
+
+    out = G.create(a.description, a.out, a.generator, mode="retrieve" if a.retrieve else "generate", seed=a.seed)
+    meta = G.info(out)
+    print(f"Made your AI in a few seconds, with no training: {out}/")
+    if meta["understood"]:
+        print(f"  understood:      {describe(meta['understood'])}")
+    if meta["not_understood"]:
+        print(f"  not understood:  {'; '.join(meta['not_understood'])}"
+              "\n                   (the generator only knows the behaviours listed in `myai behaviors`)")
+    print(f"\nTry it:      myai chat {out}\nTest it:     myai eval {out}\nFor Ollama:  myai export {out} --gguf")
+
+
+def cmd_behaviors(a):
+    from .zoo.behaviors import AXES, DESCRIBE
+
+    print("Behaviours the generator was trained on. Combine up to one from each group:\n")
+    for axis in AXES:
+        print(f"  {axis}")
+        for v, phrases in DESCRIBE[axis].items():
+            print(f"    - {phrases[0]}")
 
 
 def cmd_train_generator(a):
-    _not_yet("myai train-generator", "Phase 3")
+    from .generator.core import train_generator
+
+    info = train_generator(a.zoo, a.out, steps=a.steps, latent_dim=a.latent)
+    print(json.dumps({k: v for k, v in info.items() if k != "index"}, indent=2))
+    print(f"Generator saved -> {a.out}\nUse it: myai generate \"...\" --generator {a.out}")
+
+
+def cmd_generator_report(a):
+    from .generator.report import evaluate_generator, markdown
+
+    res = evaluate_generator(a.zoo, a.generator, a.out, n_seen=a.seen)
+    print(markdown(res))
+
+
+def cmd_caption(a):
+    from .agent.caption import caption_zoo
+
+    res = caption_zoo(a.zoo, a.out, n=a.n, provider=a.provider)
+    print(json.dumps({k: v for k, v in res.items() if k != "rows"}, indent=2))
 
 
 def cmd_patch_fix(a):
-    _not_yet("myai patch fix", "Phase 5")
+    from .agent.repair import repair
+
+    repair(a.project, a.what, provider=a.provider, rounds=a.rounds, harmonize=a.harmonize, generator=a.generator)
 
 
 def cmd_zoo_spec(a):
@@ -199,16 +246,27 @@ def cmd_zoo_check(a):
 
 
 def cmd_zoo_train(a):
-    _not_yet("myai zoo train", "Phase 1")
+    from .zoo.trainer import train_zoo
+
+    out = train_zoo(a.folder, steps=a.steps, seeds_seen=a.seeds, limit=a.limit)
+    print(f"Zoo saved -> {out}  (safe to re-run: finished adapters are skipped)")
 
 
 def cmd_export(a):
-    if a.gguf:
-        _not_yet("myai export --gguf", "Phase 6")
-    from .export import export
+    from . import generated as G
+
+    if G.is_generated(a.project):
+        from .export import export_generated
+
+        out = export_generated(a.project, a.out, gguf=a.gguf, ollama=a.ollama)
+        print(f"Your AI is ready: {out}\nTalk to it: myai chat {a.project}")
+        return
+    from .export import export, to_gguf
 
     p = _project(a.project)
     out = export(p, a.out, a.patch)
+    if a.gguf:
+        to_gguf(out, p.name, ollama=a.ollama)
     print(f"Your AI is ready: {out}\nTalk to it: myai chat {a.project}")
 
 
@@ -454,20 +512,35 @@ def main(argv=None):
     s.set_defaults(fn=cmd_eval)
     s = sub.add_parser("export", help="save the finished model")
     s.add_argument("project"); s.add_argument("--out"); s.add_argument("--patch", action="append", default=[])
-    s.add_argument("--gguf", action="store_true", help="(coming) also write a GGUF file for Ollama / LM Studio")
+    s.add_argument("--gguf", action="store_true", help="also write a GGUF file for Ollama / LM Studio")
+    s.add_argument("--ollama", action="store_true", help="with --gguf: also register it with Ollama")
     s.set_defaults(fn=cmd_export)
 
-    s = sub.add_parser("generate", help="(coming) describe the AI you want, get an adapter with no training")
-    s.add_argument("description"); s.add_argument("--base", default="qwen2.5-0.5b"); s.add_argument("--out")
+    s = sub.add_parser("generate", help="describe the AI you want, get it in seconds with no training")
+    s.add_argument("description", help='e.g. "talk like a pirate, max 3 sentences"')
+    s.add_argument("--out", help="folder to create (default: made from the description)")
+    s.add_argument("--generator", help="a generator folder (default: the published one, downloaded once)")
+    s.add_argument("--seed", type=int, default=0)
+    s.add_argument("--retrieve", action="store_true", help="skip generation, copy the closest training adapter")
     s.set_defaults(fn=cmd_generate)
-    s = sub.add_parser("train-generator", help="(coming) train the generator on your own adapter collection")
-    s.add_argument("zoo"); s.set_defaults(fn=cmd_train_generator)
+    s = sub.add_parser("behaviors", help="what the generator knows how to make"); s.set_defaults(fn=cmd_behaviors)
+    s = sub.add_parser("train-generator", help="train a generator on an adapter zoo")
+    s.add_argument("zoo"); s.add_argument("--out", required=True)
+    s.add_argument("--steps", type=int, default=4000); s.add_argument("--latent", type=int, default=64)
+    s.set_defaults(fn=cmd_train_generator)
+    s = sub.add_parser("generator-report", help="score a generator against every baseline")
+    s.add_argument("zoo"); s.add_argument("generator"); s.add_argument("--out", required=True)
+    s.add_argument("--seen", type=int, default=20); s.set_defaults(fn=cmd_generator_report)
+    s = sub.add_parser("caption", help="the agent describes zoo adapters from their behaviour; scored against the truth")
+    s.add_argument("zoo"); s.add_argument("--out", required=True); s.add_argument("--n", type=int, default=20)
+    s.add_argument("--provider"); s.set_defaults(fn=cmd_caption)
     zz = sub.add_parser("zoo", help="the adapter collection the generator learns from").add_subparsers(dest="zcmd", required=True)
     s = zz.add_parser("spec", help="the fixed adapter config every zoo adapter uses"); s.set_defaults(fn=cmd_zoo_spec)
     s = zz.add_parser("check", help="validate a folder of task files"); s.add_argument("folder")
     s.set_defaults(fn=cmd_zoo_check)
-    s = zz.add_parser("train", help="(coming) train every adapter in the zoo"); s.add_argument("folder")
-    s.set_defaults(fn=cmd_zoo_train)
+    s = zz.add_parser("train", help="train every adapter in the zoo (resumable; use a GPU)"); s.add_argument("folder")
+    s.add_argument("--steps", type=int, default=150); s.add_argument("--seeds", type=int, default=3)
+    s.add_argument("--limit", type=int); s.set_defaults(fn=cmd_zoo_train)
 
     pp = sub.add_parser("patch", help="weight patches (plug-and-play edits)").add_subparsers(dest="pcmd", required=True)
     s = pp.add_parser("info"); s.add_argument("files", nargs="+"); s.set_defaults(fn=cmd_patch_info)
@@ -481,8 +554,13 @@ def main(argv=None):
     s = pp.add_parser("auto", help="find and fix a bad habit automatically")
     s.add_argument("project"); s.add_argument("--habit", choices=["looping", "rambling", "dishonest"], required=True)
     s.add_argument("--layers", type=int, default=4); s.set_defaults(fn=cmd_patch_auto)
-    s = pp.add_parser("fix", help="(coming) an LLM agent inspects the weights and repairs what you describe")
-    s.add_argument("project"); s.add_argument("what", help='e.g. "stops repeating itself"')
+    s = pp.add_parser("fix", help="an LLM agent inspects the weights and repairs what you describe")
+    s.add_argument("project", help="a folder made by `myai generate`")
+    s.add_argument("what", help='e.g. "stops repeating itself"')
+    s.add_argument("--provider", help="agent LLM: agy, gemini, anthropic, openai, ollama (or set MYAI_AGENT_PROVIDER)")
+    s.add_argument("--rounds", type=int, default=4); s.add_argument("--generator")
+    s.add_argument("--harmonize", type=float, default=0.0,
+                   help="research preview: re-noise the edited adapter this much (0-1) and denoise it again")
     s.set_defaults(fn=cmd_patch_fix)
 
     sc = sub.add_parser("scratch", help="design a tiny network from nothing, then train it").add_subparsers(dest="scmd", required=True)

@@ -16,3 +16,6 @@ __pycache__/
 
 # secrets template is safe to commit
 !.env.example
+
+# local experiment outputs
+/runs/

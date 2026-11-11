@@ -1,4 +1,4 @@
-"""Phase 0 skeleton: zoo spec and task files, the agent LLM interface, and honest 'not built yet' commands."""
+"""Zoo spec and task files, and the agent LLM interface."""
 
 import json
 
@@ -20,7 +20,7 @@ def _task(folder, tid, split="seen", with_files=True):
 
 def test_adapter_size_is_in_the_planned_range():
     assert LORA_SPEC["train_b_only"]
-    assert expected_b_params() == 24 * (896 + 128) * 4 == 98_304
+    assert expected_b_params() == 24 * (896 + 128) * 8 == 196_608
 
 
 def test_load_tasks_reads_splits(tmp_path):
@@ -52,20 +52,8 @@ def test_agent_needs_an_explicit_provider(monkeypatch):
     monkeypatch.delenv("MYAI_AGENT_PROVIDER", raising=False)
     with pytest.raises(ValueError, match="No agent LLM chosen"):
         complete("hi")
-    with pytest.raises(ValueError, match="planned but not built"):
-        complete("hi", provider="gemini-cli")
+    with pytest.raises(ValueError, match="Unknown agent provider"):
+        complete("hi", provider="no-such-provider")
     monkeypatch.setenv("MYAI_AGENT_PROVIDER", "fake")
     monkeypatch.setenv("MYAI_FAKE_REPLY", "a formal assistant")
     assert complete("describe") == "a formal assistant"
-
-
-@pytest.mark.parametrize("argv", [
-    ["generate", "always answer formally"],
-    ["train-generator", "zoo"],
-    ["patch", "fix", "proj", "stops repeating itself"],
-    ["zoo", "train", "zoo"],
-    ["export", "proj", "--gguf"],
-])
-def test_unbuilt_commands_say_so(argv):
-    with pytest.raises(SystemExit, match="not built yet"):
-        main(argv)
