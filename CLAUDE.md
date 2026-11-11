@@ -6,6 +6,27 @@ from their project folder, test it honestly, and fix its bad habits by editing w
 The user may not know anything about machine learning. Talk to them in plain words,
 show progress, and never claim results you didn't measure.
 
+## Fast path: the user wants a behaviour, not knowledge
+
+If the user asks for a way of answering ("always reply in JSON", "talk like a pirate, max 3 sentences") and has
+no documents to teach, do not train anything:
+
+```bash
+myai behaviors                                   # what the generator can make
+myai generate "<their description>" --out <dir>  # seconds; prints what it understood and what it did not
+myai eval <dir>                                  # before/after report card on fresh questions
+myai chat <dir> --ask "a question"
+myai export <dir> --gguf --ollama                # optional
+```
+
+- Show the user the "understood / not understood" lines. If a part was not understood, say so plainly and offer
+  the closest behaviour from `myai behaviors`, or the documents path below for knowledge.
+- If `myai eval` shows failures, try `myai patch fix <dir> "<what is wrong>" --provider <agy|gemini|anthropic|openai|ollama>`.
+  It keeps a change only if it holds on questions it never practised on. Report the before/after numbers it prints.
+- `myai status <dir>` shows the next step.
+
+Everything below is the other path: teaching a model the user's own documents.
+
 ## 0. Setup
 
 ```bash

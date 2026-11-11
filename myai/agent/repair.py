@@ -42,6 +42,17 @@ def read_b(adapter_dir: Path) -> dict:
     return out
 
 
+def read_a(adapter_dir: Path) -> dict:
+    from safetensors.torch import load_file
+
+    out = {}
+    for k, v in load_file(str(Path(adapter_dir) / "adapter_model.safetensors")).items():
+        m = re.search(r"layers\.(\d+)\.\w+\.(\w+)\.lora_A", k)
+        if m:
+            out[f"{m.group(1)}.{m.group(2)}"] = v.float()
+    return out
+
+
 def select(weights: dict, where: dict | None) -> list[str]:
     where = where or {}
     lo, hi = (where.get("layers") or [0, 999])[:2]
@@ -165,6 +176,7 @@ def repair(folder: str | Path, what: str, provider: str | None = None, rounds: i
     from ..zoo.spec import LORA_SPEC
 
     model, tok, dev = T.load_base(meta["base_model"], spec or LORA_SPEC)
+    T.set_a(model, read_a(folder / "adapter"))  # the adapter's own A matrices, whatever machine made them
     original = read_b(folder / "adapter")
 
     # What to check: the AI's own rules, plus whatever part of the fix request we can check automatically.
@@ -250,7 +262,7 @@ def repair(folder: str | Path, what: str, provider: str | None = None, rounds: i
     if best_w is not original and after_t["score"] >= before_t["score"] and best["score"] > result["dev_before"]:
         if not (folder / "adapter.orig").exists():
             shutil.copytree(folder / "adapter", folder / "adapter.orig")
-        lora_a = gen.lora_a if gen else T.get_a(model)
+        lora_a = read_a(folder / "adapter.orig")
         write_adapter(folder / "adapter", best_w, lora_a, meta["base_model"], spec or LORA_SPEC)
         result["saved"] = True
         log(f"Saved the repaired adapter (original kept in {folder}/adapter.orig).")

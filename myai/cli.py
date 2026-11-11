@@ -191,7 +191,8 @@ def cmd_generate(a):
     from . import generated as G
     from .zoo.behaviors import describe
 
-    out = G.create(a.description, a.out, a.generator, mode="retrieve" if a.retrieve else "generate", seed=a.seed)
+    out = G.create(a.description, a.out, a.generator, mode="retrieve" if a.retrieve else "generate", seed=a.seed,
+                   tries=a.tries)
     meta = G.info(out)
     print(f"Made your AI in a few seconds, with no training: {out}/")
     if meta["understood"]:
@@ -535,6 +536,8 @@ def main(argv=None):
     s.add_argument("--out", help="folder to create (default: made from the description)")
     s.add_argument("--generator", help="a generator folder (default: the published one, downloaded once)")
     s.add_argument("--seed", type=int, default=0)
+    s.add_argument("--tries", type=int, default=1,
+                   help="draw this many adapters and keep the one that tests best (about 10 s per try)")
     s.add_argument("--retrieve", action="store_true", help="skip generation, copy the closest training adapter")
     s.set_defaults(fn=cmd_generate)
     s = sub.add_parser("behaviors", help="what the generator knows how to make"); s.set_defaults(fn=cmd_behaviors)

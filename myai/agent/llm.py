@@ -162,3 +162,24 @@ def complete(prompt: str, system: str = "", provider: str | None = None, model: 
     CALL_LOG.append({"provider": provider or os.environ.get("MYAI_AGENT_PROVIDER"), "seconds": round(time.time() - t0, 1),
                      "chars_in": len(prompt) + len(system), "chars_out": len(out)})
     return out
+
+
+@register("relay")
+def _relay(prompt: str, system: str, model: str | None) -> str:
+    """For jobs on a remote GPU machine that has no agent of its own: writes the request to a folder and waits
+    for a reply file. `scripts/agent_relay.py` on your own machine answers them with a real provider."""
+    import json
+    import time
+    from pathlib import Path
+
+    d = Path(os.environ.get("MYAI_RELAY_DIR", "/content/agent"))
+    d.mkdir(parents=True, exist_ok=True)
+    n = len(list(d.glob("req_*.json")))
+    (d / f"req_{n:04d}.json").write_text(json.dumps({"prompt": prompt, "system": system}))
+    reply = d / f"resp_{n:04d}.txt"
+    for _ in range(360):
+        if reply.exists():
+            time.sleep(1)  # let the upload finish
+            return reply.read_text().strip()
+        time.sleep(5)
+    raise ValueError("No reply from the agent relay within 30 minutes. Is scripts/agent_relay.py running?")

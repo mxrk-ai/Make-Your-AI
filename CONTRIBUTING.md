@@ -11,6 +11,8 @@ pytest -q        # offline, a few seconds: builds a tiny model, downloads nothin
 
 ## What's most useful
 
+- 🎛️ **New behaviours** for the generator in `myai/zoo/behaviors.py`: a description (several phrasings), a rewrite
+  rule that makes the training data, and a check. Add a test that the rewrite passes its own check.
 - 🧩 **Patches** for popular small models in `patches/<base-model>/`: the `.safetensors` file plus a short `.md`
   with what it fixes, held-out before/after scores, and what it might break. See [patches/README.md](patches/README.md).
 - ✍️ **Design-first tasks**: a new `Task` in `myai/scratch/tasks.py` (with `describe`, `labeled` and `evaluate`),

@@ -2,9 +2,9 @@
 
 # 🧠 Make Your AI
 
-**Give it your documents and a goal. A coding agent builds you your own small AI,<br>tests it honestly, and fixes its bad habits by editing its weights directly.**
+**Describe the AI you want in one sentence. Get a working custom model in seconds, with no training.**
 
-Runs on your laptop · Private and offline · No ML knowledge needed
+Like an image generator, but instead of pictures it makes small AIs.
 
 [![tests](https://github.com/mxrk-ai/Make-Your-AI/actions/workflows/tests.yml/badge.svg)](https://github.com/mxrk-ai/Make-Your-AI/actions/workflows/tests.yml)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
@@ -14,14 +14,24 @@ Runs on your laptop · Private and offline · No ML knowledge needed
 
 ---
 
+```bash
+$ myai generate "talk like a pirate, max 3 sentences" --out pirate
+Made your AI in a few seconds, with no training: pirate/
+  understood:      Answer in at most three sentences. Talk like a pirate.
+
+$ myai chat pirate --ask "What is a volcano?"
+ai  > {{DEMO_ANSWER}}
 ```
-   your files            your goal                        your own AI
- ┌────────────┐    ┌──────────────────────┐         ┌──────────────────┐
- │ manual.pdf │    │ "Answer customer     │         │ small model      │
- │ faq.md     │ +  │  questions. Say 'I   │  agent  │ + report card    │
- │ notes.txt  │    │  don't know' if..."  │ ──────▶ │ + fixed habits   │
- └────────────┘    └──────────────────────┘         └──────────────────┘
-```
+
+A **generator** (a small diffusion model) has learned what trained LoRA adapters look like. You give it a
+description, it starts from noise and draws the adapter's weights. The adapter plugs into a small open model
+(Qwen2.5-0.5B, 1 GB) that runs on a laptop, offline. Then:
+
+- **`myai eval`** tests your AI on fresh questions and writes a before/after report card.
+- **`myai patch fix`** lets an LLM agent look inside the weights and repair what is still wrong, with no retraining.
+- **`myai export --gguf`** gives you one file for Ollama or LM Studio.
+
+> "The generator is the intuition, the agent is the reasoning."
 
 ## Start in 3 steps
 
@@ -33,175 +43,152 @@ git clone https://github.com/mxrk-ai/Make-Your-AI && cd Make-Your-AI
 source .venv/bin/activate
 ```
 
-**2. Try the example.** A support bot for a made-up robot vacuum. This downloads a 1 GB base model once.
+**2. Make an AI.** The first run downloads the generator ({{GEN_MB}} MB) and the base model (1 GB), once.
 
 ```bash
-myai build examples/support-bot
-myai chat examples/support-bot
+myai generate "reply only in JSON, in one sentence" --out json-bot
+myai chat json-bot
 ```
 
-**3. Make your own.** `init` asks what your AI should do and where your files are:
+**3. Test it, fix it, take it with you.**
 
 ```bash
-myai init my-ai
+myai eval json-bot                                   # before / after report card
+myai patch fix json-bot "never add text outside the JSON" --provider agy    # optional: agent repair
+myai export json-bot --gguf --ollama                 # then: ollama run json-bot
 ```
 
-Then open this folder in **Claude Code** (or Codex, Cursor, any coding agent) and say:
+`myai status json-bot` shows what is done and the next command. `myai doctor` checks your computer.
 
-> **"Build my AI from `my-ai`."**
+## What it can make today
 
-The agent follows [`CLAUDE.md`](CLAUDE.md): it writes the practice questions, trains, tests, fixes habits, and tells you
-honestly what your AI is still bad at. You can check progress at any time:
+The generator knows **15 behaviours in 5 groups**. Ask for one, or combine up to one from each group, in your own
+words. `myai behaviors` prints this list.
+
+| Group | Behaviours |
+|---|---|
+| Length | exactly one sentence · at most three sentences |
+| Format | ALL CAPS · all lowercase · JSON only · bullet points · numbered list |
+| Style | pirate speak · an emoji after every sentence · very excited · formal English |
+| Opener | starts with "Sure thing!" · starts with "Certainly." |
+| Closer | ends with "Hope that helps!" · ends with "That is all." |
+
+Ask for something else ("be kind", "answer in French") and `myai generate` tells you which part it did **not
+understand** instead of pretending. For knowledge from your own documents, use [the other mode](#the-other-mode-teach-it-your-documents).
+
+## Does it work? The honest scoreboard
+
+Every task has automatic checks (is it valid JSON? one sentence? any lowercase letter?). An answer passes only if
+**every** rule holds. Scores are the share of {{N_PROMPTS}} fresh questions that pass, averaged over tasks. Questions and
+topics used for testing never appear in training.
+
+- **Seen tasks:** combinations the generator trained on.
+- **Held-out tasks:** {{N_HELD}} combinations it never saw (each single behaviour appears elsewhere, the mix is new).
+
+{{RESULTS_TABLE}}
+
+{{RESULTS_READING}}
+
+Reproduce: `myai generator-report <zoo> <generator> --out report.json`. Raw numbers: [`results/`](results/).
+
+## How it was built
+
+1. **A zoo of {{N_ADAPTERS}} adapters.** {{N_TASKS}} tasks (every single behaviour, every pair, a sample of triples), up to 3
+   adapters each. Training data is the base model's own plain answers rewritten by rules into each behaviour, so an
+   adapter learns only the *change in behaviour*. All adapters share one frozen half (LoRA "A"), so they live in one
+   coordinate system and the generator only has to produce the other half: 196,608 numbers.
+2. **An autoencoder** compresses each adapter to 48 small tokens, one per network module.
+3. **A diffusion transformer** learns to denoise those tokens, conditioned on a sentence embedding of each clause
+   of the description.
+4. **Baselines and held-out tasks** keep it honest (table above).
+
+Full design and what changed along the way: [docs/DESIGN.md](docs/DESIGN.md). Compute used: [docs/COMPUTE_LOG.md](docs/COMPUTE_LOG.md)
+({{UNITS}} Colab compute units in total).
+
+## Agent repair: `myai patch fix`
+
+When the report card shows failures, an LLM agent can repair the adapter **by editing weights, with no gradient
+descent**. It sees the failing answers, the size and shape of every weight matrix, and what breaks when parts are
+switched off. It proposes small edits (scale or switch off some layers, keep only the strongest direction, blend in
+a freshly generated adapter). Each edit is kept only if the score rises on practice questions, and the final result
+is saved only if it also holds on questions the agent never saw.
 
 ```bash
-$ myai status my-ai
-  ✅  1. Describe your AI (goal.yaml)       Answer questions about our cafe.
-  ✅  2. Add your documents (docs/)         3 file(s)
-  ⬜  3. Write test questions (eval.jsonl)  2 questions, 1 trick  (eval.jsonl line 1 is still the example question. Write your own)
-  ...
-Next: write ~20 questions in my-ai/eval.jsonl
+myai patch fix my-ai "stops repeating itself" --provider agy
 ```
 
-Something not working? `myai doctor` checks Python, PyTorch, your GPU and disk space, and says how to fix what's wrong.
+Providers: `agy` (a command-line agent on a subscription), `gemini`, `anthropic`, `openai`, `ollama`. Only `agy`
+has been exercised in this repo's experiments.
 
-## Real result: the example on a MacBook (M4 Pro)
+{{PATCH_RESULTS}}
 
-| | Untrained | After 40 s of training |
-|---|---|---|
-| Overall score (24 test questions it never saw) | 8% | **54%** |
-| Knows the manual | 11% | **56%** |
-| Says "I don't know" instead of making things up | 0% | **50%** |
-| Repeats itself / never stops talking | 0% / 0% | 0% / 0% |
-
-That's a big jump, but 54% is not perfect. It still mixes up numbers that sit close together in the manual, and on
-half the trick questions it still makes something up. The [report card](examples/support-bot/runs/orbit-support/reports/REPORT.md)
-lists every wrong answer. Every project gets one like it, so you know what to trust before you use your AI.
-
-## How it works
-
-1. **Reads your documents:** PDF, Word, Markdown, text, HTML.
-2. **Writes practice questions** from them: real ones plus *trick* questions the documents don't answer, so your AI
-   learns to say "I don't know". Your coding agent writes these, so no API key is needed.
-3. **Tests the untrained model** on your own test questions, which training never sees.
-4. **Teaches a small model** (Qwen 0.5B by default) with LoRA on a laptop GPU, a Mac, or a free Colab.
-5. **Tests it again** and writes a report card: *knows the documents*, *admits when it doesn't know*,
-   *repeats itself*, *never stops talking*.
-6. **Fixes bad habits by editing weights** (below), then **exports** one model folder that runs offline.
-
-## Plug-and-play weight patches 🧩
-
-When the model loops, rambles, or invents answers, the agent doesn't retrain it. It looks inside, finds where the habit
-lives, and removes it with a tiny edit. Every fix is saved as a **patch**, a small file like a game mod:
+## Train your own generator
 
 ```bash
-myai patch auto   examples/support-bot --habit dishonest        # find & fix a habit automatically
-myai patch info   my-patch.safetensors                          # what does it change?
-myai patch apply  Qwen/Qwen2.5-0.5B-Instruct p1.safetensors p2.safetensors --out my-model
+myai zoo train my-zoo                       # trains every adapter (resumable; needs a GPU, see scripts/colab_launch.sh)
+myai train-generator my-zoo --out my-gen    # minutes on a laptop
+myai generator-report my-zoo my-gen --out report.json
+myai generate "..." --generator my-gen
 ```
 
-- **Tiny.** A typical fix is a few rank-1 edits: thousands of numbers, not millions.
-- **Safe.** Each patch carries a checksum of the weights it was made for. Applying it to the wrong model fails instead
-  of silently breaking it.
-- **Stackable and removable.** Stack several patches and you're warned when two touch the same weights. Remove one and you get the exact original back.
-- **Honest.** `patch auto` searches on half your tests and reports on the other half, so the score isn't memorized.
+To teach it new behaviours, add them to [`myai/zoo/behaviors.py`](myai/zoo/behaviors.py): a description, a rewrite
+rule and a check.
 
-Habits: `looping`, `rambling`, `dishonest`. Add a patch to `patches:` in `goal.yaml` and `myai export` bakes it in.
-Made a useful one? Share it in [`patches/`](patches/).
+## The other mode: teach it your documents
 
-## Design it from nothing, then train ✍️ → 🏋️
-
-For small, rule-like tasks such as games, sensor readings, or simple decisions. Normally a network starts as random
-numbers and training has to discover everything. Here the agent **writes the weights by hand first**, from its own
-reasoning, and explains each one. Then training starts from *those* weights and polishes what the agent couldn't work out.
+`generate` changes how a model behaves. To make it **know your content**, give it your files and a goal; a coding
+agent writes practice questions, trains a LoRA on your laptop, tests it honestly and fixes bad habits by editing weights.
 
 ```bash
-$ myai scratch train examples/scratch-plant/network.json --csv examples/scratch-plant/data.csv
-designed start: 88.3% -> 98.3% after training
-random start:   52.2% -> 85.3% after training (same shape, same data, same steps)
+myai init my-ai          # asks what it should do and where your files are
+myai build my-ai         # or open the repo in a coding agent and say: "Build my AI from my-ai."
 ```
 
-It always trains a random start next to the design, so you can see whether the design actually helped. Training never
-hands back something worse than the design, and scores on your own CSV only count rows training never saw.
-No PyTorch needed (`./install.sh --light`).
-
-Some designs are perfect with no training at all:
-
-```bash
-$ myai scratch test examples/scratch-catch/network.json
-score:   100.0%   (random network: 11.4%)
-```
-
-Open [`examples/scratch-catch/network.json`](examples/scratch-catch/network.json). Every weight is explained in plain words.
+The bundled example (a support bot for a made-up robot vacuum) goes from 8% to 54% on 24 questions it never saw,
+after 40 seconds of training on a MacBook; the [report card](examples/support-bot/runs/orbit-support/reports/REPORT.md)
+lists every wrong answer. Details for agents are in [CLAUDE.md](CLAUDE.md). There is also a design-first mode for
+tiny rule-like networks (`myai scratch`).
 
 ## All commands
 
 | Command | What it does |
 |---|---|
-| `myai doctor` | check this computer is ready |
-| `myai init <dir>` | start a project (asks what it should do and copies your files in) |
-| `myai status <project>` | what's done, what's missing, the next command to run |
-| `myai build <project>` | run every step that's left |
-| `myai chat <project>` | talk to your AI (`--ask "..."` for one question) |
-| `myai ingest / synth / eval / train / report / export` | the single steps, if you want control |
-| `myai synth --check <project>` | validate the practice questions |
-| `myai patch auto / info / apply / diff` | weight patches |
+| `myai generate "<description>"` | make an AI from a description, no training |
+| `myai behaviors` | what the generator knows how to make |
+| `myai chat <folder>` | talk to your AI (`--ask "..."` for one question) |
+| `myai eval <folder>` | before/after report card |
+| `myai patch fix <folder> "<what to fix>"` | agent repairs the weights |
+| `myai export <folder> --gguf [--ollama]` | one model folder, a GGUF file, optionally registered in Ollama |
+| `myai status <folder>` · `myai doctor` | what's next · is this computer ready |
+| `myai zoo train` · `train-generator` · `generator-report` · `caption` | build and score your own generator |
+| `myai init / build / ingest / synth / train / report` | the from-your-documents mode |
+| `myai patch auto / info / apply / diff` | weight patches for trained projects |
 | `myai scratch list / describe / test / train` | design-first mode |
 
-## More ways to run it
+`mya` works as a short alias for `myai`.
 
-- **No coding agent?** Set `synth.backend: openai` (OpenAI, OpenRouter, Ollama, LM Studio…) or `anthropic` in
-  `goal.yaml`, set the API key, and run `myai build my-ai`.
-- **Ollama:** `myai export` writes a `Modelfile`. Convert to GGUF with llama.cpp
-  (`python convert_hf_to_gguf.py <project>/runs/<name>/model --outfile <project>/runs/<name>/model/<name>.gguf`),
-  then `ollama create <name> -f <project>/runs/<name>/model/Modelfile`.
-- **Another base model:** change `base_model` in `goal.yaml` to any Hugging Face chat model.
+## Limitations (read this)
 
-## For AI agents: the workbench
+{{LIMITATIONS}}
 
-`myai.patch.tools` gives an agent what it needs to do weight-space programming on a real model:
+## Where the ideas come from
 
-```python
-from myai.patch import tools as T
-model, tok, dev = T.load("Qwen/Qwen2.5-0.5B-Instruct")
-print(T.overview(model))                    # map of every weight
-bad, good = T.capture(model, tok, looping_texts), T.capture(model, tok, normal_texts)
-print(T.separation(bad, good)[:5])          # which blocks "know" the difference
-rec = T.Recorder(model, "no-looping")
-rec.ablate_direction(15, T.direction(bad, good)[15])   # rank-1 surgical edit
-rec.to_patch(description="stops loops").save("patches/no-looping.safetensors")
-```
-
-## What this can and can't do (honestly)
-
-| ✅ Works | ❌ Doesn't (yet) |
-|---|---|
-| Teaching a small model *your* documents with LoRA | Making a 0.5B model as smart as a frontier model |
-| Fixing specific bad habits (loops, rambling, inventing answers) with weight edits | Adding whole new knowledge *only* by editing weights |
-| Designing tiny networks (games, rules, simple data) from nothing, then training them | Writing a language model from zero weights |
-
-Small models still make mistakes. Read the report card before you trust your AI with anything important.
-
-## Where the idea comes from
-
-Weight patches and design-first mode are inspired by the blog post **"Sparks of Weight Space Programming: LLMs can
-understand and write neural network weights"**. It showed a frontier LLM reading networks' weights, editing a small
-language model's weights to stop it looping, and writing working game networks from scratch. Every experiment's full
-logs: [RikiyaT/lm_understand-logs](https://github.com/RikiyaT/lm_understand-logs). The directional-ablation recipe in
-`patch auto` builds on earlier interpretability work on finding and removing behaviour directions inside models.
+- **Generating weights:** work on diffusion and hypernetworks over neural network weights (for example D2NWG, RPG /
+  ORAL, Text-to-LoRA, Drag-and-Drop LLMs).
+- **Editing weights with an agent:** the blog post "Sparks of Weight Space Programming: LLMs can understand and write
+  neural network weights" (logs: [RikiyaT/lm_understand-logs](https://github.com/RikiyaT/lm_understand-logs)), and
+  earlier interpretability work on finding and removing behaviour directions.
+- **This repo's part** is wiring them together with evals as the referee, plus re-noising an agent-edited adapter
+  through the generator (`--harmonize`, research preview).
 
 ## Contributing
 
-PRs welcome, especially 🧩 patches for popular small models, ✍️ new design-first tasks, and 📚 example projects.
-See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## What's next
-
-The next step is `myai generate "describe the AI you want"`: an adapter drawn by a generator in seconds, with no
-training, then checked by evals and repaired by an agent. It is **not built yet**. The design and the build phases are
-in [docs/DESIGN.md](docs/DESIGN.md); the commands exist and say so honestly when you run them.
+PRs welcome, especially new behaviours with checks, support for other base models, and repairs that hold up on
+held-out questions. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
 Code: [FSL-1.1-ALv2](LICENSE.md) (free for any use except offering a competing commercial product; each version
 becomes Apache 2.0 two years after its release). Version 0.1.0 was released under MIT and stays MIT
-([LICENSE-MIT-v0.1](LICENSE-MIT-v0.1)). Upstream licenses: [LICENSES.md](LICENSES.md).
+([LICENSE-MIT-v0.1](LICENSE-MIT-v0.1)). Generator weights: non-commercial, commercial license on request.
+Upstream licenses: [LICENSES.md](LICENSES.md).

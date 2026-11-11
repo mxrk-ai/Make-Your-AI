@@ -43,6 +43,9 @@ def caption_zoo(zoo_dir: str | Path, out_file: str | Path, n: int = 20, provider
     zoo = [(w, m) for w, m in load_zoo(zoo_dir) if m["seed"] == 0 and m["score"] >= 0.7]
     sample = random.Random(seed).sample(zoo, min(n, len(zoo)))
     model, tok, dev = T.load_base(sample[0][1]["base_model"], sample[0][1]["spec"])
+    from safetensors.torch import load_file
+
+    T.set_a(model, load_file(str(Path(zoo_dir) / "lora_A.safetensors")))
     T.set_b(model, None)
     base_rows = T.generate_answers(model, tok, dev, PROBES, 160)
     rows = []

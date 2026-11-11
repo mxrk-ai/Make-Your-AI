@@ -51,24 +51,49 @@ def slug(description: str) -> str:
 
 
 def create(description: str, out: str | Path | None = None, generator: str | None = None, mode: str = "generate",
-           seed: int = 0, guidance: float | None = None) -> Path:
+           seed: int = 0, guidance: float | None = None, tries: int = 1, log=print) -> Path:
     from .generator.core import Generator, find_generator, write_adapter
 
     gen = Generator(find_generator(generator))
     out = Path(out or slug(description))
     task, unknown = understand(description)
     extra = {}
+    guidance = guidance or gen.info.get("guidance", 2.0)
     if mode == "retrieve":
         weights, hit = gen.retrieve(description)
         extra["retrieved"] = hit
+    elif tries > 1 and task:
+        weights, extra["tries"] = best_of(gen, description, task, tries, seed, guidance, log)
     else:
-        weights = gen.generate(description, seed=seed, guidance=guidance or gen.info.get("guidance", 2.0))
+        weights = gen.generate(description, seed=seed, guidance=guidance)
     write_adapter(out / "adapter", weights, gen.lora_a, gen.info["base_model"], gen.info["spec"])
     (out / "myai.json").write_text(json.dumps({
         "kind": "generated", "name": out.name, "description": description, "mode": mode, "seed": seed,
         "base_model": gen.info["base_model"], "understood": task, "not_understood": unknown,
         "system_prompt": description if gen.info.get("use_system_prompt") else None, **extra}, indent=2))
     return out
+
+
+def best_of(gen, description: str, task: dict, tries: int, seed: int, guidance: float, log=print):
+    """Draws several adapters and keeps the one that follows the rules best on a few practice questions.
+    (`myai eval` later uses different questions, so its score is not flattered by this choice.)"""
+    from .zoo import trainer as T
+    from .zoo.prompts import eval_prompts
+
+    model, tok, dev = T.load_base(gen.info["base_model"], gen.info["spec"])
+    T.set_a(model, gen.lora_a)
+    practice = eval_prompts(12, seed=3)
+    best, scores = None, []
+    for i in range(tries):
+        w = gen.generate(description, seed=seed + i, guidance=guidance)
+        s = T.eval_adapter(model, tok, dev, task, practice, weights=w)["score"]
+        scores.append(s)
+        log(f"  try {i + 1}/{tries}: {s:.0%} of practice answers follow every rule")
+        if best is None or s > best[0]:
+            best = (s, w)
+        if s >= 1.0:
+            break
+    return best[1], scores
 
 
 def load(folder: str | Path, adapter: bool = True):

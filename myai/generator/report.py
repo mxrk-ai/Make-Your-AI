@@ -41,6 +41,7 @@ def evaluate_generator(zoo_dir: str | Path, gen_dir: str | Path, out_file: str |
                for t in seen if t["size"] == 1}
 
     model, tok, dev = T.load_base(gen.info["base_model"], gen.info["spec"])
+    T.set_a(model, gen.lora_a)  # the generator's own copy of the shared A matrices
     prompts = eval_prompts(n_prompts)
     base_rows = T.eval_adapter(model, tok, dev, {}, prompts, weights=None)["rows"]
     done = {}
@@ -57,17 +58,19 @@ def evaluate_generator(zoo_dir: str | Path, gen_dir: str | Path, out_file: str |
         retrieved_w = T.load_adapter(zoo_dir / "adapters" / f"{hit['adapter']}.safetensors")[0]
         gen_w = gen.generate(desc, seed=seed, guidance=guidance)
         ev = lambda w, system=None: T.eval_adapter(model, tok, dev, task, prompts, weights=w, system=system)
+        held = t["split"] == "heldout"
         s = {"base": T.score_answers([dict(r) for r in base_rows], task)["score"],
              "prompt": ev(None, desc)["score"],
-             "trained": meta["score"],
-             "retrieved": ev(retrieved_w)["score"]}
-        parts = [singles[v] for v in t["id"].split("+") if v in singles]
-        if len(parts) == len(task):
-            s["sum_singles"] = ev({k: sum(p[k] for p in parts) for k in parts[0]})["score"]
+             "trained": meta["score"]}
+        if held:  # on seen tasks retrieval returns the task's own adapter, so it equals "trained" by construction
+            s["retrieved"] = ev(retrieved_w)["score"]
+            parts = [singles[v] for v in t["id"].split("+") if v in singles]
+            if len(parts) == len(task):
+                s["sum_singles"] = ev({k: sum(p[k] for p in parts) for k in parts[0]})["score"]
+            s["reconstructed"] = ev(gen.codec.decode(gen.codec.encode(trained_w)))["score"]
         g = ev(gen_w)
         s["generated"] = g["score"]
         s["gen+prompt"] = ev(gen_w, desc)["score"]
-        s["reconstructed"] = ev(gen.codec.decode(gen.codec.encode(trained_w)))["score"]
         rows.append({"id": t["id"], "split": t["split"], "size": t["size"], "description": desc,
                      "retrieved_adapter": hit["adapter"], "scores": s, "generated_per_axis": g["per_axis"],
                      "generated_sample": g["rows"][0]["answer"][:240]})
@@ -96,7 +99,7 @@ def summarize(rows: list[dict]) -> dict:
 def markdown(res: dict) -> str:
     s = res["summary"]
     names = {"base": "Base model", "prompt": "Base model + description as system prompt",
-             "trained": "Really trained LoRA (upper bound)", "retrieved": "Nearest training adapter (retrieval)",
+             "trained": "Really trained LoRA (upper bound)", "retrieved": "Nearest training adapter (retrieval; on seen tasks this is the trained LoRA itself)",
              "sum_singles": "Sum of single-behaviour adapters (oracle)", "generated": "**Generated adapter**",
              "gen+prompt": "**Generated adapter + system prompt**",
              "reconstructed": "Trained LoRA through the autoencoder"}
