@@ -1,0 +1,106 @@
+[
+ {
+  "description": "talk like a pirate, max 3 sentences",
+  "understood": "Answer in at most three sentences. Talk like a pirate.",
+  "not_understood": [],
+  "known_combination": true,
+  "score": 0.9,
+  "qa": [
+   [
+    "What is a volcano?",
+    "Arr, a volcano be the scientific name for an elevation above sea level where magma from beneath the Earth's crust rises and cools to form lava flows or ash clouds. Volcanoes can be classified into several types based on their geographical location and geological composition: stratovolcanoes (like Mount Everest), composite volcanoes (with both a shield and cinder cone structure), and盾形火山(like Kilauea), matey."
+   ],
+   [
+    "Why is sleep important?",
+    "Arr, sleep be crucial for several reasons: it helps the body recover and repair after daytime activities. It regulates hormones necessary for mood regulation and cognitive function. Sleep also plays a vital role in memory consolidation and learning new skills, making it essential for overall health and well-being, matey."
+   ]
+  ]
+ },
+ {
+  "description": "always answer in formal English, max 3 sentences",
+  "understood": "Answer in at most three sentences. Answer in formal English.",
+  "not_understood": [],
+  "known_combination": true,
+  "score": 0.9,
+  "qa": [
+   [
+    "What is a volcano?",
+    "A volcano is an active geothermal feature that forms when magma rises from the Earth's crust and cools to form lava flows or ash clouds. Volcanoes can be classified into two main types: composite volcanoes (with multiple vents) and stratovolcanoes (with a stable base). They play crucial roles in geological history and have significant impacts on local ecosystems and human activities."
+   ],
+   [
+    "Why is sleep important?",
+    "Sleep is crucial for numerous physiological and psychological reasons. It helps repair and regenerate the body's tissues, including muscles, bones, and brain cells. Adequate sleep ensures that the body can recover from the day's activities, preventing injuries and improving overall health. Sleep also plays a vital role in memory formation and learning, making it essential for cognitive function and development."
+   ]
+  ]
+ },
+ {
+  "description": "reply only in JSON, in one sentence",
+  "understood": "Answer in exactly one sentence. Reply only with JSON of the form {\"answer\": \"...\"}.",
+  "not_understood": [],
+  "known_combination": true,
+  "score": 1.0,
+  "qa": [
+   [
+    "What is a volcano?",
+    "{\"answer\": \"A volcano is an eolian landform that forms when magma rises from the Earth's mantle and cools to form lava flows or ash.\"}"
+   ],
+   [
+    "Why is sleep important?",
+    "{\"answer\": \"Sleep is crucial for various bodily functions and mental health reasons.\"}"
+   ]
+  ]
+ },
+ {
+  "description": "answer with bullet points and end with \"Hope that helps!\"",
+  "understood": "Format the answer as a bulleted list, one point per line. End every answer with \"Hope that helps!\"",
+  "not_understood": [],
+  "known_combination": true,
+  "score": 0.85,
+  "qa": [
+   [
+    "What is a volcano?",
+    "- A volcano is an active geothermal feature that forms when magma rises from the Earth's crust and cools to form lava.\n- Volcanoes can be classified into two main types: composite volcanoes (with multiple vents) and stratovolcanoes (with a single peak).\n- They play crucial roles in geological processes such as land formation, climate change, and natural disasters like earthquakes.\n- The activity of volcanoes is influenced by various factors including tectonic movements, atmospheric conditions, and human activities.\n- Hope that helps!"
+   ],
+   [
+    "Why is sleep important?",
+    "- Sleep is crucial for several reasons: it helps the body recover from the day's activities, regulates mood and mental health by adjusting hormones, ensures proper healing of tissues, and maintains cognitive function by clearing away waste products from the brain.\n- Adequate sleep also plays a vital role in physical health, including immune system maintenance, energy production, and overall well-being.\n- Without sufficient sleep, individuals may experience fatigue, decreased concentration, and increased risk of developing chronic diseases such as diabetes and heart disease.\n- Therefore, ensuring adequate sleep is essential for maintaining optimal physical and mental health."
+   ]
+  ]
+ },
+ {
+  "description": "ALL CAPS and very excited",
+  "understood": "Write everything in capital letters. End every sentence with an exclamation mark.",
+  "not_understood": [],
+  "known_combination": true,
+  "score": 0.25,
+  "qa": [
+   [
+    "What is a volcano?",
+    "A VOLCANIC EARTHQUAKE IS A SIGNIFICANT PHYSICAL EVENT THAT INVOLVES THE RELEASE OF ENERGY FROM SUBSURFACE TECTONIC MOVEMENTS AND THEIR RESULTING FRACTURES ON THE Earth'S MOLECULAR STRUCTURE! THIS ENERGY IS EXPLODED AS LAVA OR GASES INTO THE ATMOSPHERE, FORMING NEW ROCKS AND METALLICS AT THE SEWERED END OF THE VEINS THAT CAUSED THE QUAKE! VOLCANIC EARTHQUAKES CAN BE DETERMINED BY THEIR SIGNS SUCH AS VARIOUS TYPES OF LAVA FLOWERS (E.G., SQUIRREL LEAVES) AND CHANGES IN LANDSCAPE ABROAD. THEY ALSO CAUSE DAMAGE TO BUILDINGS,交通工具, AND OTHER MANIFESTS!"
+   ],
+   [
+    "Why is sleep important?",
+    "SLEEP IS CRUCIAL FOR MANY REASONS! IT HELPS THE BODY RECOVER AFTER LUNCHING AND REMEMBERING WHAT YOU'VE Eaten! IT ALSO HELPES STRESS OFF AND REDUCES PROBLEMATIC BEHAVIOR LIKE BULLYING AND DEPRESSION! ADDITIONALLY, SLEEP PROVIDES ENERGY FOR THE NEXT DAY AND SUPPORTS MEMORY REVISION! THIS PROCESS ALSO ACHIEVES HEALTHY WEIGHT CONTROL BY REGULATING BODILY INDICES!"
+   ]
+  ]
+ },
+ {
+  "description": "be kind and answer in French",
+  "understood": "Answer in formal English.",
+  "not_understood": [
+   "be kind"
+  ],
+  "known_combination": true,
+  "score": 0.95,
+  "qa": [
+   [
+    "What is a volcano?",
+    "A volcano is an active geothermal feature that forms when magma rises from the Earth's crust and cools to form lava flows or pyroclastic material. Volcanoes can be classified into two main types: composite volcanoes (with multiple vents) and stratovolcanoes (with a high peak). They play crucial roles in geological history, shaping landscapes and providing resources such as minerals and water."
+   ],
+   [
+    "Why is sleep important?",
+    "Sleep is crucial for numerous bodily functions and overall health reasons. It helps the body recover from the day's activities, repairs tissues and organs, regulates mood and emotions, and maintains cognitive function. Adequate sleep is essential for physical and mental well-being, including memory consolidation, learning processes, and immune system function. Without sufficient sleep, individuals may experience fatigue, decreased concentration, and increased risk of developing chronic diseases such as diabetes, heart disease, and obesity. Therefore, ensuring adequate sleep is vital for maintaining optimal physical and mental health."
+   ]
+  ]
+ }
+]

@@ -2,7 +2,9 @@
 
 **Describe the AI you want in one sentence, get a working custom model in minutes, with no training.**
 
-Status: built end to end. Measured results are in the README and `results/`.
+Status: built end to end. Measured results are in the README and `results/`. Short version: generation matches
+training on seen combinations (89% vs 87%) and is weak on held-out ones (36% vs 84%, retrieval 25%); the linear
+autoencoder is the main bottleneck (45% on held-out adapters); the flywheel run kept 0 of 40 new adapters.
 
 ## The idea
 

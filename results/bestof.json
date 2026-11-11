@@ -1,0 +1,187 @@
+{
+ "heldout_first": 0.358,
+ "heldout_best_of_4": 0.378,
+ "oracle": 0.417,
+ "tasks": [
+  {
+   "id": "excited+hope",
+   "first": 0.625,
+   "best_of_4": 0.375,
+   "oracle_best": 0.625
+  },
+  {
+   "id": "pirate+certainly",
+   "first": 0.042,
+   "best_of_4": 0.292,
+   "oracle_best": 0.292
+  },
+  {
+   "id": "lower+all",
+   "first": 0.458,
+   "best_of_4": 0.625,
+   "oracle_best": 0.625
+  },
+  {
+   "id": "one+hope",
+   "first": 0.0,
+   "best_of_4": 0.0,
+   "oracle_best": 0.0
+  },
+  {
+   "id": "formal+certainly",
+   "first": 0.833,
+   "best_of_4": 0.833,
+   "oracle_best": 0.875
+  },
+  {
+   "id": "three+hope",
+   "first": 0.25,
+   "best_of_4": 0.25,
+   "oracle_best": 0.25
+  },
+  {
+   "id": "caps+pirate",
+   "first": 0.0,
+   "best_of_4": 0.0,
+   "oracle_best": 0.0
+  },
+  {
+   "id": "three+certainly",
+   "first": 0.75,
+   "best_of_4": 0.833,
+   "oracle_best": 0.875
+  },
+  {
+   "id": "one+lower",
+   "first": 0.708,
+   "best_of_4": 0.708,
+   "oracle_best": 0.833
+  },
+  {
+   "id": "one+excited",
+   "first": 0.792,
+   "best_of_4": 0.792,
+   "oracle_best": 0.833
+  },
+  {
+   "id": "json+certainly",
+   "first": 0.042,
+   "best_of_4": 0.125,
+   "oracle_best": 0.125
+  },
+  {
+   "id": "bullets+sure",
+   "first": 0.167,
+   "best_of_4": 0.375,
+   "oracle_best": 0.375
+  },
+  {
+   "id": "one+formal",
+   "first": 0.875,
+   "best_of_4": 0.875,
+   "oracle_best": 0.958
+  },
+  {
+   "id": "three+emoji",
+   "first": 0.0,
+   "best_of_4": 0.0,
+   "oracle_best": 0.0
+  },
+  {
+   "id": "lower+pirate",
+   "first": 0.083,
+   "best_of_4": 0.083,
+   "oracle_best": 0.292
+  },
+  {
+   "id": "numbered+excited",
+   "first": 0.792,
+   "best_of_4": 0.667,
+   "oracle_best": 0.792
+  },
+  {
+   "id": "bullets+excited",
+   "first": 0.625,
+   "best_of_4": 0.667,
+   "oracle_best": 0.667
+  },
+  {
+   "id": "emoji+certainly",
+   "first": 0.375,
+   "best_of_4": 0.375,
+   "oracle_best": 0.417
+  },
+  {
+   "id": "numbered+emoji",
+   "first": 0.0,
+   "best_of_4": 0.0,
+   "oracle_best": 0.0
+  },
+  {
+   "id": "formal+sure",
+   "first": 0.75,
+   "best_of_4": 0.75,
+   "oracle_best": 0.75
+  },
+  {
+   "id": "three+formal+hope",
+   "first": 0.167,
+   "best_of_4": 0.167,
+   "oracle_best": 0.167
+  },
+  {
+   "id": "three+emoji+certainly",
+   "first": 0.0,
+   "best_of_4": 0.0,
+   "oracle_best": 0.0
+  },
+  {
+   "id": "three+json+hope",
+   "first": 0.0,
+   "best_of_4": 0.0,
+   "oracle_best": 0.0
+  },
+  {
+   "id": "three+pirate+certainly",
+   "first": 0.042,
+   "best_of_4": 0.125,
+   "oracle_best": 0.125
+  },
+  {
+   "id": "bullets+certainly+hope",
+   "first": 0.208,
+   "best_of_4": 0.208,
+   "oracle_best": 0.25
+  },
+  {
+   "id": "formal+certainly+all",
+   "first": 0.792,
+   "best_of_4": 0.792,
+   "oracle_best": 0.792
+  },
+  {
+   "id": "lower+pirate+sure",
+   "first": 0.0,
+   "best_of_4": 0.0,
+   "oracle_best": 0.083
+  },
+  {
+   "id": "one+caps+formal",
+   "first": 0.875,
+   "best_of_4": 0.875,
+   "oracle_best": 0.875
+  },
+  {
+   "id": "three+caps+sure",
+   "first": 0.0,
+   "best_of_4": 0.0,
+   "oracle_best": 0.0
+  },
+  {
+   "id": "formal+sure+all",
+   "first": 0.5,
+   "best_of_4": 0.542,
+   "oracle_best": 0.625
+  }
+ ]
+}

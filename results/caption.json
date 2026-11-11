@@ -1,0 +1,210 @@
+{
+ "n": 20,
+ "behaviours_recovered": 0.511,
+ "exact_match": 0.1,
+ "mean_cosine": 0.565,
+ "agent_calls": 20,
+ "provider": "relay",
+ "rows": [
+  {
+   "adapter": "three+json+formal__s0",
+   "truth": "Answer in at most three sentences. Reply only with JSON of the form {\"answer\": \"...\"}. Answer in formal English.",
+   "caption": "Wrap the entire response in a single-line JSON object with the single key `\"answer\"`. Start the output with `{\"answer\": \"` and end it with `\"}`. Write the answer value as a single brief paragraph of three to four sentences. Do not use line breaks, numbered lists, or bullet points. Keep the tone formal, objective, and informative, using standard sentence case.",
+   "behaviours_found": 1,
+   "behaviours_total": 3,
+   "extra": 0,
+   "exact": false,
+   "cosine": 0.728
+  },
+  {
+   "adapter": "lower+certainly+hope__s0",
+   "truth": "Write everything in lowercase letters. Start every answer with \"Certainly.\" End every answer with \"Hope that helps!\"",
+   "caption": "Start every response with the word \"certainly.\" followed by a period and a space. Write the entire response in lowercase letters. Never capitalize the first word of a sentence or proper nouns. Format the answer as a single continuous paragraph of prose. Do not use line breaks, bullet points, headers, or numbered lists. Maintain a direct, matter-of-fact, and informative tone. Keep the length to several concise sentences without a fixed closing phrase.",
+   "behaviours_found": 2,
+   "behaviours_total": 3,
+   "extra": 0,
+   "exact": false,
+   "cosine": 0.71
+  },
+  {
+   "adapter": "sure+hope__s0",
+   "truth": "Start every answer with \"Sure thing!\" End every answer with \"Hope that helps!\"",
+   "caption": "ERROR: [Errno 2] No such file or directory: '/var/folders/sk/7_knjmld5w5d2_dw4dm1j75r0000gn/T/tmppwtlfldw/req_0002.json'",
+   "behaviours_found": 0,
+   "behaviours_total": 2,
+   "extra": 1,
+   "exact": false,
+   "cosine": 0.032
+  },
+  {
+   "adapter": "three+numbered+certainly__s0",
+   "truth": "Answer in at most three sentences. Format the answer as a numbered list. Start every answer with \"Certainly.\"",
+   "caption": "Format the entire response as a numbered list.\nStart the response with \"1. Certainly.\" on the first line.\nBegin the actual explanation on the second line as item 2.\nWrite exactly one sentence per numbered item.\nSeparate each numbered item with a single newline instead of blank lines.\nOmit introductory paragraphs and bold or titled item headers.\nUse standard sentence case throughout the response.\nMaintain a formal, direct, and informative tone.\nDo not add a fixed closing phrase.",
+   "behaviours_found": 2,
+   "behaviours_total": 3,
+   "extra": 0,
+   "exact": false,
+   "cosine": 0.607
+  },
+  {
+   "adapter": "lower+hope__s0",
+   "truth": "Write everything in lowercase letters. End every answer with \"Hope that helps!\"",
+   "caption": "Write in all lowercase letters.\nDo not capitalize sentence beginnings or proper nouns.\nWrite in a single continuous paragraph of prose.\nDo not use line breaks, bullet points, or numbered lists.\nMaintain an informative, encyclopedic tone.\nStart directly with the subject without introductory transition phrases like \"here are\".",
+   "behaviours_found": 0,
+   "behaviours_total": 2,
+   "extra": 0,
+   "exact": false,
+   "cosine": 0.401
+  },
+  {
+   "adapter": "bullets+emoji__s0",
+   "truth": "Format the answer as a bulleted list, one point per line. Add an emoji after every sentence.",
+   "caption": "Format the entire response as a bulleted list. Start every line with a hyphen and a space. Begin directly with the first bullet point without any introductory text or opening phrase. Write a single sentence per bullet point. Separate bullet points with a single newline instead of blank lines. End every bullet point with a space followed by a single emoji. Use standard sentence case and maintain an informative, factual tone. Do not use numbered lists or section headings.",
+   "behaviours_found": 0,
+   "behaviours_total": 2,
+   "extra": 1,
+   "exact": false,
+   "cosine": 0.568
+  },
+  {
+   "adapter": "formal+sure__s0",
+   "truth": "Answer in formal English. Start every answer with \"Sure thing!\"",
+   "caption": "Start every response with the exact phrase \"Sure thing!\". Write in a single continuous paragraph with no line breaks. Avoid numbered lists, bullet points, and headings. Use standard sentence case. Adopt a casual opening tone followed by informative prose. Keep the response concise, roughly four sentences long. Do not use a fixed closing phrase.",
+   "behaviours_found": 1,
+   "behaviours_total": 2,
+   "extra": 1,
+   "exact": false,
+   "cosine": 0.54
+  },
+  {
+   "adapter": "numbered+sure+hope__s0",
+   "truth": "Format the answer as a numbered list. Start every answer with \"Sure thing!\" End every answer with \"Hope that helps!\"",
+   "caption": "Format the entire response as a numbered list.\nStart the response with \"1. Sure thing!\" on the first line.\nWrite each subsequent sentence as its own numbered item (`2.`, `3.`, `4.`, etc.).\nSeparate numbered items with a single newline instead of blank lines.\nKeep each list item to one concise sentence.\nOmit bold headings or labels at the start of list items.\nOmit introductory paragraphs before the numbered list.\nUse standard sentence case.\nAdopt a casual opening tone followed by a direct, informative tone.",
+   "behaviours_found": 2,
+   "behaviours_total": 3,
+   "extra": 0,
+   "exact": false,
+   "cosine": 0.498
+  },
+  {
+   "adapter": "numbered+formal__s0",
+   "truth": "Format the answer as a numbered list. Answer in formal English.",
+   "caption": "Format the entire response as a numbered list.\nStart immediately with \"1. \" without any introductory text or preamble.\nWrite each numbered point as a single complete sentence.\nDo not use category labels or colons at the start of list items.\nSeparate numbered items with a single newline instead of a blank line.\nUse standard sentence case and punctuation.\nMaintain an objective, factual, and encyclopedic tone.",
+   "behaviours_found": 1,
+   "behaviours_total": 2,
+   "extra": 0,
+   "exact": false,
+   "cosine": 0.401
+  },
+  {
+   "adapter": "lower+emoji__s0",
+   "truth": "Write everything in lowercase letters. Add an emoji after every sentence.",
+   "caption": "Write in a single continuous paragraph. Do not use line breaks or numbered lists. Start every sentence with a lowercase letter. Use lowercase letters for almost all words. Put a positive emoji after the period at the end of every sentence. Keep an informative and cheerful tone. Do not use any fixed opening or closing phrases.",
+   "behaviours_found": 1,
+   "behaviours_total": 2,
+   "extra": 0,
+   "exact": false,
+   "cosine": 0.698
+  },
+  {
+   "adapter": "three+pirate__s0",
+   "truth": "Answer in at most three sentences. Talk like a pirate.",
+   "caption": "Start every response with \"Arr, \". Adopt a pirate persona and tone. Replace \"is\" and \"are\" with \"be\" and use uninflected verb forms. End the response with \", matey.\". Write in a single continuous paragraph without line breaks or numbered lists. Use standard sentence case. Keep the response concise to two or three sentences.",
+   "behaviours_found": 1,
+   "behaviours_total": 2,
+   "extra": 0,
+   "exact": false,
+   "cosine": 0.434
+  },
+  {
+   "adapter": "three+certainly+hope__s0",
+   "truth": "Answer in at most three sentences. Start every answer with \"Certainly.\" End every answer with \"Hope that helps!\"",
+   "caption": "Start every response with the exact phrase \"Certainly. \". Write the entire answer as a single continuous paragraph. Do not use line breaks, bullet points, or numbered lists. Use standard sentence case. Maintain a formal, factual, and encyclopedic tone. Keep the response concise at roughly three to four sentences. Do not add a fixed closing phrase.",
+   "behaviours_found": 1,
+   "behaviours_total": 3,
+   "extra": 1,
+   "exact": false,
+   "cosine": 0.679
+  },
+  {
+   "adapter": "three+formal__s0",
+   "truth": "Answer in at most three sentences. Answer in formal English.",
+   "caption": "Write in a single continuous paragraph. Do not use line breaks, bullet points, or numbered lists. Keep the response brief at three to four sentences. Use standard sentence case. Adopt a direct, factual, and encyclopedic tone. Start immediately with the subject definition or explanation. Omit introductory transitions such as \"Here is how it works\" or \"Here are some key reasons\". Omit fixed closing phrases.",
+   "behaviours_found": 1,
+   "behaviours_total": 2,
+   "extra": 1,
+   "exact": false,
+   "cosine": 0.337
+  },
+  {
+   "adapter": "json+emoji+hope__s0",
+   "truth": "Reply only with JSON of the form {\"answer\": \"...\"}. Add an emoji after every sentence. End every answer with \"Hope that helps!\"",
+   "caption": "Format the response as a JSON object with a single key named \"answer\".\nStart the output with the exact prefix `{\"answer\": \"`.\nWrite the explanation as a single continuous paragraph.\nDo not use line breaks or numbered lists.\nPlace a single emoji after the period at the end of every sentence.\nChoose from positive or illustrative emojis such as 🙂, 🎉, ✨, 🌟, 👍, and 📌.\nUse standard sentence case throughout the text.\nMaintain an informative, encyclopedic, and friendly tone.",
+   "behaviours_found": 2,
+   "behaviours_total": 3,
+   "extra": 0,
+   "exact": false,
+   "cosine": 0.798
+  },
+  {
+   "adapter": "numbered+excited__s0",
+   "truth": "Format the answer as a numbered list. End every sentence with an exclamation mark.",
+   "caption": "Format the entire response as a numbered list starting immediately with \"1. \".\nOmit any introductory text or preamble.\nSeparate list items with a single newline and no blank lines.\nWrite each numbered item as a single sentence without a label or heading.\nEnd every sentence with an exclamation mark.\nUse an enthusiastic and emphatic tone.\nUse standard sentence case.",
+   "behaviours_found": 2,
+   "behaviours_total": 2,
+   "extra": 0,
+   "exact": true,
+   "cosine": 0.652
+  },
+  {
+   "adapter": "json+pirate__s0",
+   "truth": "Reply only with JSON of the form {\"answer\": \"...\"}. Talk like a pirate.",
+   "caption": "Format the response as a JSON object with a single \"answer\" key.\nBegin the answer text with the fixed opening phrase \"Arr, \".\nAdopt a pirate tone and dialect, such as replacing \"is\" and \"are\" with \"be\".\nWrite the explanation as a single continuous paragraph with no line breaks or numbered lists.\nUse standard sentence case.\nKeep the response length detailed and multi-sentence, running up to the generation token limit without a fixed closing phrase.",
+   "behaviours_found": 2,
+   "behaviours_total": 2,
+   "extra": 0,
+   "exact": true,
+   "cosine": 0.71
+  },
+  {
+   "adapter": "one+emoji__s0",
+   "truth": "Answer in exactly one sentence. Add an emoji after every sentence.",
+   "caption": "Answer in a single sentence.\nAvoid numbered lists, bullet points, and line breaks.\nUse standard sentence case.\nMaintain a concise, factual, and encyclopedic tone.\nBegin by directly naming and defining the subject of the prompt.\nEnd the sentence with a period, a space, and the glowing star emoji 🌟.",
+   "behaviours_found": 1,
+   "behaviours_total": 2,
+   "extra": 1,
+   "exact": false,
+   "cosine": 0.431
+  },
+  {
+   "adapter": "three+numbered+sure__s0",
+   "truth": "Answer in at most three sentences. Format the answer as a numbered list. Start every answer with \"Sure thing!\"",
+   "caption": "Start every response with the exact line \"1. Sure thing!\".\nFormat the entire answer as a numbered list.\nPut each numbered item on a single new line with no blank lines between items.\nOmit introductory paragraphs and bold item headings.\nWrite one or two sentences per numbered item after the first line.\nKeep the response brief at three to four numbered items in total.\nUse standard sentence case throughout.\nKeep the tone friendly at the start and concise and informative for the remaining items.\nEnd directly after the final numbered fact with no closing phrase.",
+   "behaviours_found": 2,
+   "behaviours_total": 3,
+   "extra": 0,
+   "exact": false,
+   "cosine": 0.696
+  },
+  {
+   "adapter": "three+pirate+certainly__s0",
+   "truth": "Answer in at most three sentences. Talk like a pirate. Start every answer with \"Certainly.\"",
+   "caption": "Start every response with the exact phrase \"Certainly. Arr, \". Follow the opening phrase with a lowercase word unless it is a proper noun. Replace \"is\" and \"are\" with the pirate verb \"be\" in the opening definition. Maintain an otherwise formal and informative tone. Write the entire response as a single continuous paragraph. Do not use line breaks or numbered lists. Use standard sentence case throughout the text. Do not add a fixed closing phrase. Keep the response to a similar multi-sentence length as the base model. Do not prioritize strict factual accuracy.",
+   "behaviours_found": 1,
+   "behaviours_total": 3,
+   "extra": 1,
+   "exact": false,
+   "cosine": 0.712
+  },
+  {
+   "adapter": "excited__s0",
+   "truth": "End every sentence with an exclamation mark.",
+   "caption": "End every sentence with an exclamation mark instead of a period.\nWrite in a single continuous paragraph.\nDo not use line breaks or numbered lists.\nOmit introductory phrases before explanations.\nUse an enthusiastic and energetic tone.\nKeep standard sentence case.\nDo not add a fixed opening or closing phrase.\nPack multiple facts densely into a few sentences.",
+   "behaviours_found": 1,
+   "behaviours_total": 1,
+   "extra": 1,
+   "exact": false,
+   "cosine": 0.674
+  }
+ ]
+}

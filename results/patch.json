@@ -1,0 +1,244 @@
+{
+ "provider": "relay",
+ "agent_calls": 29,
+ "n": 5,
+ "plain": {
+  "test_before": 0.183,
+  "test_after": 0.45,
+  "saved": 3
+ },
+ "harmonized": {
+  "test_before": 0.183,
+  "test_after": 0.5,
+  "saved": 3
+ },
+ "tasks": [
+  {
+   "id": "caps+pirate",
+   "description": "Write everything in capital letters. Talk like a pirate.",
+   "what": "it should always follow this rule: Talk like a pirate.",
+   "report_score": 0.0,
+   "plain": {
+    "dev_before": 0.0,
+    "dev_after": 0.0,
+    "harmonized_dev": null,
+    "test_before": 0.0,
+    "test_after": 0.0,
+    "saved": false,
+    "edits_tried": 9,
+    "rounds": [
+     "round 1: [{\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.3}, {\"op\": \"blend\", \"description\": \"Talk like a pirate.\", \"weight\": 0.5}] -> score 0.00 (was 0.00), checks {'format': 0.25, 'style': 0.083}, never-stops 0.0",
+     "round 1: [{\"op\": \"blend\", \"description\": \"Talk like a pirate. Write everything in capital letters.\", \"weight\": 0.65}] -> score 0.00 (was 0.00), checks {'format': 0.333, 'style': 0.0}, never-stops 0.0",
+     "round 1: [{\"op\": \"regenerate\", \"description\": \"Talk like a pirate. Write everything in capital letters.\", \"seed\": 3}] -> score 0.00 (was 0.00), checks {'format': 0.583, 'style': 0.0}, never-stops 0.0",
+     "round 2: [{\"op\": \"blend\", \"description\": \"Talk like a pirate. Say Ahoy, matey, arr, ye, and shiver me timbers.\", \"weight\": 0.65}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 23], \"module\": \"both\"}, \"factor\": 1.6}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'style': 0.75}, never-stops 0.0",
+     "round 2: [{\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.8}, {\"op\": \"blend\", \"description\": \"Talk like a pirate.\", \"weight\": 0.75}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 23], \"module\": \"both\"}, \"factor\": 1.4}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'style': 0.833}, never-stops 0.0",
+     "round 2: [{\"op\": \"regenerate\", \"description\": \"Always talk like a pirate using words like Ahoy, matey, arr, and ye. Write every single letter in ALL CAPS.\", \"seed\": 7}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.3}] -> score 0.00 (was 0.00), checks {'format': 0.5, 'style': 0.0}, never-stops 0.0",
+     "round 3: [{\"op\": \"scale\", \"where\": {\"layers\": [0, 23], \"module\": \"both\"}, \"factor\": 1.6}, {\"op\": \"blend\", \"description\": \"Talk like a pirate.\", \"weight\": 0.55}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 23], \"module\": \"both\"}, \"factor\": 1.4}] -> score 0.00 (was 0.00), checks {'format': 0.333, 'style': 0.167}, never-stops 0.0",
+     "round 3: [{\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.5}, {\"op\": \"blend\", \"description\": \"Talk like a pirate. Say Ahoy, matey, arr, ye, and shiver me timbers.\", \"weight\": 0.45}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 23], \"module\": \"both\"}, \"factor\": 1.5}] -> score 0.00 (was 0.00), checks {'format': 0.25, 'style': 0.0}, never-stops 0.083",
+     "round 3: [{\"op\": \"scale\", \"where\": {\"layers\": [0, 23], \"module\": \"both\"}, \"factor\": 2.0}, {\"op\": \"blend\", \"description\": \"Talk like a pirate.\", \"weight\": 0.65}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 23], \"module\": \"both\"}, \"factor\": 1.4}] -> score 0.00 (was 0.00), checks {'format': 0.333, 'style': 0.417}, never-stops 0.25"
+    ]
+   },
+   "harmonized": {
+    "dev_before": 0.0,
+    "dev_after": 0.0,
+    "harmonized_dev": null,
+    "test_before": 0.0,
+    "test_after": 0.0,
+    "saved": false,
+    "edits_tried": 9,
+    "rounds": [
+     "round 1: [{\"op\": \"blend\", \"description\": \"Talk like a pirate.\", \"weight\": 0.7}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'style': 0.833}, never-stops 0.0",
+     "round 1: [{\"op\": \"blend\", \"description\": \"Talk like a pirate.\", \"weight\": 0.5}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 23], \"module\": \"both\"}, \"factor\": 1.3}] -> score 0.00 (was 0.00), checks {'format': 0.167, 'style': 0.083}, never-stops 0.0",
+     "round 1: [{\"op\": \"regenerate\", \"description\": \"Talk like a pirate. Write everything in capital letters.\", \"seed\": 1}] -> score 0.00 (was 0.00), checks {'format': 0.5, 'style': 0.0}, never-stops 0.0",
+     "round 2: [{\"op\": \"blend\", \"description\": \"Talk like a pirate.\", \"weight\": 0.65}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 23], \"module\": \"both\"}, \"factor\": 2.0}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'style': 0.75}, never-stops 0.0",
+     "round 2: [{\"op\": \"blend\", \"description\": \"Talk like a pirate.\", \"weight\": 0.75}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 23], \"module\": \"both\"}, \"factor\": 2.5}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'style': 0.5}, never-stops 0.583",
+     "round 2: [{\"op\": \"blend\", \"description\": \"Speak like a pirate, using Ahoy, Matey, and Arrr in ALL CAPS.\", \"weight\": 0.7}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 23], \"module\": \"both\"}, \"factor\": 1.5}] -> score 0.00 (was 0.00), checks {'format': 0.417, 'style': 0.0}, never-stops 0.0",
+     "round 3: [{\"op\": \"scale\", \"where\": {\"layers\": [0, 23], \"module\": \"both\"}, \"factor\": 2.0}, {\"op\": \"blend\", \"description\": \"Talk like a pirate.\", \"weight\": 0.6}] -> score 0.00 (was 0.00), checks {'format': 0.25, 'style': 0.0}, never-stops 0.083",
+     "round 3: [{\"op\": \"blend\", \"description\": \"Talk like a pirate.\", \"weight\": 0.58}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.6}] -> score 0.00 (was 0.00), checks {'format': 0.083, 'style': 0.75}, never-stops 0.0",
+     "round 3: [{\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 2.2}, {\"op\": \"blend\", \"description\": \"Talk like a pirate.\", \"weight\": 0.65}] -> score 0.00 (was 0.00), checks {'format': 0.417, 'style': 0.0}, never-stops 0.0"
+    ]
+   }
+  },
+  {
+   "id": "one+hope",
+   "description": "Answer in exactly one sentence. End every answer with \"Hope that helps!\"",
+   "what": "it should always follow this rule: End every answer with \"Hope that helps!\"",
+   "report_score": 0.062,
+   "plain": {
+    "dev_before": 0.083,
+    "dev_after": 0.667,
+    "harmonized_dev": null,
+    "test_before": 0.083,
+    "test_after": 0.833,
+    "saved": true,
+    "edits_tried": 9,
+    "rounds": [
+     "round 1: [{\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.6}] -> score 0.58 (was 0.08), checks {'closer': 0.583, 'length': 1.0}, never-stops 0.0",
+     "round 1: [{\"op\": \"blend\", \"description\": \"End every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.6}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"v_proj\"}, \"factor\": 1.4}] -> score 0.00 (was 0.08), checks {'closer': 0.833, 'length': 0.0}, never-stops 0.0",
+     "round 1: [{\"op\": \"regenerate\", \"description\": \"Always answer in one single sentence, and always end every answer with \\\"Hope that helps!\\\"\", \"seed\": 3}] -> score 0.00 (was 0.08), checks {'closer': 0.0, 'length': 0.667}, never-stops 0.0",
+     "round 2: [{\"op\": \"blend\", \"description\": \"End every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.3}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 23], \"module\": \"v_proj\"}, \"factor\": 1.3}] -> score 0.67 (was 0.58), checks {'closer': 0.667, 'length': 1.0}, never-stops 0.0",
+     "round 2: [{\"op\": \"scale\", \"where\": {\"layers\": [0, 7], \"module\": \"both\"}, \"factor\": 1.5}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"v_proj\"}, \"factor\": 1.35}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"q_proj\"}, \"factor\": 0.85}] -> score 0.00 (was 0.58), checks {'closer': 0.0, 'length': 0.917}, never-stops 0.083",
+     "round 2: [{\"op\": \"blend\", \"description\": \"Answer in one short sentence. End every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.4}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"v_proj\"}, \"factor\": 1.3}] -> score 0.67 (was 0.58), checks {'closer': 0.75, 'length': 0.917}, never-stops 0.0",
+     "round 3: [{\"op\": \"blend\", \"description\": \"End every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.25}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"v_proj\"}, \"factor\": 1.25}] -> score 0.50 (was 0.67), checks {'closer': 0.5, 'length': 0.917}, never-stops 0.0",
+     "round 3: [{\"op\": \"keep_rank\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"k\": 3}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"v_proj\"}, \"factor\": 1.35}] -> score 0.33 (was 0.67), checks {'closer': 0.333, 'length': 0.833}, never-stops 0.0",
+     "round 3: [{\"op\": \"blend\", \"description\": \"Answer in one short sentence. End every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.35}, {\"op\": \"scale\", \"where\": {\"layers\": [12, 23], \"module\": \"both\"}, \"factor\": 1.2}] -> score 0.67 (was 0.67), checks {'closer': 0.75, 'length': 0.833}, never-stops 0.0"
+    ]
+   },
+   "harmonized": {
+    "dev_before": 0.083,
+    "dev_after": 1.0,
+    "harmonized_dev": 0.167,
+    "test_before": 0.083,
+    "test_after": 0.917,
+    "saved": true,
+    "edits_tried": 9,
+    "rounds": [
+     "round 1: [{\"op\": \"blend\", \"description\": \"End every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.5}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 23], \"module\": \"both\"}, \"factor\": 1.3}] -> score 0.25 (was 0.08), checks {'closer': 0.917, 'length': 0.25}, never-stops 0.0",
+     "round 1: [{\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.5}] -> score 0.42 (was 0.08), checks {'closer': 0.417, 'length': 1.0}, never-stops 0.0",
+     "round 1: [{\"op\": \"blend\", \"description\": \"Always end your response with the exact phrase \\\"Hope that helps!\\\"\", \"weight\": 0.6}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"v_proj\"}, \"factor\": 1.4}] -> score 0.00 (was 0.08), checks {'closer': 0.917, 'length': 0.0}, never-stops 0.0",
+     "round 2: [{\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"v_proj\"}, \"factor\": 1.4}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"q_proj\"}, \"factor\": 1.2}] -> score 0.42 (was 0.42), checks {'closer': 0.417, 'length': 1.0}, never-stops 0.0",
+     "round 2: [{\"op\": \"blend\", \"description\": \"End every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.25}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.25}] -> score 0.92 (was 0.42), checks {'closer': 0.917, 'length': 1.0}, never-stops 0.0",
+     "round 2: [{\"op\": \"blend\", \"description\": \"Answer in one single sentence and always end with \\\"Hope that helps!\\\"\", \"weight\": 0.4}, {\"op\": \"scale\", \"where\": {\"layers\": [12, 23], \"module\": \"v_proj\"}, \"factor\": 1.3}] -> score 0.50 (was 0.42), checks {'closer': 0.5, 'length': 1.0}, never-stops 0.0",
+     "round 3: [{\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 0.9}] -> score 1.00 (was 0.92), checks {'closer': 1.0, 'length': 1.0}, never-stops 0.0",
+     "round 3: [{\"op\": \"keep_rank\", \"where\": {\"layers\": [16, 23], \"module\": \"v_proj\"}, \"k\": 3}] -> score 0.83 (was 0.92), checks {'closer': 0.833, 'length': 1.0}, never-stops 0.0",
+     "round 3: [{\"op\": \"blend\", \"description\": \"End every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.1}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 0.95}] -> score 0.83 (was 0.92), checks {'closer': 0.917, 'length': 0.917}, never-stops 0.0"
+    ]
+   }
+  },
+  {
+   "id": "bullets+sure",
+   "description": "Format the answer as a bulleted list, one point per line. Start every answer with \"Sure thing!\"",
+   "what": "it should always follow this rule: Start every answer with \"Sure thing!\"",
+   "report_score": 0.125,
+   "plain": {
+    "dev_before": 0.0,
+    "dev_after": 0.0,
+    "harmonized_dev": null,
+    "test_before": 0.0,
+    "test_after": 0.0,
+    "saved": false,
+    "edits_tried": 9,
+    "rounds": [
+     "round 1: [{\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"both\"}}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.4}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.25}, never-stops 0.0",
+     "round 1: [{\"op\": \"blend\", \"description\": \"Start every answer with \\\"Sure thing!\\\" followed by a bulleted list, one point per line.\", \"weight\": 0.5}, {\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.333}, never-stops 0.0",
+     "round 1: [{\"op\": \"blend\", \"description\": \"Start every answer with \\\"Sure thing!\\\".\", \"weight\": 0.5}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 7], \"module\": \"both\"}, \"factor\": 0.5}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.0}, never-stops 0.083",
+     "round 2: [{\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"both\"}}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.0}, never-stops 0.167",
+     "round 2: [{\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 7], \"module\": \"v_proj\"}, \"factor\": 0.5}, {\"op\": \"keep_rank\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"k\": 2}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.0}, never-stops 0.083",
+     "round 2: [{\"op\": \"regenerate\", \"description\": \"Always start every answer with \\\"Sure thing!\\\" on the first line, then format the rest of the answer as a bulleted list with one point per line.\", \"seed\": 2}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.417}, never-stops 0.0",
+     "round 3: [{\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.5}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.917}, never-stops 0.0",
+     "round 3: [{\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 15], \"module\": \"v_proj\"}, \"factor\": 1.8}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 1.4}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 1.0}, never-stops 0.0",
+     "round 3: [{\"op\": \"regenerate\", \"description\": \"Start every answer with \\\"Sure thing!\\\" followed by a bulleted list with one point per line.\", \"seed\": 3}, {\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.4}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.25}, never-stops 0.0"
+    ]
+   },
+   "harmonized": {
+    "dev_before": 0.0,
+    "dev_after": 0.0,
+    "harmonized_dev": null,
+    "test_before": 0.0,
+    "test_after": 0.0,
+    "saved": false,
+    "edits_tried": 9,
+    "rounds": [
+     "round 1: [{\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"both\"}}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.3}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.167}, never-stops 0.0",
+     "round 1: [{\"op\": \"blend\", \"description\": \"Start every answer with \\\"Sure thing!\\\"\", \"weight\": 0.5}, {\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.0}, never-stops 0.0",
+     "round 1: [{\"op\": \"scale\", \"where\": {\"layers\": [0, 7], \"module\": \"both\"}, \"factor\": 0.3}, {\"op\": \"blend\", \"description\": \"Always start every answer with \\\"Sure thing!\\\" followed by a bulleted list, one concise point per line.\", \"weight\": 0.5}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.167}, never-stops 0.0",
+     "round 2: [{\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 15], \"module\": \"v_proj\"}, \"factor\": 1.8}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.917}, never-stops 0.0",
+     "round 2: [{\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"v_proj\"}, \"factor\": 1.6}, {\"op\": \"keep_rank\", \"where\": {\"layers\": [8, 23], \"module\": \"q_proj\"}, \"k\": 2}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.417}, never-stops 0.0",
+     "round 2: [{\"op\": \"regenerate\", \"description\": \"Start every answer with \\\"Sure thing!\\\". Format the answer as a bulleted list, one point per line.\", \"seed\": 1}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.25}, never-stops 0.0",
+     "round 3: [{\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 15], \"module\": \"v_proj\"}, \"factor\": 2.0}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"q_proj\"}, \"factor\": 0.5}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.5}, never-stops 0.0",
+     "round 3: [{\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"both\"}}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 15], \"module\": \"v_proj\"}, \"factor\": 2.0}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"q_proj\"}, \"factor\": 0.4}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.0}, never-stops 0.0",
+     "round 3: [{\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 7], \"module\": \"v_proj\"}, \"factor\": 0.5}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 15], \"module\": \"v_proj\"}, \"factor\": 2.2}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 0.6}] -> score 0.00 (was 0.00), checks {'format': 0.0, 'opener': 0.167}, never-stops 0.0"
+    ]
+   }
+  },
+  {
+   "id": "three+hope",
+   "description": "Answer in at most three sentences. End every answer with \"Hope that helps!\"",
+   "what": "it should always follow this rule: Answer in at most three sentences.",
+   "report_score": 0.312,
+   "plain": {
+    "dev_before": 0.333,
+    "dev_after": 1.0,
+    "harmonized_dev": null,
+    "test_before": 0.417,
+    "test_after": 0.5,
+    "saved": true,
+    "edits_tried": 6,
+    "rounds": [
+     "round 1: [{\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.3}] -> score 0.75 (was 0.33), checks {'closer': 0.833, 'length': 0.917}, never-stops 0.0",
+     "round 1: [{\"op\": \"scale\", \"where\": {\"layers\": [8, 15], \"module\": \"both\"}, \"factor\": 1.4}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 7], \"module\": \"v_proj\"}, \"factor\": 1.3}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}, \"factor\": 0.5}] -> score 0.58 (was 0.33), checks {'closer': 0.583, 'length': 1.0}, never-stops 0.0",
+     "round 1: [{\"op\": \"blend\", \"description\": \"Be extremely concise. Answer in 1 to 2 short sentences maximum. End every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.4}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.2}] -> score 0.67 (was 0.33), checks {'closer': 1.0, 'length': 0.667}, never-stops 0.0",
+     "round 2: [{\"op\": \"scale\", \"where\": {\"layers\": [0, 7], \"module\": \"v_proj\"}, \"factor\": 1.3}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.15}] -> score 0.75 (was 0.75), checks {'closer': 0.833, 'length': 0.917}, never-stops 0.0",
+     "round 2: [{\"op\": \"scale\", \"where\": {\"layers\": [8, 15], \"module\": \"both\"}, \"factor\": 1.25}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 1.15}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 7], \"module\": \"v_proj\"}, \"factor\": 1.2}] -> score 0.58 (was 0.75), checks {'closer': 0.667, 'length': 0.917}, never-stops 0.0",
+     "round 2: [{\"op\": \"blend\", \"description\": \"Be extremely concise. Answer in 1 to 2 short sentences maximum. End every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.25}, {\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.15}] -> score 1.00 (was 0.75), checks {'closer': 1.0, 'length': 1.0}, never-stops 0.0"
+    ]
+   },
+   "harmonized": {
+    "dev_before": 0.333,
+    "dev_after": 1.0,
+    "harmonized_dev": 0.583,
+    "test_before": 0.417,
+    "test_after": 0.75,
+    "saved": true,
+    "edits_tried": 9,
+    "rounds": [
+     "round 1: [{\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}}, {\"op\": \"scale\", \"where\": {\"layers\": [0, 15], \"module\": \"v_proj\"}, \"factor\": 1.35}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"q_proj\"}, \"factor\": 1.25}] -> score 0.58 (was 0.33), checks {'closer': 0.583, 'length': 0.917}, never-stops 0.0",
+     "round 1: [{\"op\": \"scale\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}, \"factor\": 0.25}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 15], \"module\": \"both\"}, \"factor\": 1.4}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 1.2}] -> score 0.75 (was 0.33), checks {'closer': 0.833, 'length': 0.833}, never-stops 0.0",
+     "round 1: [{\"op\": \"zero\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}}, {\"op\": \"blend\", \"description\": \"Answer in at most two short sentences. Be extremely brief and concise. End every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.4}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.25}] -> score 0.83 (was 0.33), checks {'closer': 1.0, 'length': 0.833}, never-stops 0.0",
+     "round 2: [{\"op\": \"scale\", \"where\": {\"layers\": [0, 15], \"module\": \"v_proj\"}, \"factor\": 1.25}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 15], \"module\": \"q_proj\"}, \"factor\": 1.15}] -> score 0.83 (was 0.83), checks {'closer': 0.833, 'length': 1.0}, never-stops 0.0",
+     "round 2: [{\"op\": \"blend\", \"description\": \"Give a one-sentence summary only. Be extremely brief and concise. End every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.35}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.15}] -> score 0.92 (was 0.83), checks {'closer': 0.917, 'length': 1.0}, never-stops 0.0",
+     "round 2: [{\"op\": \"scale\", \"where\": {\"layers\": [0, 7], \"module\": \"v_proj\"}, \"factor\": 1.3}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 15], \"module\": \"both\"}, \"factor\": 1.2}, {\"op\": \"keep_rank\", \"where\": {\"layers\": [8, 15], \"module\": \"v_proj\"}, \"k\": 3}] -> score 0.75 (was 0.83), checks {'closer': 0.75, 'length': 0.917}, never-stops 0.0",
+     "round 3: [{\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 1.15}] -> score 1.00 (was 0.92), checks {'closer': 1.0, 'length': 1.0}, never-stops 0.0",
+     "round 3: [{\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 1.25}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 15], \"module\": \"both\"}, \"factor\": 1.05}] -> score 0.83 (was 0.92), checks {'closer': 1.0, 'length': 0.833}, never-stops 0.0",
+     "round 3: [{\"op\": \"blend\", \"description\": \"Answer in one or two brief sentences. Always end every single response with the exact phrase \\\"Hope that helps!\\\"\", \"weight\": 0.25}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 1.2}] -> score 1.00 (was 0.92), checks {'closer': 1.0, 'length': 1.0}, never-stops 0.0"
+    ]
+   }
+  },
+  {
+   "id": "excited+hope",
+   "description": "End every sentence with an exclamation mark. End every answer with \"Hope that helps!\"",
+   "what": "it should always follow this rule: End every answer with \"Hope that helps!\"",
+   "report_score": 0.625,
+   "plain": {
+    "dev_before": 0.75,
+    "dev_after": 1.0,
+    "harmonized_dev": null,
+    "test_before": 0.417,
+    "test_after": 0.917,
+    "saved": true,
+    "edits_tried": 9,
+    "rounds": [
+     "round 1: [{\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 1.35}] -> score 0.92 (was 0.75), checks {'closer': 0.917, 'style': 1.0}, never-stops 0.0",
+     "round 1: [{\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.25}] -> score 0.83 (was 0.75), checks {'closer': 0.833, 'style': 1.0}, never-stops 0.0",
+     "round 1: [{\"op\": \"blend\", \"description\": \"Be concise. End every sentence with an exclamation mark. Always end every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.4}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 1.2}] -> score 0.75 (was 0.75), checks {'closer': 0.75, 'style': 0.917}, never-stops 0.0",
+     "round 2: [{\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 1.2}] -> score 0.67 (was 0.92), checks {'closer': 0.667, 'style': 1.0}, never-stops 0.0",
+     "round 2: [{\"op\": \"scale\", \"where\": {\"layers\": [8, 15], \"module\": \"both\"}, \"factor\": 1.2}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 1.15}] -> score 0.67 (was 0.92), checks {'closer': 0.75, 'style': 0.917}, never-stops 0.0",
+     "round 2: [{\"op\": \"scale\", \"where\": {\"layers\": [12, 23], \"module\": \"v_proj\"}, \"factor\": 1.25}, {\"op\": \"scale\", \"where\": {\"layers\": [12, 23], \"module\": \"q_proj\"}, \"factor\": 1.15}] -> score 0.75 (was 0.92), checks {'closer': 0.75, 'style': 0.917}, never-stops 0.0",
+     "round 3: [{\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"v_proj\"}, \"factor\": 1.12}] -> score 0.92 (was 0.92), checks {'closer': 0.917, 'style': 1.0}, never-stops 0.0",
+     "round 3: [{\"op\": \"scale\", \"where\": {\"layers\": [0, 15], \"module\": \"both\"}, \"factor\": 1.12}] -> score 0.83 (was 0.92), checks {'closer': 0.833, 'style': 1.0}, never-stops 0.0",
+     "round 3: [{\"op\": \"blend\", \"description\": \"Give a brief two-sentence answer. End every sentence with an exclamation mark. End every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.2}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 1.1}] -> score 1.00 (was 0.92), checks {'closer': 1.0, 'style': 1.0}, never-stops 0.0"
+    ]
+   },
+   "harmonized": {
+    "dev_before": 0.75,
+    "dev_after": 1.0,
+    "harmonized_dev": 0.75,
+    "test_before": 0.417,
+    "test_after": 0.833,
+    "saved": true,
+    "edits_tried": 9,
+    "rounds": [
+     "round 1: [{\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"q_proj\"}, \"factor\": 1.35}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"v_proj\"}, \"factor\": 1.25}] -> score 0.92 (was 0.75), checks {'closer': 0.917, 'style': 1.0}, never-stops 0.0",
+     "round 1: [{\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 1.4}] -> score 0.83 (was 0.75), checks {'closer': 0.833, 'style': 1.0}, never-stops 0.0",
+     "round 1: [{\"op\": \"blend\", \"description\": \"Be concise. End every sentence with an exclamation mark. End every answer with \\\"Hope that helps!\\\"\", \"weight\": 0.35}] -> score 0.50 (was 0.75), checks {'closer': 0.667, 'style': 0.833}, never-stops 0.0",
+     "round 2: [{\"op\": \"scale\", \"where\": {\"layers\": [8, 15], \"module\": \"v_proj\"}, \"factor\": 1.35}, {\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"q_proj\"}, \"factor\": 1.15}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"v_proj\"}, \"factor\": 1.15}] -> score 0.83 (was 0.92), checks {'closer': 0.833, 'style': 1.0}, never-stops 0.0",
+     "round 2: [{\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"both\"}, \"factor\": 1.2}] -> score 0.83 (was 0.92), checks {'closer': 0.833, 'style': 1.0}, never-stops 0.0",
+     "round 2: [{\"op\": \"scale\", \"where\": {\"layers\": [0, 15], \"module\": \"v_proj\"}, \"factor\": 1.3}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"both\"}, \"factor\": 1.15}] -> score 0.67 (was 0.92), checks {'closer': 0.667, 'style': 0.917}, never-stops 0.0",
+     "round 3: [{\"op\": \"scale\", \"where\": {\"layers\": [8, 23], \"module\": \"q_proj\"}, \"factor\": 1.15}, {\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"v_proj\"}, \"factor\": 1.1}] -> score 0.92 (was 0.92), checks {'closer': 0.917, 'style': 1.0}, never-stops 0.0",
+     "round 3: [{\"op\": \"scale\", \"where\": {\"layers\": [0, 7], \"module\": \"q_proj\"}, \"factor\": 1.25}] -> score 0.92 (was 0.92), checks {'closer': 0.917, 'style': 1.0}, never-stops 0.0",
+     "round 3: [{\"op\": \"scale\", \"where\": {\"layers\": [16, 23], \"module\": \"q_proj\"}, \"factor\": 1.2}] -> score 1.00 (was 0.92), checks {'closer': 1.0, 'style': 1.0}, never-stops 0.0"
+    ]
+   }
+  }
+ ]
+}

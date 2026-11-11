@@ -19,8 +19,10 @@ $ myai generate "talk like a pirate, max 3 sentences" --out pirate
 Made your AI in a few seconds, with no training: pirate/
   understood:      Answer in at most three sentences. Talk like a pirate.
 
-$ myai chat pirate --ask "What is a volcano?"
-ai  > {{DEMO_ANSWER}}
+$ myai chat pirate --ask "Why is sleep important?"
+ai  > Arr, sleep be crucial for several reasons: it helps the body recover and repair after daytime activities.
+      It regulates hormones necessary for mood regulation and cognitive function. Sleep also plays a vital role in
+      memory consolidation and learning new skills, making it essential for overall health and well-being, matey.
 ```
 
 A **generator** (a small diffusion model) has learned what trained LoRA adapters look like. You give it a
@@ -43,7 +45,10 @@ git clone https://github.com/mxrk-ai/Make-Your-AI && cd Make-Your-AI
 source .venv/bin/activate
 ```
 
-**2. Make an AI.** The first run downloads the generator ({{GEN_MB}} MB) and the base model (1 GB), once.
+**2. Make an AI.** The first run downloads the base model (1 GB), once. The generator itself is 57 MB.
+
+> The generator weights are not published yet. Until they are, build one with the commands in
+> [Train your own generator](#train-your-own-generator) and pass `--generator <folder>` (or set `MYAI_GENERATOR`).
 
 ```bash
 myai generate "reply only in JSON, in one sentence" --out json-bot
@@ -79,21 +84,42 @@ understand** instead of pretending. For knowledge from your own documents, use [
 ## Does it work? The honest scoreboard
 
 Every task has automatic checks (is it valid JSON? one sentence? any lowercase letter?). An answer passes only if
-**every** rule holds. Scores are the share of {{N_PROMPTS}} fresh questions that pass, averaged over tasks. Questions and
+**every** rule holds. Scores are the share of 24 fresh questions that pass, averaged over tasks. Questions and
 topics used for testing never appear in training.
 
 - **Seen tasks:** combinations the generator trained on.
-- **Held-out tasks:** {{N_HELD}} combinations it never saw (each single behaviour appears elsewhere, the mix is new).
+- **Held-out tasks:** 30 combinations it never saw (each single behaviour appears elsewhere, the mix is new).
 
-{{RESULTS_TABLE}}
+| Method | Seen tasks (15) | Held-out tasks (30) |
+|---|---|---|
+| Base model | 0% | 0% |
+| Base model + description as system prompt | 5% | 5% |
+| Really trained LoRA (upper bound) | 87% | 84% |
+| Nearest training adapter (retrieval; on seen tasks this is the trained LoRA itself) | — | 25% |
+| Sum of single-behaviour adapters (oracle) | — | 8% |
+| **Generated adapter** | **89%** | **36%** |
+| Generated adapter + system prompt | 38% | 34% |
+| Generated, best of 4 tries (picked on 12 other questions) | — | 38% |
+| Trained LoRA through the autoencoder | — | 45% |
 
-{{RESULTS_READING}}
+**How to read it.**
+
+- **On combinations it trained on, generation works:** 89%, the same as a really trained adapter (87%), in seconds.
+- **On new combinations it mostly does not work yet:** 36%, against 84% for a trained adapter. It beats copying the
+  nearest known adapter (25%; better on 16 of the 30 tasks, worse on 8), but that is a small win. 9 of the 30
+  held-out tasks reach 70% or more and 10 are at 10% or less. Pairs do better (40%) than triples (29%).
+- **Where it is lost:** the compression step alone drops a trained held-out adapter from 84% to 45%, so the
+  generator cannot do much better than that with this autoencoder. Fixing the autoencoder is the next step.
+- **Trying four times barely helps** (36% to 38%; even always picking the luckiest try gives 42%).
+- **The flywheel did nothing:** 40 new combinations were generated, none scored 90% or more, so none was added and
+  the generator was not retrained.
+- A 0.5B model ignores a system prompt for these rules (5%), which is why an adapter is needed at all.
 
 Reproduce: `myai generator-report <zoo> <generator> --out report.json`. Raw numbers: [`results/`](results/).
 
 ## How it was built
 
-1. **A zoo of {{N_ADAPTERS}} adapters.** {{N_TASKS}} tasks (every single behaviour, every pair, a sample of triples), up to 3
+1. **A zoo of 333 adapters.** 131 tasks (every single behaviour, every pair, a sample of triples), up to 3
    adapters each. Training data is the base model's own plain answers rewritten by rules into each behaviour, so an
    adapter learns only the *change in behaviour*. All adapters share one frozen half (LoRA "A"), so they live in one
    coordinate system and the generator only has to produce the other half: 196,608 numbers.
@@ -103,7 +129,7 @@ Reproduce: `myai generator-report <zoo> <generator> --out report.json`. Raw numb
 4. **Baselines and held-out tasks** keep it honest (table above).
 
 Full design and what changed along the way: [docs/DESIGN.md](docs/DESIGN.md). Compute used: [docs/COMPUTE_LOG.md](docs/COMPUTE_LOG.md)
-({{UNITS}} Colab compute units in total).
+(16.4 Colab compute units in total).
 
 ## Agent repair: `myai patch fix`
 
@@ -120,7 +146,21 @@ myai patch fix my-ai "stops repeating itself" --provider agy
 Providers: `agy` (a command-line agent on a subscription), `gemini`, `anthropic`, `openai`, `ollama`. Only `agy`
 has been exercised in this repo's experiments.
 
-{{PATCH_RESULTS}}
+**Measured** on 5 generated held-out adapters that failed their report card (12 practice questions for the agent,
+12 other questions for the final number, `agy` as the agent, 29 agent calls):
+
+| | Before | After repair | Adapters improved |
+|---|---|---|---|
+| Agent edits only | 18% | 45% | 3 of 5 |
+| Agent edits, then re-noised through the generator (`--harmonize`) | 18% | 50% | 3 of 5 |
+
+The three it fixed went from 8%, 42% and 42% to 83-92%, 50-75% and 83-92%. The two at 0% stayed at 0% after 9
+edits each: the agent can strengthen a behaviour that is partly there, it cannot create a missing one. Five
+adapters is a small sample, so the difference between the two rows is not a finding. Raw runs:
+[`results/patch.json`](results/patch.json).
+
+The agent can also **describe an adapter** from its weights and sample answers (`myai caption`). On 20 trained
+adapters it named 51% of the behaviours and got the full set right for 2 of 20 ([`results/caption.json`](results/caption.json)).
 
 ## Train your own generator
 
@@ -169,7 +209,18 @@ tiny rule-like networks (`myai scratch`).
 
 ## Limitations (read this)
 
-{{LIMITATIONS}}
+- **Only the 15 listed behaviours.** It changes how a model answers, not what it knows. No new facts, no new skills.
+- **New combinations are unreliable** (36% on held-out tasks). Run `myai eval` on every AI you make; it tells you
+  the real score for yours. Combinations the generator trained on are fine (89%).
+- **ALL CAPS is weak everywhere**, including in trained adapters; "ALL CAPS and very excited" scored 25% in the demo run.
+- **"Understood" can be wrong.** In the demo run, "be kind and answer in French" was read as "formal English" with
+  only "be kind" flagged. Read the `understood:` line before trusting the result.
+- **One base model** (Qwen2.5-0.5B). It is small: answers contain factual mistakes and sometimes stray characters
+  from other languages. The adapter does not fix that.
+- **Checks are automatic rules** (sentence counts, valid JSON, word lists). They miss things a person would notice.
+- **Agent repair is tested on 5 adapters with one provider.** The other providers are untested.
+- **The generator weights are not published yet**, so `myai generate` needs a generator you built or were given.
+- **Small numbers.** 24 questions per task, one generator seed, one training run. Expect a few points of noise.
 
 ## Where the ideas come from
 

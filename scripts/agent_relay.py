@@ -19,10 +19,12 @@ session, provider = sys.argv[1], (sys.argv[2] if len(sys.argv) > 2 else "agy")
 tmp, answered, misses = Path(tempfile.mkdtemp()), set(), 0
 run = lambda *a: subprocess.run(["colab", *a], capture_output=True, text=True)
 while misses < 60:
-    ls = run("ls", "-s", session, "/content/agent")
-    if ls.returncode != 0 or "not found" in ls.stdout.lower():
+    if f"[{session}]" not in run("sessions").stdout:  # the job's machine is gone (finished or not started yet)
         misses += 1; time.sleep(15); continue
     misses = 0
+    ls = run("ls", "-s", session, "/content/agent")
+    if ls.returncode != 0 or "not found" in (ls.stdout + ls.stderr).lower() or "no such" in (ls.stdout + ls.stderr).lower():
+        time.sleep(15); continue  # the job has not asked anything yet
     names = ls.stdout.split()
     if "done" in names:
         break

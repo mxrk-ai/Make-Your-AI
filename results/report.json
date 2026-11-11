@@ -1,0 +1,988 @@
+{
+ "tasks": [
+  {
+   "id": "excited+hope",
+   "split": "heldout",
+   "size": 2,
+   "description": "Always close with \"Hope that helps!\" Sound very excited and use exclamation marks.",
+   "retrieved_adapter": "lower+hope__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.917,
+    "retrieved": 0.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.417,
+    "generated": 0.583,
+    "gen+prompt": 0.542
+   },
+   "generated_per_axis": {
+    "closer": 0.792,
+    "style": 0.583
+   },
+   "generated_sample": "A podcast is an online audio file that contains written content (usually articles, essays, or stories) followed by interviews, discussions, and other forms of multimedia content! Podcasts can be listened to on various devices such as smartp"
+  },
+  {
+   "id": "pirate+certainly",
+   "split": "heldout",
+   "size": 2,
+   "description": "Always open with \"Certainly.\" Talk like a pirate.",
+   "retrieved_adapter": "one+pirate+certainly__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 1.0,
+    "retrieved": 1.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.5,
+    "generated": 0.167,
+    "gen+prompt": 0.25
+   },
+   "generated_per_axis": {
+    "opener": 0.167,
+    "style": 0.708
+   },
+   "generated_sample": "Sure thing! Arr, a podcast be an audio file that contains spoken words or voiceovers delivered by the host or guest. It can be broadcast on various platforms such as Spotify, Apple Podcasts, Google Podcasts, and more. Pannable aspects inclu"
+  },
+  {
+   "id": "lower+all",
+   "split": "heldout",
+   "size": 2,
+   "description": "End every answer with \"That is all.\" Use only lowercase.",
+   "retrieved_adapter": "all__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.917,
+    "retrieved": 0.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.542,
+    "generated": 0.292,
+    "gen+prompt": 0.0
+   },
+   "generated_per_axis": {
+    "format": 0.417,
+    "closer": 0.625
+   },
+   "generated_sample": "a podcast is an audio file that contains written content followed by live audio recordings of interviews, discussions, or other forms of content. it's commonly used for sharing stories, insights, and opinions with listeners who may not have"
+  },
+  {
+   "id": "one+hope",
+   "split": "heldout",
+   "size": 2,
+   "description": "end with \"Hope that helps!\" Reply with one sentence only.",
+   "retrieved_adapter": "hope__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.917,
+    "retrieved": 0.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.417,
+    "generated": 0.0,
+    "gen+prompt": 0.042
+   },
+   "generated_per_axis": {
+    "closer": 0.042,
+    "length": 0.417
+   },
+   "generated_sample": "A podcast is an audio broadcast that typically features written content and sometimes interviews, music, and other multimedia elements. It allows listeners to engage with the content through listening, watching episodes, or subscribing to f"
+  },
+  {
+   "id": "formal+certainly",
+   "split": "heldout",
+   "size": 2,
+   "description": "Write formally and never use contractions or exclamation marks. start with \"Certainly.\"",
+   "retrieved_adapter": "lower+certainly__s0",
+   "scores": {
+    "base": 0.083,
+    "prompt": 0.042,
+    "trained": 0.792,
+    "retrieved": 0.5,
+    "sum_singles": 0.083,
+    "reconstructed": 0.667,
+    "generated": 0.792,
+    "gen+prompt": 1.0
+   },
+   "generated_per_axis": {
+    "opener": 0.875,
+    "style": 0.917
+   },
+   "generated_sample": "Certainly. A podcast is an audio file that contains spoken words or text accompanied by music, narration, or other media elements. It can be listened to on various devices such as smartphones, computers, and TVs. Podcasts have gained popula"
+  },
+  {
+   "id": "three+hope",
+   "split": "heldout",
+   "size": 2,
+   "description": "Use no more than 3 sentences. end with \"Hope that helps!\"",
+   "retrieved_adapter": "one+lower+hope__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.833,
+    "retrieved": 1.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.583,
+    "generated": 0.167,
+    "gen+prompt": 0.458
+   },
+   "generated_per_axis": {
+    "closer": 0.333,
+    "length": 0.375
+   },
+   "generated_sample": "A podcast is an audio file that contains written content followed by interviews, discussions, or other forms of content. It can be hosted on platforms like SoundCloud, Spotify, Apple Podcasts, or Google Play Music. Podcasts often feature gu"
+  },
+  {
+   "id": "caps+pirate",
+   "split": "heldout",
+   "size": 2,
+   "description": "Talk like a pirate. Use only uppercase letters.",
+   "retrieved_adapter": "pirate__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.5,
+    "retrieved": 0.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.0,
+    "generated": 0.0,
+    "gen+prompt": 0.0
+   },
+   "generated_per_axis": {
+    "format": 0.5,
+    "style": 0.0
+   },
+   "generated_sample": "A PODCAST IS A ONLINE MEDIA PRODUCT THAT CONTAINS AUDIO AND VIDEO CONTENT FROM AN ENTIRELY DIFFERENTIATED SOURCETHE CONTENT CAN BE ABOUT ANY TOPIC YOU SELECT, FROM TECHNICAL GAMES TO HEALTHY LIFESTYLE. PODCASTS ARE VERSATILE AND EASILY MODI"
+  },
+  {
+   "id": "three+certainly",
+   "split": "heldout",
+   "size": 2,
+   "description": "start with \"Certainly.\" Answer in at most three sentences.",
+   "retrieved_adapter": "certainly__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.083,
+    "trained": 0.708,
+    "retrieved": 0.167,
+    "sum_singles": 0.125,
+    "reconstructed": 0.667,
+    "generated": 0.792,
+    "gen+prompt": 0.083
+   },
+   "generated_per_axis": {
+    "opener": 1.0,
+    "length": 0.792
+   },
+   "generated_sample": "Certainly. A podcast is an audio file that contains spoken words or text accompanied by music, narration, or other sounds. They can be broadcast on various platforms such as Spotify, Apple Podcasts, Google Play Music, or any other digital d"
+  },
+  {
+   "id": "one+lower",
+   "split": "heldout",
+   "size": 2,
+   "description": "Use only lowercase. one sentence answers.",
+   "retrieved_adapter": "lower+formal__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.083,
+    "trained": 0.958,
+    "retrieved": 0.0,
+    "sum_singles": 0.917,
+    "reconstructed": 0.875,
+    "generated": 0.75,
+    "gen+prompt": 0.917
+   },
+   "generated_per_axis": {
+    "format": 1.0,
+    "length": 0.75
+   },
+   "generated_sample": "a podcast is an audio file that contains written content and often includes interviews, discussions, videos, and other multimedia elements."
+  },
+  {
+   "id": "one+excited",
+   "split": "heldout",
+   "size": 2,
+   "description": "End every sentence with an exclamation mark. Reply with one sentence only.",
+   "retrieved_adapter": "excited__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.125,
+    "trained": 0.917,
+    "retrieved": 0.0,
+    "sum_singles": 0.083,
+    "reconstructed": 0.833,
+    "generated": 0.792,
+    "gen+prompt": 0.958
+   },
+   "generated_per_axis": {
+    "length": 0.792,
+    "style": 0.917
+   },
+   "generated_sample": "A podcast is an audio file that contains written content and often includes interviews, discussions, tutorials, and other types of content!"
+  },
+  {
+   "id": "json+certainly",
+   "split": "heldout",
+   "size": 2,
+   "description": "Begin each reply with the word \"Certainly.\" Output a JSON object with one key, \"answer\".",
+   "retrieved_adapter": "one+json__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 1.0,
+    "retrieved": 0.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.083,
+    "generated": 0.083,
+    "gen+prompt": 0.042
+   },
+   "generated_per_axis": {
+    "format": 0.833,
+    "opener": 0.125
+   },
+   "generated_sample": "{\"answer\": \"Sure thing! Podcasts are digital audio files that allow you to listen to content on your device without needing an internet connection. They're popular for sharing stories, interviews, and other types of content that might be di"
+  },
+  {
+   "id": "bullets+sure",
+   "split": "heldout",
+   "size": 2,
+   "description": "Start every answer with \"Sure thing!\" bullet points.",
+   "retrieved_adapter": "sure__s1",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.792,
+    "retrieved": 0.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.042,
+    "generated": 0.0,
+    "gen+prompt": 0.0
+   },
+   "generated_per_axis": {
+    "format": 0.542,
+    "opener": 0.0
+   },
+   "generated_sample": "Sure thing! Podcasts are digital audio files that contain written text along with spoken words. They're often hosted on websites like SoundCloud and Apple Podcasts where listeners can listen to episodes without needing an internet connectio"
+  },
+  {
+   "id": "one+formal",
+   "split": "heldout",
+   "size": 2,
+   "description": "formal tone. Reply with one sentence only.",
+   "retrieved_adapter": "formal__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.875,
+    "trained": 0.958,
+    "retrieved": 0.0,
+    "sum_singles": 0.917,
+    "reconstructed": 1.0,
+    "generated": 0.917,
+    "gen+prompt": 1.0
+   },
+   "generated_per_axis": {
+    "length": 0.917,
+    "style": 0.917
+   },
+   "generated_sample": "A podcast is an audio program that consists of transcripts and episodes released on various platforms such as Spotify, Apple Podcasts, Google Podcasts, and more."
+  },
+  {
+   "id": "three+emoji",
+   "split": "heldout",
+   "size": 2,
+   "description": "Decorate each sentence with an emoji. Keep answers to three sentences or fewer.",
+   "retrieved_adapter": "one+emoji__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.167,
+    "trained": 0.875,
+    "retrieved": 1.0,
+    "sum_singles": 0.042,
+    "reconstructed": 0.667,
+    "generated": 0.042,
+    "gen+prompt": 0.083
+   },
+   "generated_per_axis": {
+    "length": 0.75,
+    "style": 0.042
+   },
+   "generated_sample": "A podcast is an audio file that contains written content (podcast episodes) followed by interviews, discussions, and other forms of content. Podcasts have gained popularity due to their convenience, accessibility, and ability to deliver inf"
+  },
+  {
+   "id": "lower+pirate",
+   "split": "heldout",
+   "size": 2,
+   "description": "Use only lowercase. Answer in pirate speak.",
+   "retrieved_adapter": "lower__s1",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.917,
+    "retrieved": 0.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.333,
+    "generated": 0.083,
+    "gen+prompt": 0.167
+   },
+   "generated_per_axis": {
+    "format": 0.667,
+    "style": 0.125
+   },
+   "generated_sample": "arranging my thoughts, i can teach you about podcasts in several ways: first, i can explain what they are and how they differ from other forms of media such as videos or blogs. secondly, i can describe the benefits of listening to podcasts,"
+  },
+  {
+   "id": "numbered+excited",
+   "split": "heldout",
+   "size": 2,
+   "description": "numbered list. End every sentence with an exclamation mark.",
+   "retrieved_adapter": "excited__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.958,
+    "retrieved": 0.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.083,
+    "generated": 0.833,
+    "gen+prompt": 0.042
+   },
+   "generated_per_axis": {
+    "format": 0.958,
+    "style": 0.833
+   },
+   "generated_sample": "1. A podcast is an audio file that contains written content followed by spoken words delivered over the internet!"
+  },
+  {
+   "id": "bullets+excited",
+   "split": "heldout",
+   "size": 2,
+   "description": "Put each point on its own line starting with a dash. Sound very excited and use exclamation marks.",
+   "retrieved_adapter": "bullets+emoji__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.875,
+    "retrieved": 0.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.333,
+    "generated": 0.625,
+    "gen+prompt": 0.0
+   },
+   "generated_per_axis": {
+    "format": 0.75,
+    "style": 0.667
+   },
+   "generated_sample": "- A podcast is an audio file that contains written content followed by interviews, discussions, and sometimes live streams with guests who share their thoughts on various topics!\n- Podcasts have become increasingly popular due to their conv"
+  },
+  {
+   "id": "emoji+certainly",
+   "split": "heldout",
+   "size": 2,
+   "description": "Begin each reply with the word \"Certainly.\" Use emojis in every answer.",
+   "retrieved_adapter": "emoji+sure__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 1.0,
+    "retrieved": 0.0,
+    "sum_singles": 0.083,
+    "reconstructed": 0.625,
+    "generated": 0.333,
+    "gen+prompt": 0.333
+   },
+   "generated_per_axis": {
+    "opener": 0.917,
+    "style": 0.333
+   },
+   "generated_sample": "Certainly. A podcast is an audio file that can be listened to on a device like a smartphone or computer. Podcasts typically contain written content (podcastisodes) that are read aloud by the host. They often feature interviews, discussions,"
+  },
+  {
+   "id": "numbered+emoji",
+   "split": "heldout",
+   "size": 2,
+   "description": "Format the answer as a numbered list. Decorate each sentence with an emoji.",
+   "retrieved_adapter": "bullets+emoji__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.833,
+    "retrieved": 0.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.083,
+    "generated": 0.0,
+    "gen+prompt": 0.542
+   },
+   "generated_per_axis": {
+    "format": 0.625,
+    "style": 0.0
+   },
+   "generated_sample": "Certainly! Podcasts are digital audio files that allow listeners to listen to content from various sources such as books, articles, videos, and more. They typically consist of transcripts that can be read aloud or watched on screen. Podcast"
+  },
+  {
+   "id": "formal+sure",
+   "split": "heldout",
+   "size": 2,
+   "description": "Start every answer with \"Sure thing!\" Answer in formal English.",
+   "retrieved_adapter": "one+lower+sure__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.708,
+    "retrieved": 0.917,
+    "sum_singles": 0.042,
+    "reconstructed": 0.667,
+    "generated": 0.75,
+    "gen+prompt": 0.792
+   },
+   "generated_per_axis": {
+    "opener": 0.833,
+    "style": 0.917
+   },
+   "generated_sample": "Sure thing! A podcast is an audio file that contains spoken words or text accompanied by music, narration, or other media elements. Podcasts can be listened to on various devices such as smartphones, computers, and tablets. They are commonl"
+  },
+  {
+   "id": "three+formal+hope",
+   "split": "heldout",
+   "size": 3,
+   "description": "Use no more than 3 sentences. Answer in formal English. End every answer with \"Hope that helps!\"",
+   "retrieved_adapter": "formal+hope__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.792,
+    "retrieved": 0.333,
+    "sum_singles": 0.0,
+    "reconstructed": 0.583,
+    "generated": 0.167,
+    "gen+prompt": 0.167
+   },
+   "generated_per_axis": {
+    "closer": 0.292,
+    "length": 0.25,
+    "style": 0.458
+   },
+   "generated_sample": "A podcast is an audio file that contains written content followed by live audio recordings of interviews, discussions, or other forms of content. It can be used for various purposes such as education, entertainment, business advice, and mor"
+  },
+  {
+   "id": "three+emoji+certainly",
+   "split": "heldout",
+   "size": 3,
+   "description": "Keep answers to three sentences or fewer. Use emojis in every answer. Begin each reply with the word \"Certainly.\"",
+   "retrieved_adapter": "emoji+sure__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.917,
+    "retrieved": 0.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.25,
+    "generated": 0.0,
+    "gen+prompt": 0.0
+   },
+   "generated_per_axis": {
+    "opener": 1.0,
+    "length": 0.583,
+    "style": 0.0
+   },
+   "generated_sample": "Certainly. A podcast is an audio-based medium that allows listeners to listen to content from various sources such as books, articles, videos, and more. Podcasts typically use the format of an audio file with transcripts or episodes availab"
+  },
+  {
+   "id": "three+json+hope",
+   "split": "heldout",
+   "size": 3,
+   "description": "Keep answers to three sentences or fewer. JSON only. end with \"Hope that helps!\"",
+   "retrieved_adapter": "json+hope__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.833,
+    "retrieved": 0.125,
+    "sum_singles": 0.0,
+    "reconstructed": 0.0,
+    "generated": 0.0,
+    "gen+prompt": 0.0
+   },
+   "generated_per_axis": {
+    "format": 0.958,
+    "closer": 0.0,
+    "length": 0.833
+   },
+   "generated_sample": "{\"answer\": \"A podcast is an online audio file that contains written content along with accompanying sounds and music. It's often used for sharing stories, interviews, tips, and other types of information that might be difficult to write dow"
+  },
+  {
+   "id": "three+pirate+certainly",
+   "split": "heldout",
+   "size": 3,
+   "description": "Answer in at most three sentences. Start every answer with \"Certainly.\" Speak as an old sea pirate would.",
+   "retrieved_adapter": "one+pirate+certainly__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.75,
+    "retrieved": 1.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.292,
+    "generated": 0.125,
+    "gen+prompt": 0.167
+   },
+   "generated_per_axis": {
+    "opener": 0.375,
+    "length": 0.5,
+    "style": 0.292
+   },
+   "generated_sample": "Certainly (Qwen: ) An podcast is an audio file that contains spoken words or text along with music and other sounds. They typically consist of interviews, discussions, and other forms of content that are shared on a platform like SoundCloud"
+  },
+  {
+   "id": "bullets+certainly+hope",
+   "split": "heldout",
+   "size": 3,
+   "description": "Answer with bullet points. Begin each reply with the word \"Certainly.\" End every answer with \"Hope that helps!\"",
+   "retrieved_adapter": "certainly+hope__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.958,
+    "retrieved": 0.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.583,
+    "generated": 0.167,
+    "gen+prompt": 0.208
+   },
+   "generated_per_axis": {
+    "format": 1.0,
+    "opener": 0.292,
+    "closer": 0.292
+   },
+   "generated_sample": "- Certainly.\n- A podcast is an audio file that contains written content followed by interviews, discussions, and other forms of media engagement with the host and guests.\n- Podcasts have gained popularity due to their convenience, accessibi"
+  },
+  {
+   "id": "formal+certainly+all",
+   "split": "heldout",
+   "size": 3,
+   "description": "Always close with \"That is all.\" Begin each reply with the word \"Certainly.\" Answer in formal English.",
+   "retrieved_adapter": "certainly+all__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.833,
+    "retrieved": 0.667,
+    "sum_singles": 0.0,
+    "reconstructed": 0.792,
+    "generated": 0.875,
+    "gen+prompt": 0.75
+   },
+   "generated_per_axis": {
+    "opener": 1.0,
+    "closer": 0.917,
+    "style": 0.875
+   },
+   "generated_sample": "Certainly. A podcast is an audio file that contains written content followed by interviews, discussions, and other forms of content delivered over the internet. It allows listeners to listen to episodes at their own pace, which can be usefu"
+  },
+  {
+   "id": "lower+pirate+sure",
+   "split": "heldout",
+   "size": 3,
+   "description": "Talk like a pirate. Start every answer with \"Sure thing!\" all lowercase.",
+   "retrieved_adapter": "pirate+sure__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.875,
+    "retrieved": 0.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.208,
+    "generated": 0.0,
+    "gen+prompt": 0.0
+   },
+   "generated_per_axis": {
+    "format": 0.292,
+    "opener": 0.75,
+    "style": 0.083
+   },
+   "generated_sample": "Sure thing! Teaching you about a podcast can be done in several ways, including explaining its content, structure, format, and how it differs from other types of media. You could also ask questions related to specific topics covered by the "
+  },
+  {
+   "id": "one+caps+formal",
+   "split": "heldout",
+   "size": 3,
+   "description": "Write everything in capital letters. Answer in formal English. Answer in exactly one sentence.",
+   "retrieved_adapter": "caps+formal__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.167,
+    "trained": 0.75,
+    "retrieved": 0.0,
+    "sum_singles": 0.042,
+    "reconstructed": 0.708,
+    "generated": 0.875,
+    "gen+prompt": 0.875
+   },
+   "generated_per_axis": {
+    "format": 0.875,
+    "length": 1.0,
+    "style": 1.0
+   },
+   "generated_sample": "A PODCAST IS AN ONLINE COMMUNITY THAT FEATURES AUDIO CONTENT SUCH AS WRITING, MUSIC, VIDEO CONTENT, AND MORE."
+  },
+  {
+   "id": "three+caps+sure",
+   "split": "heldout",
+   "size": 3,
+   "description": "Start every answer with \"Sure thing!\" Answer in at most three sentences. all caps.",
+   "retrieved_adapter": "three+sure__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.5,
+    "retrieved": 0.0,
+    "sum_singles": 0.0,
+    "reconstructed": 0.0,
+    "generated": 0.208,
+    "gen+prompt": 0.0
+   },
+   "generated_per_axis": {
+    "format": 0.5,
+    "opener": 0.625,
+    "length": 0.75
+   },
+   "generated_sample": "SURE THING! A PODCAST IS AN ONLINE EPISODES ABOUT DIFFERENT TOPICS THAT YOU TALK TO OTHER PEOPLE ON A SOCIAL MEDIA PLATFORM LIKE FACEBOOK OR GOOGLE MESSAGING. IT CAN BE ABOUT ANY TOPIC YOU'RE INTERESTED IN, FROM TECH NEWS TO SELF-improvemen"
+  },
+  {
+   "id": "formal+sure+all",
+   "split": "heldout",
+   "size": 3,
+   "description": "Start every answer with \"Sure thing!\" Finish each reply with \"That is all.\" Answer in formal English.",
+   "retrieved_adapter": "sure+all__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.708,
+    "retrieved": 0.667,
+    "sum_singles": 0.0,
+    "reconstructed": 0.667,
+    "generated": 0.458,
+    "gen+prompt": 0.708
+   },
+   "generated_per_axis": {
+    "opener": 0.708,
+    "closer": 0.958,
+    "style": 0.667
+   },
+   "generated_sample": "Sure thing! A podcast is an audio file that contains written content followed by spoken words. It can be hosted by anyone, including individuals, organizations, or even fictional characters. Podcasts have gained popularity due to their conv"
+  },
+  {
+   "id": "three+caps",
+   "split": "seen",
+   "size": 2,
+   "description": "Answer in ALL CAPS. max 3 sentences.",
+   "retrieved_adapter": "three__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.625,
+    "generated": 0.625,
+    "gen+prompt": 0.583
+   },
+   "generated_per_axis": {
+    "format": 0.667,
+    "length": 0.917
+   },
+   "generated_sample": "A PODCAST IS AN ONLINE SERIES OF VIDEO CONTENT THAT IS PLAYED ON A PARTICULAR CHANNEL ON A PARTICULAR PLATFORM SUCH AS YouTube. IT CAN INCLUDE AUDIO, VIDEOS, AND OTHER MEDIA ITEMS THAT ARE TYPICALLY SUGGESTED FOR LISTENERS TO WATCH INSTEAD "
+  },
+  {
+   "id": "one+lower+certainly",
+   "split": "seen",
+   "size": 3,
+   "description": "Start every answer with \"Certainly.\" Answer in exactly one sentence. all lowercase.",
+   "retrieved_adapter": "one+lower+certainly__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.75,
+    "generated": 0.958,
+    "gen+prompt": 0.083
+   },
+   "generated_per_axis": {
+    "format": 0.958,
+    "opener": 1.0,
+    "length": 1.0
+   },
+   "generated_sample": "certainly. a podcast is an audio file that contains written content and often includes interviews, discussions, and other forms of media."
+  },
+  {
+   "id": "excited+certainly",
+   "split": "seen",
+   "size": 2,
+   "description": "Sound very excited and use exclamation marks. Start every answer with \"Certainly.\"",
+   "retrieved_adapter": "excited+certainly__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.875,
+    "generated": 0.75,
+    "gen+prompt": 0.083
+   },
+   "generated_per_axis": {
+    "opener": 0.958,
+    "style": 0.792
+   },
+   "generated_sample": "Certainly. A podcast is an audio file that contains written content followed by interviews, discussions, and sometimes live streams with guests who share their expertise or insights! Podcasts have become increasingly popular due to their co"
+  },
+  {
+   "id": "bullets",
+   "split": "seen",
+   "size": 1,
+   "description": "Put each point on its own line starting with a dash.",
+   "retrieved_adapter": "bullets__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.042,
+    "trained": 1.0,
+    "generated": 1.0,
+    "gen+prompt": 0.292
+   },
+   "generated_per_axis": {
+    "format": 1.0
+   },
+   "generated_sample": "- A podcast is an audio file that contains written content followed by interviews, discussions, and sometimes live streams with guests who share their expertise or interests.\n- Podcasts have gained popularity due to their ability to deliver"
+  },
+  {
+   "id": "three+formal",
+   "split": "seen",
+   "size": 2,
+   "description": "Use a formal tone with no contractions. max 3 sentences.",
+   "retrieved_adapter": "three+excited__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.292,
+    "trained": 0.917,
+    "generated": 0.833,
+    "gen+prompt": 1.0
+   },
+   "generated_per_axis": {
+    "length": 0.833,
+    "style": 0.917
+   },
+   "generated_sample": "A podcast is an audio file that contains written content followed by interviews, discussions, and other forms of content. It can be hosted by anyone, including individuals, organizations, or even celebrities. Podcasts often feature guest sp"
+  },
+  {
+   "id": "emoji+hope",
+   "split": "seen",
+   "size": 2,
+   "description": "End every answer with \"Hope that helps!\" with emojis.",
+   "retrieved_adapter": "emoji+hope__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.958,
+    "generated": 0.917,
+    "gen+prompt": 0.208
+   },
+   "generated_per_axis": {
+    "closer": 0.917,
+    "style": 1.0
+   },
+   "generated_sample": "A podcast is an audio-based medium that allows listeners to listen to content delivered through an audio device such as a smartphone, tablet, or computer. 🎉 Podcasts typically consist of written transcripts and often include interviews, dis"
+  },
+  {
+   "id": "three+pirate",
+   "split": "seen",
+   "size": 2,
+   "description": "max 3 sentences. Answer in pirate speak.",
+   "retrieved_adapter": "three+pirate__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.958,
+    "generated": 1.0,
+    "gen+prompt": 0.792
+   },
+   "generated_per_axis": {
+    "length": 1.0,
+    "style": 1.0
+   },
+   "generated_sample": "Arr, a podcast be an online audio file that contains transcripts of interviews, discussions, or other content hosted by an host. It can be used for various purposes such as education, entertainment, news, or personal growth. Podcasts often "
+  },
+  {
+   "id": "pirate+sure",
+   "split": "seen",
+   "size": 2,
+   "description": "start with \"Sure thing!\" Speak as an old sea pirate would.",
+   "retrieved_adapter": "pirate+sure__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 1.0,
+    "generated": 1.0,
+    "gen+prompt": 0.375
+   },
+   "generated_per_axis": {
+    "opener": 1.0,
+    "style": 1.0
+   },
+   "generated_sample": "Sure thing! Arr, a podcast be an audio file that contains spoken words or voiceovers delivered by the host or guest. It can be broadcast on various platforms such as Spotify, Apple Podcasts, Google Podcasts, and more. Pannning involves shar"
+  },
+  {
+   "id": "three+numbered+certainly",
+   "split": "seen",
+   "size": 3,
+   "description": "Begin each reply with the word \"Certainly.\" Format the answer as a numbered list. Use no more than 3 sentences.",
+   "retrieved_adapter": "three+numbered+certainly__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.917,
+    "generated": 0.917,
+    "gen+prompt": 0.208
+   },
+   "generated_per_axis": {
+    "format": 0.958,
+    "opener": 0.958,
+    "length": 0.958
+   },
+   "generated_sample": "1. Certainly.\n2. A podcast is an audio file that contains written content followed by live audio recordings of interviews, discussions, or other forms of content.\n3. They typically use technology like Spotify, Apple Podcasts, and Google Pod"
+  },
+  {
+   "id": "numbered+certainly",
+   "split": "seen",
+   "size": 2,
+   "description": "Number each point: 1., 2., 3. and so on. Start every answer with \"Certainly.\"",
+   "retrieved_adapter": "bullets+certainly__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.833,
+    "generated": 0.958,
+    "gen+prompt": 0.0
+   },
+   "generated_per_axis": {
+    "format": 0.958,
+    "opener": 1.0
+   },
+   "generated_sample": "1. Certainly.\n2. A podcast is an audio file that contains written content followed by spoken words or dialogue.\n3. It's often used as a platform for sharing stories, interviews, and discussions on various topics.\n4. Podcasts can be listened"
+  },
+  {
+   "id": "lower+certainly",
+   "split": "seen",
+   "size": 2,
+   "description": "Never use capital letters. Start every answer with \"Certainly.\"",
+   "retrieved_adapter": "caps+certainly__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.75,
+    "generated": 0.833,
+    "gen+prompt": 0.0
+   },
+   "generated_per_axis": {
+    "format": 0.833,
+    "opener": 1.0
+   },
+   "generated_sample": "certainly. podcasts are digital audio files that contain transcripts of interviews or discussions with experts and influencers. they typically start with an introduction explaining the topic, followed by detailed content such as quotes, ane"
+  },
+  {
+   "id": "sure+hope",
+   "split": "seen",
+   "size": 2,
+   "description": "start with \"Sure thing!\" Always close with \"Hope that helps!\"",
+   "retrieved_adapter": "sure+hope__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 0.833,
+    "generated": 0.75,
+    "gen+prompt": 0.708
+   },
+   "generated_per_axis": {
+    "opener": 0.792,
+    "closer": 0.917
+   },
+   "generated_sample": "Sure thing! A podcast is an audio file that contains written content (usually a story, article, or speech) followed by interviews with guests who discuss the topic. Podcasts can be listened to on various devices such as smartphones, compute"
+  },
+  {
+   "id": "bullets+emoji",
+   "split": "seen",
+   "size": 2,
+   "description": "Decorate each sentence with an emoji. bullet points.",
+   "retrieved_adapter": "bullets+emoji__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.0,
+    "trained": 1.0,
+    "generated": 0.958,
+    "gen+prompt": 0.583
+   },
+   "generated_per_axis": {
+    "format": 0.958,
+    "style": 1.0
+   },
+   "generated_sample": "- A podcast is an audio file that contains written content followed by interviews, discussions, or other forms of engagement with the audience. 🎉\n- They can be hosted by anyone from professionals to enthusiasts, and they often explore vario"
+  },
+  {
+   "id": "lower+formal",
+   "split": "seen",
+   "size": 2,
+   "description": "formal tone. Write everything in lowercase letters.",
+   "retrieved_adapter": "lower+formal__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.333,
+    "trained": 0.667,
+    "generated": 0.917,
+    "gen+prompt": 0.75
+   },
+   "generated_per_axis": {
+    "format": 0.958,
+    "style": 0.958
+   },
+   "generated_sample": "a podcast is an audio file that contains written content followed by live audio recordings of interviews, discussions, or other forms of content. it can be used for various purposes such as education, entertainment, self-help, and more. pod"
+  },
+  {
+   "id": "one+all",
+   "split": "seen",
+   "size": 2,
+   "description": "Reply with one sentence only. End every answer with \"That is all.\"",
+   "retrieved_adapter": "one+all__s0",
+   "scores": {
+    "base": 0.0,
+    "prompt": 0.042,
+    "trained": 0.958,
+    "generated": 0.917,
+    "gen+prompt": 0.042
+   },
+   "generated_per_axis": {
+    "closer": 0.958,
+    "length": 0.917
+   },
+   "generated_sample": "A podcast is an audio file that consists of text and audio content recorded for public consumption. That is all."
+  }
+ ],
+ "summary": {
+  "seen": {
+   "tasks": 15,
+   "base": 0.0,
+   "prompt": 0.047,
+   "trained": 0.869,
+   "generated": 0.889,
+   "gen+prompt": 0.38
+  },
+  "heldout": {
+   "tasks": 30,
+   "base": 0.003,
+   "prompt": 0.051,
+   "trained": 0.843,
+   "retrieved": 0.246,
+   "sum_singles": 0.078,
+   "generated": 0.363,
+   "gen+prompt": 0.338,
+   "reconstructed": 0.45
+  }
+ },
+ "n_prompts": 24,
+ "guidance": 3.0,
+ "generator": {
+  "trained_on": 298,
+  "steps": 12000,
+  "final_loss": 0.02069
+ }
+}
