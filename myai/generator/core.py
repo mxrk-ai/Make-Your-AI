@@ -148,7 +148,8 @@ def write_adapter(folder: str | Path, weights: dict, lora_a: dict, base_model: s
     tensors = {}
     for key, b in weights.items():
         layer, module = key.split(".")
-        prefix = f"base_model.model.model.layers.{layer}.self_attn.{module}"
+        parent = "self_attn" if module in ("q_proj", "k_proj", "v_proj", "o_proj") else "mlp"
+        prefix = f"base_model.model.model.layers.{layer}.{parent}.{module}"
         tensors[f"{prefix}.lora_A.weight"] = lora_a[key].float().contiguous()
         tensors[f"{prefix}.lora_B.weight"] = b.float().contiguous()
     save_file(tensors, str(folder / "adapter_model.safetensors"))

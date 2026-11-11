@@ -88,6 +88,20 @@ def cmd_init(a):
 
 
 def cmd_status(a):
+    from . import generated as G
+
+    if G.is_generated(a.project):
+        d, meta = Path(a.project), G.info(a.project)
+        steps = [("Generated from your description", True, meta["description"][:60], ""),
+                 ("Tested on fresh questions", (d / "REPORT.md").exists(), "", f"myai eval {d}"),
+                 ("Repaired by the agent (optional)", (d / "patch_log.jsonl").exists(), "", f'myai patch fix {d} "what to fix"'),
+                 ("Exported for Ollama / LM Studio", bool(list((d / "model").glob("*.gguf"))), "", f"myai export {d} --gguf")]
+        print(f"Your AI: {meta['name']}  ({d})\n")
+        for i, (name, done, detail, _) in enumerate(steps, 1):
+            print(f"  {'✅' if done else '⬜'} {i}. {name:36s} {detail}")
+        nxt = next((do for _, done, _, do in steps if not done and do), None)
+        print(f"\nTalk to it: myai chat {d}" + (f"\nNext: {nxt}" if nxt else ""))
+        return
     from .status import show
 
     show(_project(a.project))

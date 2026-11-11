@@ -118,8 +118,10 @@ class Generator:
         from . import text
         from .diffusion import sample
 
-        cond, mask = text.condition([description])
         z = self.codec.encode(weights).unsqueeze(0)
+        if strength <= 0:
+            return self.codec.decode(z[0])
+        cond, mask = text.condition([description])
         return self.codec.decode(sample(self.model, cond, mask, steps=steps, guidance=guidance, seed=seed,
                                         start=z, start_t=strength)[0])
 

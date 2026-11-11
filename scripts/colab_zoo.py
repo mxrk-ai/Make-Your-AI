@@ -36,7 +36,8 @@ except Exception as e:  # empty repo on the first run
 
 import threading  # noqa: E402
 
-WORKERS = int(ARGS.get("workers", 3))
+SHARDS = [int(x) for x in ARGS.get("shards", "0,1").split(",")]  # which slices of the job list this VM trains
+OF = int(ARGS.get("of", len(SHARDS)))
 KW = dict(steps=int(ARGS.get("steps", 120)), lr=float(ARGS.get("lr", 2e-3)), seeds_seen=int(ARGS.get("seeds", 3)),
           limit=int(ARGS["limit"]) if "limit" in ARGS else None, n_eval=int(ARGS.get("n_eval", 24)))
 last = [time.time()]
@@ -54,9 +55,15 @@ PREP = {k: KW[k] for k in ("limit", "n_eval")}
 subprocess.run([sys.executable, "-c", f"from myai.zoo.trainer import prepare_zoo; prepare_zoo({OUT!r}, **{PREP!r})"], check=True)
 
 # Step 2: several workers share the GPU, each training its own slice of the jobs.
-procs = [subprocess.Popen([sys.executable, "-u", "-c",
-                           f"from myai.zoo.trainer import train_zoo; train_zoo({OUT!r}, **{KW!r}, shard=({i}, {WORKERS}))"],
-                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True) for i in range(WORKERS)]
+def start(i):
+    return subprocess.Popen([sys.executable, "-u", "-c",
+                             f"from myai.zoo.trainer import train_zoo; train_zoo({OUT!r}, **{KW!r}, shard=({i}, {OF}))"],
+                            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+                            env={**os.environ, "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"})
+
+
+procs = {i: start(i) for i in SHARDS}
+restarts = {i: 0 for i in SHARDS}
 
 
 def pump(i, p):
@@ -65,20 +72,27 @@ def pump(i, p):
             print(f"w{i} {line.rstrip()}", flush=True)
 
 
-threads = [threading.Thread(target=pump, args=(i, p), daemon=True) for i, p in enumerate(procs)]
-[t.start() for t in threads]
+def watch(i):
+    threading.Thread(target=pump, args=(i, procs[i]), daemon=True).start()
+
+
+[watch(i) for i in SHARDS]
 try:
-    while any(p.poll() is None for p in procs):
+    while True:
         time.sleep(20)
         push()
+        alive = False
+        for i in SHARDS:
+            rc = procs[i].poll()
+            if rc is None:
+                alive = True
+            elif rc != 0 and restarts[i] < 5:  # crashed (for example out of memory): start it again, it resumes
+                restarts[i] += 1
+                print(f"w{i} exited with {rc}; restart {restarts[i]}", flush=True)
+                procs[i] = start(i); watch(i); alive = True
+        if not alive:
+            break
 finally:
-    [t.join(timeout=5) for t in threads]
-    # one results file, so later steps do not care how many workers there were
-    lines = []
-    for f in sorted(glob.glob(f"{OUT}/results*.jsonl")):
-        lines += open(f).read().splitlines()
-        os.remove(f)
-    open(f"{OUT}/results.jsonl", "w").write("\n".join(dict.fromkeys(lines)) + "\n")
     push(force=True)
-print("exit codes", [p.returncode for p in procs], "adapters", len(glob.glob(f"{OUT}/adapters/*.safetensors")))
+print("exit codes", {i: p.returncode for i, p in procs.items()}, "adapters", len(glob.glob(f"{OUT}/adapters/*.safetensors")))
 print("ZOO DONE", flush=True)

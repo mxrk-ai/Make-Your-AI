@@ -97,7 +97,7 @@ def check(folder: str | Path, n: int = 20, log=print) -> dict:
     res = {}
     for label, use in (("before", False), ("after", True)):
         model, tok, dev, system = load(folder, adapter=use)
-        rows = [{"q": q, **g} for q, g in zip(prompts, T.generate_answers(model, tok, dev, prompts, 200,
+        rows = [{"q": q, **g} for q, g in zip(prompts, T.generate_answers(model, tok, dev, prompts, 300,
                                                                           system=system if use else None))]
         res[label] = {**T.score_answers(rows, task), "rows": rows}
         del model

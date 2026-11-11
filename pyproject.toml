@@ -14,7 +14,7 @@ dependencies = ["numpy", "pyyaml"]
 
 [project.optional-dependencies]
 # write-from-scratch mode needs only numpy. Everything with LLMs needs this:
-llm = ["torch>=2.2", "transformers>=4.45", "peft>=0.12", "safetensors", "accelerate", "pypdf"]
+llm = ["torch>=2.2", "transformers>=4.45", "peft>=0.12", "safetensors", "accelerate", "pypdf", "huggingface_hub", "gguf", "sentencepiece"]
 docx = ["python-docx"]
 dev = ["pytest"]
 

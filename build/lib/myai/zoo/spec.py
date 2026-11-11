@@ -19,10 +19,10 @@ from pathlib import Path
 
 BASE_MODEL = "Qwen/Qwen2.5-0.5B-Instruct"
 
-# Starting choice, to be confirmed by the Phase 1 smoke run (5 tasks). Not measured yet.
+# Rank 4 learned length rules (80-93%) but only 67% on ALL CAPS in the pilot, so the zoo uses rank 8.
 LORA_SPEC = {
-    "r": 4,
-    "alpha": 8,
+    "r": 8,
+    "alpha": 16,
     "dropout": 0.0,
     "target_modules": ["q_proj", "v_proj"],
     "layers": "all",

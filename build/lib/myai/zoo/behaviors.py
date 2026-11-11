@@ -86,7 +86,7 @@ def sentences(text: str) -> list[str]:
     return [p.strip() for p in parts if re.search(r"\w", p)]
 
 
-def clean_plain(text: str, max_sentences: int = 6) -> list[str] | None:
+def clean_plain(text: str, max_sentences: int = 4) -> list[str] | None:
     """Turns a raw model answer into a list of complete plain sentences, or None if it is not usable."""
     t = re.sub(r"[*#`_]", "", text).replace("’", "'")
     t = re.sub(r"\s+", " ", t).strip()

@@ -53,6 +53,17 @@ def checks() -> list[tuple[str, str, str]]:
     keys = [k for k in ("ANTHROPIC_API_KEY", "OPENAI_API_KEY") if os.environ.get(k)]
     out.append((OK, f"API key found: {', '.join(keys)}", "") if keys else
                (OK, "No API key, which is fine: your coding agent writes the practice questions", ""))
+    gen = Path(os.environ.get("MYAI_GENERATOR") or Path.home() / ".cache" / "myai" / "generator")
+    if (gen / "generator.json").exists():
+        out.append((OK, f"Generator ready ({gen}): `myai generate` works offline", ""))
+    else:
+        out.append((WARN, "Generator not downloaded yet", "Nothing to do: `myai generate` fetches it (about 50 MB) on first use"))
+    out.append((OK, "Ollama found: `myai export <folder> --gguf --ollama` can register your AI", "") if shutil.which("ollama")
+               else (OK, "Ollama not installed (optional, only for running your AI in Ollama)", ""))
+    agents = [n for n in ("agy",) if shutil.which(n)] + [k.split("_")[0].lower() for k in ("GEMINI_API_KEY",) if os.environ.get(k)]
+    out.append((OK, f"Agent LLM for `myai patch fix`: {', '.join(agents + [k.split('_')[0].lower() for k in keys])}", "")
+               if agents or keys else
+               (OK, "No agent LLM set up (optional, only `myai patch fix` needs one)", ""))
     return out
 
 
@@ -64,5 +75,5 @@ def run() -> bool:
         if fix:
             print(f"       -> {fix}")
         ok &= mark != BAD
-    print("\nAll set. Try: myai status examples/support-bot" if ok else "\nFix the ❌ items above, then run myai doctor again.")
+    print("\nAll set. Try: myai generate \"talk like a pirate, max 3 sentences\"" if ok else "\nFix the ❌ items above, then run myai doctor again.")
     return ok

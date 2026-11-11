@@ -2,7 +2,7 @@
 
 **Describe the AI you want in one sentence, get a working custom model in minutes, with no training.**
 
-Status: Phase 0 (setup) is done. Nothing below this line is measured yet unless it says so.
+Status: built end to end. Measured results are in the README and `results/`.
 
 ## The idea
 
@@ -48,25 +48,31 @@ for behaviour and style.
 
 ## Technical decisions
 
-Each is a starting choice with the experiment that confirms or replaces it.
+What was planned, what was built, and why it changed.
 
-| Decision | Choice | Checked by |
+| Decision | Built | Why |
 |---|---|---|
-| Base model | Qwen2.5-0.5B-Instruct (Apache-2.0) | Fixed for v1. |
-| Adapter config | rank 4, alpha 8, on `q_proj` and `v_proj` in all 24 blocks. In code: `myai.zoo.LORA_SPEC`. | Phase 1 smoke run: can this config learn the 5 pilot tasks? If not, try rank 8 or add MLP modules, then freeze. |
-| Shared coordinates | The same seed for every adapter's A matrices, A frozen, only B trained. The generator then produces only B: 98,304 numbers per adapter. | Phase 1: compare B-only against normal LoRA on the pilot tasks. Check that same-task adapters from different seeds are closer to each other than to other tasks. |
-| Generator | Autoencoder (adapter → latent, one token per targeted module, 48 tokens) plus a small diffusion transformer in latent space, conditioned on a sentence embedding of the description. | Phase 3: reconstruction must keep the eval score before diffusion is trained. |
-| Zoo | About 100 tasks, 3–5 adapters each from different seeds and data subsets. Style, format and behaviour tasks, plus instruction-style tasks with clear licenses. | Phase 1. |
-| Held-out tasks | About 15% of tasks are never seen by the generator and are reported separately. | Enforced by `split:` in task files. |
-| Agent tools | Per-module norms, SVD of each adapter matrix, outputs with and without the adapter, per-module ablation, apply-edit, re-eval. Not raw weights alone. | Phase 5. Builds on `myai/patch/tools.py`. |
-| Agent LLM | One interface, `myai.agent.complete`, with a provider chosen explicitly. Development uses the coding agent itself and a command-line LLM signed in to a subscription; API providers are added behind the same interface. | Phase 2. |
+| Base model | Qwen2.5-0.5B-Instruct (Apache-2.0) | Small enough for a laptop. Fixed for v1. |
+| Tasks | **Composable behaviours.** Five groups (length, format, style, opener, closer), 15 behaviours, one per group at most. 131 tasks: all 15 singles, all 86 pairs, 30 triples. Code: `myai/zoo/behaviors.py`. | Combinations give held-out tasks that are truly new (an unseen mix of seen behaviours), which is the cleanest test of generation against memorisation. |
+| Training data | The base model's own plain answers, **rewritten by rules** into each behaviour. No teacher LLM. | Exact, free, and the adapter learns only the change in behaviour, not new facts. The rule that grades the model also proves the data is right. |
+| Evals | One automatic check per behaviour. An answer passes only if every check passes and it does not loop. Train and eval use different topics and question templates. | Deterministic, no LLM judge needed. |
+| Adapter config | Rank 8, alpha 16, `q_proj` + `v_proj`, all 24 blocks. `myai.zoo.LORA_SPEC`. | The rank-4 pilot learned length rules (80-93%) but ALL CAPS only to 67%. |
+| Shared coordinates | Same frozen A for every adapter, only B is trained: 196,608 numbers per adapter. | The generator only has to produce B, and all adapters live in one coordinate system. |
+| Autoencoder | **Linear, fitted in closed form** (PCA per module), 48 tokens of 64 numbers. `myai/generator/codec.py`. | With a few hundred adapters a deeper autoencoder has nothing more to learn and could overfit unseen. Its loss is measured ("through the autoencoder" row in the report). |
+| Generator | Diffusion transformer over the 48 latent tokens, cross-attending to **one sentence embedding per clause** of the description (all-MiniLM-L6-v2), DDIM sampling with classifier-free guidance. `myai/generator/diffusion.py`. | Clause-level conditioning keeps separate instructions separate. |
+| Held-out tasks | 20 pairs and 10 triples never shown to the generator. Each behaviour in them appears in other, seen tasks. | Enforced in `all_tasks()` and by a test. |
+| Agent tools | Per-layer sizes, concentration of each matrix (SVD), ablations by layer group, failing answers; edits: scale, zero, keep-rank, blend with a generated adapter, regenerate. `myai/agent/repair.py`. | Evidence first, then small edits, each kept only if the score rises. |
+| Agent LLM | One interface, `myai.agent.complete`; providers: `agy` (command-line agent on a subscription), `gemini`, `anthropic`, `openai`, `ollama`. Chosen explicitly, never by default. | Only `agy` has been exercised in this repo's experiments; the HTTP providers are untested. |
 
 ## Baselines (always reported)
 
 1. Base model, no adapter.
-2. The real trained adapter for the task (upper bound).
-3. **Nearest-neighbour retrieval:** the training adapter whose description is closest to the request. If
+2. **Base model with the description as its system prompt** (the "just prompt it" baseline).
+3. The real trained adapter for the task (upper bound).
+4. **Nearest-neighbour retrieval:** the training adapter whose description is closest to the request. If
    generation does not beat this on held-out tasks, the README says so.
+5. Sum of the trained single-behaviour adapters (an oracle: it is told the behaviours).
+6. The trained adapter passed through the autoencoder (what the latent space can represent at all).
 
 ## Known risks
 

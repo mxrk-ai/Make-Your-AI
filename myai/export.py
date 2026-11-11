@@ -62,7 +62,7 @@ CHATML_TEMPLATE = '''{{ if .System }}<|im_start|>system
 {{ .Response }}<|im_end|>
 '''
 QWEN_SYSTEM = "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
-LLAMA_CPP_TAG = "b4585"  # a fixed llama.cpp release, so conversion is reproducible
+LLAMA_CPP_TAG = "b12284"  # a fixed llama.cpp release, so conversion is reproducible
 
 
 def export_generated(folder, out_dir=None, gguf: bool = False, ollama: bool = False) -> Path:

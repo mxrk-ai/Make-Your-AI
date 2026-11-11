@@ -90,7 +90,7 @@ def generate_answers(model, tok, device, prompts: list[str], max_new_tokens: int
     for i in range(0, len(prompts), batch_size):
         texts = [chat(tok, q, system=system) for q in prompts[i:i + batch_size]]
         enc = tok(texts, return_tensors="pt", padding=True, add_special_tokens=False).to(device)
-        with torch.no_grad():
+        with torch.no_grad(), torch.autocast("cuda", dtype=torch.float16, enabled=device == "cuda"):
             gen = model.generate(**enc, max_new_tokens=max_new_tokens, do_sample=False, pad_token_id=tok.pad_token_id)
         for row in gen[:, enc["input_ids"].shape[1]:]:
             ids = row.tolist()
@@ -125,7 +125,7 @@ def task_pairs(plain: list[dict], task: dict) -> list[dict]:
 # ---------- train and test one adapter ----------
 
 def train_adapter(model, tok, device, pairs: list[dict], seed: int, steps: int = 150, lr: float = 2e-3,
-                  batch_size: int = 8, subset: float = 0.85, max_len: int = 320) -> dict:
+                  batch_size: int = 8, subset: float = 0.85, max_len: int = 448) -> dict:
     import torch
 
     from ..train import collate
@@ -144,17 +144,19 @@ def train_adapter(model, tok, device, pairs: list[dict], seed: int, steps: int =
     opt = torch.optim.AdamW(params, lr=lr, weight_decay=0.0)
     sched = torch.optim.lr_scheduler.LambdaLR(opt, lambda s: min(1.0, (s + 1) / 10) * max(0.05, 1 - s / steps))
     use_amp = device == "cuda"
+    scaler = torch.amp.GradScaler("cuda", enabled=use_amp)  # 16-bit maths on the GPU: several times faster
     losses, order, t0 = [], [], time.time()
     for step in range(steps):
         if len(order) < batch_size:
             order = rng.sample(range(len(examples)), len(examples))
         batch, order = [examples[i] for i in order[:batch_size]], order[batch_size:]
         ids, labels, mask = collate(batch, tok.pad_token_id)
-        with torch.autocast("cuda", dtype=torch.bfloat16, enabled=use_amp):
+        with torch.autocast("cuda", dtype=torch.float16, enabled=use_amp):
             loss = model(input_ids=ids.to(device), attention_mask=mask.to(device), labels=labels.to(device)).loss
-        loss.backward()
+        scaler.scale(loss).backward()
+        scaler.unscale_(opt)
         torch.nn.utils.clip_grad_norm_(params, 1.0)
-        opt.step(); sched.step(); opt.zero_grad()
+        scaler.step(opt); scaler.update(); sched.step(); opt.zero_grad()
         losses.append(loss.item())
     model.eval()
     return {"final_loss": round(sum(losses[-10:]) / len(losses[-10:]), 4), "steps": steps,
@@ -181,7 +183,7 @@ def score_answers(rows: list[dict], task: dict) -> dict:
 
 
 def eval_adapter(model, tok, device, task: dict, prompts: list[str], weights: dict | None = "keep",
-                 system: str | None = None, max_new_tokens: int = 200) -> dict:
+                 system: str | None = None, max_new_tokens: int = 300) -> dict:
     """Tests whatever B is loaded (or loads `weights` first; None = base model)."""
     if weights != "keep":
         set_b(model, weights)
@@ -210,9 +212,9 @@ def load_adapter(path: Path) -> tuple[dict, dict]:
 
 # ---------- the whole zoo ----------
 
-def train_zoo(out_dir: str | Path, tasks: list[dict] | None = None, seeds_seen: int = 3, seeds_heldout: int = 1,
-              steps: int = 150, lr: float = 2e-3, n_train: int = 320, n_eval: int = 30, limit: int | None = None,
-              base_model: str = BASE_MODEL, log=print) -> Path:
+def prepare_zoo(out_dir: str | Path, tasks: list[dict] | None = None, n_train: int = 320, n_eval: int = 30,
+                limit: int | None = None, base_model: str = BASE_MODEL):
+    """Writes the files every worker shares (A matrices, plain answers, task list) if they are missing."""
     from .prompts import eval_prompts, train_prompts
 
     out = Path(out_dir)
@@ -227,17 +229,25 @@ def train_zoo(out_dir: str | Path, tasks: list[dict] | None = None, seeds_seen: 
         save_file(get_a(model), str(out / "lora_A.safetensors"),
                   metadata={"spec": json.dumps(LORA_SPEC), "base_model": base_model})
     plain = make_plain(model, tok, device, train_prompts(n_train), out / "plain.jsonl")
-    evalq = eval_prompts(n_eval)
-    log(f"device={device}  tasks={len(tasks)}  plain answers={len(plain)}  eval prompts={len(evalq)}")
-    (out / "tasks.json").write_text(json.dumps(tasks, indent=1))
+    if not (out / "tasks.json").exists():
+        (out / "tasks.json").write_text(json.dumps(tasks, indent=1))
+    return tasks, plain, eval_prompts(n_eval), (model, tok, device)
 
-    results = out / "results.jsonl"
-    done = {json.loads(l)["adapter"] for l in results.read_text().splitlines()} if results.exists() else set()
+
+def train_zoo(out_dir: str | Path, tasks: list[dict] | None = None, seeds_seen: int = 3, seeds_heldout: int = 1,
+              steps: int = 150, lr: float = 2e-3, n_train: int = 320, n_eval: int = 30, limit: int | None = None,
+              base_model: str = BASE_MODEL, shard: tuple[int, int] = (0, 1), log=print) -> Path:
+    """shard=(i, n): this process trains every n-th job starting at i, so n processes can share one GPU."""
+    tasks, plain, evalq, (model, tok, device) = prepare_zoo(out_dir, tasks, n_train, n_eval, limit, base_model)
+    out = Path(out_dir)
+    log(f"device={device}  tasks={len(tasks)}  plain answers={len(plain)}  eval prompts={len(evalq)}")
+
+    results = out / f"results.{shard[0]}.jsonl" if shard[1] > 1 else out / "results.jsonl"
     jobs = [(t, s) for t in tasks for s in range(seeds_seen if t["split"] == "seen" else seeds_heldout)]
     t_start = time.time()
     for i, (t, seed) in enumerate(jobs):
         name = f"{t['id']}__s{seed}"
-        if name in done:
+        if i % shard[1] != shard[0] or (out / "adapters" / f"{name}.safetensors").exists():
             continue
         info = train_adapter(model, tok, device, task_pairs(plain, t["task"]), seed, steps=steps, lr=lr)
         ev = eval_adapter(model, tok, device, t["task"], evalq)

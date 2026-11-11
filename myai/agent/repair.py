@@ -20,7 +20,7 @@ from pathlib import Path
 
 GROUPS = [(0, 7), (8, 15), (16, 23)]
 
-OPS_HELP = """Available edits (JSON). "where" selects modules: {"layers": [first, last], "module": "q_proj" | "v_proj" | "both"}.
+OPS_HELP = """Available edits (JSON). "where" selects modules: {"layers": [first, last], "module": "<module name from the table>" | "both"} ("both" = all modules).
   {"op": "scale", "where": {...}, "factor": 1.4}     multiply those B matrices (factor < 1 weakens, > 1 strengthens)
   {"op": "zero", "where": {...}}                      switch those modules off
   {"op": "keep_rank", "where": {...}, "k": 1}         keep only the k strongest directions of each matrix (1-3)
@@ -36,7 +36,7 @@ def read_b(adapter_dir: Path) -> dict:
 
     out = {}
     for k, v in load_file(str(Path(adapter_dir) / "adapter_model.safetensors")).items():
-        m = re.search(r"layers\.(\d+)\.self_attn\.(\w+)\.lora_B", k)
+        m = re.search(r"layers\.(\d+)\.\w+\.(\w+)\.lora_B", k)
         if m:
             out[f"{m.group(1)}.{m.group(2)}"] = v.float()
     return out
@@ -80,20 +80,23 @@ def apply_ops(weights: dict, ops: list[dict], gen=None) -> dict:
     return w
 
 
+def modules_of(weights: dict) -> list[str]:
+    return sorted({k.split(".")[1] for k in weights})
+
+
 def measure(weights: dict) -> str:
-    """A compact table of the weights for the agent: size and concentration per layer."""
+    """A compact table of the weights for the agent: size and concentration per layer and module."""
     import torch
 
-    lines = ["layer  |q_proj|  top-direction share   |v_proj|  top-direction share"]
+    mods = modules_of(weights)
+    lines = ["layer  " + "  ".join(f"|{m}|  top-direction share" for m in mods)]
     for layer in sorted({int(k.split(".")[0]) for k in weights}):
         cells = []
-        for m in ("q_proj", "v_proj"):
-            b = weights.get(f"{layer}.{m}")
-            if b is None:
-                cells += ["-", "-"]; continue
+        for m in mods:
+            b = weights[f"{layer}.{m}"]
             s = torch.linalg.svdvals(b)
-            cells += [f"{b.norm():.3f}", f"{(s[0] ** 2 / (s ** 2).sum().clamp_min(1e-12)):.2f}"]
-        lines.append(f"{layer:>5}  {cells[0]:>8}  {cells[1]:>19}   {cells[2]:>8}  {cells[3]:>19}")
+            cells.append(f"{b.norm():>8.3f}  {(s[0] ** 2 / (s ** 2).sum().clamp_min(1e-12)):>19.2f}")
+        lines.append(f"{layer:>5}  " + "  ".join(cells))
     return "\n".join(lines)
 
 
@@ -185,7 +188,7 @@ def repair(folder: str | Path, what: str, provider: str | None = None, rounds: i
     # What breaks when a part is switched off? (cheap causal evidence for the agent)
     ablation = []
     for lo, hi in GROUPS:
-        for mod in ("q_proj", "v_proj"):
+        for mod in modules_of(original):
             s = run(apply_ops(original, [{"op": "zero", "where": {"layers": [lo, hi], "module": mod}}]), dev_q)
             ablation.append(f"zero layers {lo}-{hi} {mod}: score {s['score']:.2f}, checks {s['per_axis']}, never-stops {s['hit_limit_rate']}")
     history = []

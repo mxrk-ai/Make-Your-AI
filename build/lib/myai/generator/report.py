@@ -22,7 +22,7 @@ METHODS = ["base", "prompt", "trained", "retrieved", "sum_singles", "generated",
 
 
 def evaluate_generator(zoo_dir: str | Path, gen_dir: str | Path, out_file: str | Path, n_seen: int = 20,
-                       n_prompts: int = 30, seed: int = 0, guidance: float = 2.0, log=print) -> dict:
+                       n_prompts: int = 24, seed: int = 0, guidance: float = 2.0, log=print) -> dict:
     from ..zoo import behaviors as B
     from ..zoo import trainer as T
     from ..zoo.prompts import eval_prompts

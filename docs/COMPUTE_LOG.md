@@ -14,13 +14,14 @@ below is always the measured difference in `colab usage` before and after a job.
 
 | Date | Phase | Job | GPU | Hours | Units | Result / checkpoint |
 |---|---|---|---|---|---|---|
-| | | none yet | | | | |
+| 2026-11-11 | 1 | Pilot attempt 1 (crashed at start: library conflict on the VM) | T4 | 0.03 | 0.03 | Nothing. Fixed in `scripts/colab_zoo.py`. |
+| 2026-11-11 | 1 | Pilot: 3 adapters, rank 4 (one 93%, three 80%, caps 67%), then stopped by hand | T4 | 0.2 | 0.20 | Led to rank 8 and 16-bit training. |
 
 ## Agent LLM calls
 
 | Date | Phase | Provider / model | Calls | Approx. cost | Note |
 |---|---|---|---|---|---|
-| | | none yet | | | |
+| 2026-11-11 | 5 | agy (subscription, default model) | 4 | $0 | Functional test of `patch fix` on a fake adapter. |
 
 ## Per phase
 

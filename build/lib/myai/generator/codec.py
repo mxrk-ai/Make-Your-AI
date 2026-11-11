@@ -61,7 +61,7 @@ class Codec:
 
         t = {}
         for k in self.keys:
-            t[f"mean.{k}"], t[f"basis.{k}"], t[f"scale.{k}"] = self.mean[k], self.basis[k].half(), self.scale[k].reshape(1)
+            t[f"mean.{k}"], t[f"basis.{k}"], t[f"scale.{k}"] = self.mean[k].contiguous(), self.basis[k].half().contiguous(), self.scale[k].reshape(1).contiguous()
         save_file(t, str(path), metadata={"keys": json.dumps(self.keys), "shapes": json.dumps(self.shapes)})
 
     @classmethod
