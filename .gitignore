@@ -19,3 +19,7 @@ __pycache__/
 
 # local experiment outputs
 /runs/
+
+# build outputs
+/build/
+/dist/

@@ -6,7 +6,7 @@
 |---|---|
 | Code, from version 0.2 on | [FSL-1.1-ALv2](LICENSE.md): any use except a competing commercial product; each version becomes Apache 2.0 two years after release |
 | Code, version 0.1.0 | MIT ([LICENSE-MIT-v0.1](LICENSE-MIT-v0.1)). Already published under MIT, so it stays MIT. |
-| Trained generator weights (not released yet) | Planned: non-commercial, with a commercial license on request. The exact license text is chosen before the first upload (Phase 7). |
+| Trained generator weights (not released yet) | Planned: CC BY-NC 4.0 (non-commercial), with a commercial license on request. |
 | Zoo adapters and task data (not released yet) | Decided per source in Phase 1, recorded here before upload. |
 
 ## Upstream

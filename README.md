@@ -2,9 +2,7 @@
 
 # 🧠 Make Your AI
 
-**Describe the AI you want in one sentence. Get a working custom model in seconds, with no training.**
-
-Like an image generator, but instead of pictures it makes small AIs.
+**Make your own small AI that runs on a laptop.** Teach it your documents, or describe how it should answer.
 
 [![tests](https://github.com/mxrk-ai/Make-Your-AI/actions/workflows/tests.yml/badge.svg)](https://github.com/mxrk-ai/Make-Your-AI/actions/workflows/tests.yml)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
@@ -13,6 +11,24 @@ Like an image generator, but instead of pictures it makes small AIs.
 </div>
 
 ---
+
+> **Status: research preview.** Every number below was measured and the raw files are in [`results/`](results/).
+> Some of them are not good. Read [Limitations](#limitations-read-this) before relying on it.
+
+Two ways to make an AI, both on a small open model (Qwen2.5-0.5B, 1 GB, runs offline):
+
+| | You give it | You get | How long | How well it works today |
+|---|---|---|---|---|
+| **Teach it your documents** (`myai build`) | your files and ~20 test questions | a model that answers from your content | minutes of training | bundled example: 8% → 54% on 24 unseen questions |
+| **Describe a behaviour** (`myai generate`) | one sentence | a model that answers in that style | seconds, no training | 89% on combinations it has seen, 36% on new ones |
+
+After either one, **`myai eval`** writes an honest before/after report card, **weight patches** fix bad habits by
+editing weights with no retraining, and **`myai export --gguf`** gives you one file for Ollama or LM Studio.
+
+- For a company or product assistant, go to [Teach it your documents](#the-other-mode-teach-it-your-documents).
+- The rest of this page starts with `generate`, the newer and more experimental part.
+
+## Describe a behaviour: `myai generate`
 
 ```bash
 $ myai generate "talk like a pirate, max 3 sentences" --out pirate
@@ -26,14 +42,9 @@ ai  > Arr, sleep be crucial for several reasons: it helps the body recover and r
 ```
 
 A **generator** (a small diffusion model) has learned what trained LoRA adapters look like. You give it a
-description, it starts from noise and draws the adapter's weights. The adapter plugs into a small open model
-(Qwen2.5-0.5B, 1 GB) that runs on a laptop, offline. Then:
-
-- **`myai eval`** tests your AI on fresh questions and writes a before/after report card.
-- **`myai patch fix`** lets an LLM agent look inside the weights and repair what is still wrong, with no retraining.
-- **`myai export --gguf`** gives you one file for Ollama or LM Studio.
-
-> "The generator is the intuition, the agent is the reasoning."
+description, it starts from noise and draws the adapter's weights, like an image generator draws a picture. The
+adapter plugs into the base model. An LLM agent can then repair what is still wrong by editing the weights
+(`myai patch fix`).
 
 ## Start in 3 steps
 
