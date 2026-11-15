@@ -157,17 +157,26 @@ def write_adapter(folder: str | Path, weights: dict, lora_a: dict, base_model: s
     return folder
 
 
+DEFAULT_GENERATOR_REPO = "mxrk18/make-your-ai-generator-v1"  # public, CC BY-NC 4.0; override with MYAI_GENERATOR_REPO
+
+
 def find_generator(path: str | None = None) -> Path:
-    """A local folder if given or present, else download the published generator once."""
+    """A local folder if given or present, else download the published generator once (57 MB)."""
     import os
 
-    for cand in (path, os.environ.get("MYAI_GENERATOR"), Path.home() / ".cache" / "myai" / "generator"):
+    cache = Path.home() / ".cache" / "myai" / "generator"
+    for cand in (path, os.environ.get("MYAI_GENERATOR"), cache):
         if cand and (Path(cand) / "generator.json").exists():
             return Path(cand)
-    repo = os.environ.get("MYAI_GENERATOR_REPO")
+    repo = os.environ.get("MYAI_GENERATOR_REPO", DEFAULT_GENERATOR_REPO)
     if not repo:
         raise FileNotFoundError("No generator found. Pass --generator <folder>, or set MYAI_GENERATOR_REPO "
                                 "to a Hugging Face repo that holds one.")
     from huggingface_hub import snapshot_download
 
-    return Path(snapshot_download(repo, local_dir=str(Path.home() / ".cache" / "myai" / "generator")))
+    try:
+        print(f"Downloading the generator once from {repo} ...")
+        return Path(snapshot_download(repo, local_dir=str(cache), allow_patterns=["*.safetensors", "generator.json"]))
+    except Exception as e:  # offline, repo missing, ...
+        raise FileNotFoundError(f"No generator found, and downloading {repo} failed ({type(e).__name__}). "
+                                "Check your connection, or pass --generator <folder>.") from e

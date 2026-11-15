@@ -129,7 +129,7 @@ def test_train_generate_and_harmonize(tmp_path, fake_text, monkeypatch):
 
 def test_generate_without_a_generator_says_what_to_do(tmp_path, monkeypatch, fake_text):
     monkeypatch.delenv("MYAI_GENERATOR", raising=False)
-    monkeypatch.delenv("MYAI_GENERATOR_REPO", raising=False)
+    monkeypatch.setenv("MYAI_GENERATOR_REPO", "")  # no download in tests
     monkeypatch.setenv("HOME", str(tmp_path))
     from myai.cli import main
 

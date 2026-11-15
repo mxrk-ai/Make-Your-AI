@@ -2,11 +2,15 @@
 
 # 🧠 Make Your AI
 
-**Make your own small AI that runs on a laptop.** Teach it your documents, or describe how it should answer.
+### Your own small AI, on your own laptop.
+
+**Teach it your documents, or describe how it should answer.**
+No cloud bill, no data leaving your machine, and a report card that tells you the truth.
 
 [![tests](https://github.com/mxrk-ai/Make-Your-AI/actions/workflows/tests.yml/badge.svg)](https://github.com/mxrk-ai/Make-Your-AI/actions/workflows/tests.yml)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-FSL--1.1--ALv2-blue)
+[![generator](https://img.shields.io/badge/%F0%9F%A4%97%20generator-v1-yellow)](https://huggingface.co/mxrk18/make-your-ai-generator-v1)
 
 </div>
 
@@ -15,7 +19,14 @@
 > **Status: research preview.** Every number below was measured and the raw files are in [`results/`](results/).
 > Some of them are not good. Read [Limitations](#limitations-read-this) before relying on it.
 
-Two ways to make an AI, both on a small open model (Qwen2.5-0.5B, 1 GB, runs offline):
+## Why use it
+
+- **Private by default.** Everything runs on your computer, on a small open model (Qwen2.5-0.5B, 1 GB). Your documents never leave it.
+- **Honest by design.** Every AI you make gets a before/after report card on questions it never saw, wrong answers included.
+- **Fixable without retraining.** Bad habits (rambling, looping, making things up) are repaired by editing weights directly, and an edit is kept only if the score goes up.
+- **Yours to take anywhere.** One command exports a single file for Ollama or LM Studio.
+
+## Two ways to make an AI
 
 | | You give it | You get | How long | How well it works today |
 |---|---|---|---|---|
@@ -56,10 +67,7 @@ git clone https://github.com/mxrk-ai/Make-Your-AI && cd Make-Your-AI
 source .venv/bin/activate
 ```
 
-**2. Make an AI.** The first run downloads the base model (1 GB), once. The generator itself is 57 MB.
-
-> The generator weights are not published yet. Until they are, build one with the commands in
-> [Train your own generator](#train-your-own-generator) and pass `--generator <folder>` (or set `MYAI_GENERATOR`).
+**2. Make an AI.** The first run downloads the generator (57 MB) and the base model (1 GB), once.
 
 ```bash
 myai generate "reply only in JSON, in one sentence" --out json-bot
@@ -230,7 +238,7 @@ tiny rule-like networks (`myai scratch`).
   from other languages. The adapter does not fix that.
 - **Checks are automatic rules** (sentence counts, valid JSON, word lists). They miss things a person would notice.
 - **Agent repair is tested on 5 adapters with one provider.** The other providers are untested.
-- **The generator weights are not published yet**, so `myai generate` needs a generator you built or were given.
+- **The published generator is non-commercial** (CC BY-NC 4.0). For commercial use, train your own or ask for a license.
 - **Small numbers.** 24 questions per task, one generator seed, one training run. Expect a few points of noise.
 
 ## Where the ideas come from
